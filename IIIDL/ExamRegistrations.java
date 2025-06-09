@@ -32,7 +32,7 @@ public class ExamRegistrations {
             ParameterDirection[] paramDirections = new ParameterDirection[] { ParameterDirection.Input, ParameterDirection.Input, ParameterDirection.Input };
             Object[] values = new Object[] { tntexambodyid, chrexammode, intuserid };
 
-            objDatabase = new Database(); // Instantiate the DAL helper stub
+            objDatabase = new Database  (); // Instantiate the DAL helper stub
 
             // Call the stub's ExecProcedure method. It returns the ProcedureResult object.
             // The C# calls `ExecProcedure(..., out AllParameters, out objDataSet, true);`
