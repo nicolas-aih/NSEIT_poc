@@ -403,9 +403,9 @@ public class ExamRegistration {
         System.out.println("--- Testing IIIBL.ExamRegistration ---");
 
         ExamRegistration bll = new ExamRegistration();
-        String testConnectionString = "jdbc:sqlserver://localhost:1433;databaseName=MyExamDb;user=testuser;password=testpwd"; // Dummy connection string
+        String testConnectionString = "jdbc:sqlserver://localhost:1433;databaseName=AgencyLicensingPortal;user=sa;password=sa123"; // Dummy connection string
         int dummyUserId = 303;
-        String dummyExcelFilePath = "C:/dummy/path/to/excel.xlsx"; // Path doesn't need to exist due to stub
+        String dummyExcelFilePath = "C:/Users/akliv/Downloads/titanic.csv"; // Path doesn't need to exist due to stub
 
         // Test GetExambody
         System.out.println("\nTesting getExambody...");
