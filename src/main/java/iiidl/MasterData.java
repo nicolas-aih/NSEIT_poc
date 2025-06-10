@@ -1,10 +1,10 @@
 // File: iiidl/MasterData.java
-package IIIDL;
+package iiidl;
 
-import java.util.List;
-import java.util.Map;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 // This is a STUB/MOCK class for the IIIDL layer for translation purposes.
 // In a real application, this class would interact with the database

@@ -80,25 +80,19 @@
     <!-- - BUILD CONFIGURATION - -->
     <!-- Configure how your project is built -->
     <build>
-        <plugins>
-            <!-- Spring Boot Maven Plugin: creates the executable JAR -->
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
+           <plugins>
+        <plugin>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-maven-plugin</artifactId>
+            <!-- Add this configuration block -->
+            <configuration>
+                <mainClass>com.example.NSEITJavaTranslationApplication</mainClass> <!-- < Replace with your actual package and class name -->
+            </configuration>
+        </plugin>
+        <!-- Other plugins like maven-clean-plugin, maven-compiler-plugin etc. -->
+    <!-- </plugins> -->
 
-            <!-- Configure Java Compiler Plugin (optional, parent POM provides defaults) -->
-            <!--
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.11.0</version> # Use a recent version
-                <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
-                </configuration>
-            </plugin>
-            -->
+
         </plugins>
     </build>
 

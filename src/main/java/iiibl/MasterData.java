@@ -1,5 +1,5 @@
 // File: iiibl/MasterData.java
-package IIIBL;
+package iiibl;
 
 // import IIDL.*; // Import the stub DAL
 // import IIIDL.MasterData; // Import the stub DAL
@@ -14,10 +14,10 @@ public class MasterData {
     // Method equivalent to C# GetStates
     // DataSet is translated to List<Map<String, Object>>
     public List<Map<String, Object>> getStates(String connectionString) {
-        IIIDL.MasterData objMasterData = null;
+        iiidl.MasterData objMasterData = null;
         List<Map<String, Object>> objDataSet = null;
         try {
-            objMasterData = new IIIDL.MasterData(); // Instantiate the DAL stub
+            objMasterData = new iiidl.MasterData(); // Instantiate the DAL stub
             objDataSet = objMasterData.GetStates(connectionString); // Call the DAL method
         } catch (Exception ex) {
             // In Java, simply 'throw ex;' re-throws the exception preserving the stack trace
@@ -32,10 +32,10 @@ public class MasterData {
 
     // Method equivalent to C# GetNotifications
     public List<Map<String, Object>> getNotifications(String connectionString, String notificationType /*T-icker or N-otification panel*/, String roleCode) {
-        IIIDL.MasterData objMasterData = null;
+        iiidl.MasterData objMasterData = null;
         List<Map<String, Object>> objDataSet = null;
         try {
-            objMasterData = new IIIDL.MasterData();
+            objMasterData = new iiidl.MasterData();
             objDataSet = objMasterData.GetNotifications(connectionString, notificationType, roleCode);
         } catch (Exception ex) {
             throw ex;
@@ -47,10 +47,10 @@ public class MasterData {
 
     // Method equivalent to C# GetMasterData
     public List<Map<String, Object>> getMasterData(String connectionString) {
-        IIIDL.MasterData objMasterData = null;
+        iiidl.MasterData objMasterData = null;
         List<Map<String, Object>> objDataSet = null;
         try {
-            objMasterData = new IIIDL.MasterData();
+            objMasterData = new iiidl.MasterData();
             objDataSet = objMasterData.GetMasterData(connectionString);
         } catch (Exception ex) {
             throw ex;
@@ -62,10 +62,10 @@ public class MasterData {
 
     // Method equivalent to C# GetCenterListForDistrict
     public List<Map<String, Object>> getCenterListForDistrict(String connectionString, int districtId) {
-        IIIDL.MasterData objMasterData = null;
+        iiidl.MasterData objMasterData = null;
         List<Map<String, Object>> objDataSet = null;
         try {
-            objMasterData = new IIIDL.MasterData();
+            objMasterData = new iiidl.MasterData();
             objDataSet = objMasterData.GetCenterListForDistrict(connectionString, districtId);
         } catch (Exception ex) {
             throw ex;
@@ -77,10 +77,10 @@ public class MasterData {
 
     // Method equivalent to C# GetInsurers
     public List<Map<String, Object>> getInsurers(String connectionString, int insurerId) {
-        IIIDL.MasterData objMasterData = null;
+        iiidl.MasterData objMasterData = null;
         List<Map<String, Object>> objDataSet = null;
         try {
-            objMasterData = new IIIDL.MasterData();
+            objMasterData = new iiidl.MasterData();
             objDataSet = objMasterData.GetInsurers(connectionString, insurerId);
         } catch (Exception ex) {
             throw ex;
@@ -92,10 +92,10 @@ public class MasterData {
 
     // Method equivalent to C# GetInsurers2
     public List<Map<String, Object>> getInsurers2(String connectionString, int insurerId) {
-        IIIDL.MasterData objMasterData = null;
+        iiidl.MasterData objMasterData = null;
         List<Map<String, Object>> objDataSet = null;
         try {
-            objMasterData = new IIIDL.MasterData();
+            objMasterData = new iiidl.MasterData();
             objDataSet = objMasterData.GetInsurers2(connectionString, insurerId);
         } catch (Exception ex) {
             throw ex;
@@ -107,10 +107,10 @@ public class MasterData {
 
     // Method equivalent to C# GetDPForInsurer
     public List<Map<String, Object>> getDPForInsurer(String connectionString, int insurerId, int dpId) {
-        IIIDL.MasterData objMasterData = null;
+        iiidl.MasterData objMasterData = null;
         List<Map<String, Object>> objDataSet = null;
         try {
-            objMasterData = new IIIDL.MasterData();
+            objMasterData = new iiidl.MasterData();
             objDataSet = objMasterData.GetDPForInsurer(connectionString, insurerId, dpId);
         } catch (Exception ex) {
             throw ex;
@@ -122,10 +122,10 @@ public class MasterData {
 
     // Method equivalent to C# GetACForDPs
     public List<Map<String, Object>> getACForDPs(String connectionString, int insurerId, int dpId, int acId) {
-        IIIDL.MasterData objMasterData = null;
+        iiidl.MasterData objMasterData = null;
         List<Map<String, Object>> objDataSet = null;
         try {
-            objMasterData = new IIIDL.MasterData();
+            objMasterData = new iiidl.MasterData();
             objDataSet = objMasterData.GetACForDPs(connectionString, insurerId, dpId, acId);
         } catch (Exception ex) {
             throw ex;
@@ -137,10 +137,10 @@ public class MasterData {
 
     // Method equivalent to C# GetExamCenter
     public List<Map<String, Object>> getExamCenter(String connectionString, short examBodyId, short examCenterId) {
-        IIIDL.MasterData objMasterData = null;
+        iiidl.MasterData objMasterData = null;
         List<Map<String, Object>> objDataSet = null;
         try {
-            objMasterData = new IIIDL.MasterData();
+            objMasterData = new iiidl.MasterData();
             objDataSet = objMasterData.GetExamCenter(connectionString, examBodyId, examCenterId);
         } catch (Exception ex) {
             throw ex;
@@ -152,10 +152,10 @@ public class MasterData {
 
     // Method equivalent to C# GetNewDPId
     public int getNewDPId(String connectionString, int insurerUserId) {
-        IIIDL.MasterData objMasterData = null;
+        iiidl.MasterData objMasterData = null;
         int dpId = -1;
         try {
-            objMasterData = new IIIDL.MasterData();
+            objMasterData = new iiidl.MasterData();
             dpId = objMasterData.GetNewDPId(connectionString, insurerUserId);
         } catch (Exception ex) {
             throw ex;
@@ -167,10 +167,10 @@ public class MasterData {
 
     // Method equivalent to C# GetCompanyListForVoucherEntry
     public List<Map<String, Object>> getCompanyListForVoucherEntry(String connectionString, String companyType) {
-        IIIDL.MasterData objMasterData = null;
+        iiidl.MasterData objMasterData = null;
         List<Map<String, Object>> objDataSet = null;
         try {
-            objMasterData = new IIIDL.MasterData();
+            objMasterData = new iiidl.MasterData();
             objDataSet = objMasterData.GetCompanyListForVoucherEntry(connectionString, companyType);
         } catch (Exception ex) {
             throw ex;

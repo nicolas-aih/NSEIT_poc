@@ -1,6 +1,6 @@
 package iiibl;
 
-import iiidl.ExamRegistration; // Import the translated DAL
+import iiidl.ExamRegistrations; // Import the translated DAL
 import utilities.Common; // Import utility classes
 import utilities.TextValidator;
 import utilities.fileparser.ExcelParser;
@@ -403,6 +403,7 @@ public class ExamRegistration {
         System.out.println("--- Testing IIIBL.ExamRegistration ---");
 
         ExamRegistration bll = new ExamRegistration();
+
         String testConnectionString = "jdbc:sqlserver://localhost:1433;databaseName=AgencyLicensingPortal;user=sa;password=sa123"; // Dummy connection string
         int dummyUserId = 303;
         String dummyExcelFilePath = "C:/Users/akliv/Downloads/titanic.csv"; // Path doesn't need to exist due to stub
