@@ -3,10 +3,7 @@ import java.util.*;
 
 public class BatchMgmt {
     public static void main(String[] args) {
-        String connString =  "jdbc:sqlserver://" + "LAPTOP-AMFV5IUN" + ";databaseName=" + "AgencyLicensingPortal" + 
-                              ";user=" + "sa" + 
-                              ";password=" + "sa123" + 
-                              ";encrypt=true;trustServerCertificate=true;";
+        String connString = "jdbc:sqlserver://localhost:1433;databaseName=YourDB;user=sa;password=pass";
         
         // Example: Verify Batch
         BatchMgmt batchMgmt = new BatchMgmt();

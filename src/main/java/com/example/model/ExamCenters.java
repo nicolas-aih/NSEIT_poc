@@ -1,10 +1,11 @@
 package com.example.model;
 
-import com.example.database.Database;
-import com.example.database.ParamLength;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.example.database.Database;
+import com.example.database.ParamLength;
 
 public class ExamCenters {
     // Add these constants
@@ -64,7 +65,7 @@ public class ExamCenters {
                 new ParamLength(4, 10, 0), 
                 new ParamLength(1, 3, 0) 
             };
-            int[] paramDirections = new int[] { ParameterDirection.INPUT, ParameterDirection.INPUT };
+            int[] paramDirections = new int[] { INPUT, INPUT };
             Object[] values = new Object[] { pincode, examBodyId };
             
             objDatabase = new Database();
@@ -98,7 +99,7 @@ public class ExamCenters {
                 new ParamLength(4, 10, 0), 
                 new ParamLength(1, 0, 0) 
             };
-            int[] paramDirections = new int[] { ParameterDirection.INPUT, ParameterDirection.INPUT };
+            int[] paramDirections = new int[] { INPUT, INPUT };
             Object[] values = new Object[] { stateId, isTbxCenter ? "Y" : "N" };
             
             objDatabase = new Database();
@@ -132,7 +133,7 @@ public class ExamCenters {
                 new ParamLength(4, 10, 0), 
                 new ParamLength(4, 10, 0) 
             };
-            int[] paramDirections = new int[] { ParameterDirection.INPUT, ParameterDirection.INPUT };
+            int[] paramDirections = new int[] { INPUT, INPUT };
             Object[] values = new Object[] { 
                 stateId <= 0 ? null : stateId, 
                 centerId <= 0 ? null : centerId 
@@ -169,7 +170,7 @@ public class ExamCenters {
                 new ParamLength(4, 10, 0), 
                 new ParamLength(4, 10, 0) 
             };
-            int[] paramDirections = new int[] { ParameterDirection.INPUT, ParameterDirection.INPUT };
+            int[] paramDirections = new int[] { INPUT, INPUT };
             Object[] values = new Object[] { 
                 stateId <= 0 ? null : stateId, 
                 centerId <= 0 ? null : centerId 
@@ -234,7 +235,7 @@ public class ExamCenters {
             String[] params = new String[] { "@centerid" };
             int[] paramTypes = new int[] { java.sql.Types.INTEGER };
             ParamLength[] paramLengths = new ParamLength[] { new ParamLength(4, 10, 0) };
-            int[] paramDirections = new int[] { ParameterDirection.INPUT };
+            int[] paramDirections = new int[] { INPUT };
             Object[] values = new Object[] { centerId };
             
             objDatabase = new Database();
@@ -291,11 +292,11 @@ public class ExamCenters {
             };
             
             int[] paramDirections = new int[] { 
-                ParameterDirection.INPUT, ParameterDirection.INPUT, ParameterDirection.INPUT, 
-                ParameterDirection.INPUT, ParameterDirection.INPUT, ParameterDirection.INPUT, 
-                ParameterDirection.INPUT, ParameterDirection.INPUT, ParameterDirection.INPUT, 
-                ParameterDirection.INPUT, ParameterDirection.INPUT, ParameterDirection.INPUT, 
-                ParameterDirection.INPUT, ParameterDirection.OUTPUT 
+                INPUT,INPUT,INPUT, 
+                INPUT,INPUT,INPUT, 
+                INPUT, INPUT, INPUT, 
+                INPUT, INPUT, INPUT, 
+                INPUT,OUTPUT, 
             };
             
             Object[] values = new Object[] { 

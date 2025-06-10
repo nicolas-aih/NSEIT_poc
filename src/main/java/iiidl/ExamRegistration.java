@@ -1,21 +1,18 @@
-package IIIDL;
+package iiidl;
 
-import databases.sqlserver.Database; // Import the stub DAL helper
-import databases.sqlserver.SqlDbType;
-import databases.sqlserver.ParameterDirection;
-import databases.sqlserver.ParamLength;
-import databases.sqlserver.ProcedureResult; // Import the result wrapper
-
+import java.util.ArrayList; // Import the stub DAL helper
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Date; // Using java.util.Date as equivalent to C# DateTime
-import java.sql.Connection; // Just for type hinting if needed, not used in stub
-import java.sql.Types; // Potential JDBC type equivalent
+
+import databases.sqlserver.Database; // Import the result wrapper
+import databases.sqlserver.ParamLength;
+import databases.sqlserver.ParameterDirection;
+import databases.sqlserver.ProcedureResult;
+import databases.sqlserver.SqlDbType;
 
 // Equivalent of your C# IIIDL.ExamRegistrations class
-public class ExamRegistrations {
+public class ExamRegistration {
 
     // C# DataSet -> Java List<Map<String, Object>>
     public List<Map<String, Object>> getExamBody(String connectionString, short tntexambodyid, String chrexammode, int intuserid) {

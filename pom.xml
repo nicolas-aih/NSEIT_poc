@@ -1,15 +1,105 @@
-<dependencies>
-    <!-- JDBC for SQL Server -->
-    <dependency>
-        <groupId>com.microsoft.sqlserver</groupId>
-        <artifactId>mssql-jdbc</artifactId>
-        <version>12.4.2.jre11</version>
-    </dependency>
-    
-    <!-- Apache Commons for utility functions -->
-    <dependency>
-        <groupId>org.apache.commons</groupId>
-        <artifactId>commons-lang3</artifactId>
-        <version>3.12.0</version>
-    </dependency>
-</dependencies>
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!--
+        Define the Spring Boot parent POM.
+        This is highly recommended for Spring Boot projects.
+        It manages versions for many common dependencies and provides sensible defaults.
+    -->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.2.0</version> <!-- Use a recent, stable version compatible with your JDK (JDK 17+ for 3.x) -->
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
+    <!--- PROJECT IDENTIFICATION -->
+    <!-- These identify your specific project -->
+    <groupId>com.yourcompany</groupId>       <!-- Change this to your company's or project's group ID -->
+    <artifactId>nse-it-java-translation</artifactId> <!-- Change this to your project's artifact ID -->
+    <version>0.0.1-SNAPSHOT</version>       <!-- Your project's version -->
+
+    <name>NSEIT Java Translation</name>      <!-- Human-readable name -->
+    <description>Java translation of C# code</description> <!-- Project description -->
+
+    <properties>
+        <java.version>17</java.version> <!-- Ensure this matches or is less than your installed JDK version (e.g., 17 or 21) -->
+    </properties>
+
+    <!-- - DEPENDENCIES - -->
+    <!-- List all the libraries your project needs -->
+    <dependencies>
+
+        <!-- Spring Boot Web Starter (for building web applications/REST services) -->
+        <!-- Version is managed by the parent POM -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!-- JDBC for SQL Server -->
+        <dependency>
+            <groupId>com.microsoft.sqlserver</groupId>
+            <artifactId>mssql-jdbc</artifactId>
+            <scope>runtime</scope> <!-- Usually scope 'runtime' for JDBC drivers -->
+             <!-- Version is often managed by Spring Boot parent, but if not, specify it -->
+             <!-- <version>12.4.2.jre11</version> -->
+        </dependency>
+
+        <!-- Apache Commons Lang3 for utility functions -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+             <!-- Version is often managed by Spring Boot parent, but if not, specify it -->
+            <!-- <version>3.12.0</version> -->
+        </dependency>
+
+        <!-- Apache POI for working with Excel files (.xlsx) -->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>5.2.4</version> <!-- Specify version, often not managed by Spring Boot parent -->
+        </dependency>
+
+        <!-- Optional: Spring Boot Security if you implement AuthorizationExt/AJAX -->
+        <!-- Uncomment this if you add Spring Security for authorization -->
+        <!--
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        -->
+
+        <!-- Add your other dependencies here if any -->
+
+    </dependencies>
+
+    <!-- - BUILD CONFIGURATION - -->
+    <!-- Configure how your project is built -->
+    <build>
+        <plugins>
+            <!-- Spring Boot Maven Plugin: creates the executable JAR -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+
+            <!-- Configure Java Compiler Plugin (optional, parent POM provides defaults) -->
+            <!--
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version> # Use a recent version
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+            -->
+        </plugins>
+    </build>
+
+</project>

@@ -1,6 +1,6 @@
-package IIIBL;
+package iiibl;
 
-import IIIDL.ExamRegistrations; // Import the translated DAL
+import iiidl.ExamRegistration; // Import the translated DAL
 import utilities.Common; // Import utility classes
 import utilities.TextValidator;
 import utilities.fileparser.ExcelParser;
@@ -25,11 +25,11 @@ public class ExamRegistration {
 
     // C# DataSet -> Java List<Map<String, Object>>
     public List<Map<String, Object>> getExambody(String connectionString) {
-        IIIDL.ExamRegistrations objDP = null;
+        iiidl.ExamRegistrations objDP = null;
         List<Map<String, Object>> resultDataSetTable = null; // Translated from DataSet
 
         try {
-            objDP = new IIIDL.ExamRegistrations();
+            objDP = new iiidl.ExamRegistrations();
             // Note: C# passes 0, "A", 0. Translate directly.
             resultDataSetTable = objDP.getExamBody(connectionString, (short) 0, "A", 0); // Cast 0 to short
         } catch (Exception ex) {
@@ -43,11 +43,11 @@ public class ExamRegistration {
 
     // C# DataSet -> Java List<Map<String, Object>>
     public List<Map<String, Object>> getTrainedApplicants(String connectionString, int userId, int examBodyId, int examCenterId, Date fromDate, Date toDate) {
-        IIIDL.ExamRegistrations objDP = null;
+        iiidl.ExamRegistrations objDP = null;
         List<Map<String, Object>> resultDataSetTable = null; // Translated from DataSet
 
         try {
-            objDP = new IIIDL.ExamRegistrations();
+            objDP = new iiidl.ExamRegistrations();
             resultDataSetTable = objDP.getTrainedApplicants(connectionString, userId, examBodyId, examCenterId, fromDate, toDate);
         } catch (Exception ex) {
             throw ex;
@@ -66,7 +66,7 @@ public class ExamRegistration {
         // These are the expected column headers from the Excel file
         List<String> requiredFields = Arrays.asList("IRDA URN", "Payment Mode", "Insurer Remark", "Enrollment No", "OnOrAfterDate", "EmailIds", "Batch Mode", "Scheduling Mode");
 
-        IIIDL.ExamRegistrations objSp = null;
+        iiidl.ExamRegistrations objSp = null;
         List<Map<String, Object>> resultDataSetTable = null; // Translated from DataSet returned by DAL
         List<Map<String, Object>> oExcelDataList = null; // Translated from DataTable read from Excel
         boolean status = true; // Translated from out Status
@@ -320,7 +320,7 @@ public class ExamRegistration {
 
                     // --- Bulkupload Excel Data To Database ---
                     // Pass the validated and modified List<Map> to the DAL
-                    objSp = new IIIDL.ExamRegistrations();
+                    objSp = new iiidl.ExamRegistrations();
                     resultDataSetTable = objSp.bulkUploadToDatabase(connectionString, oExcelDataList, userid);
 
                     // Note: The C# BLL does not read Status/Message from the DAL call result here.
@@ -362,11 +362,11 @@ public class ExamRegistration {
      // C# DataTable dataTable -> Java List<Map<String, Object>> dataTableList
      // This method is simpler, assuming the DataTable validation is done elsewhere before passing it here.
     public List<Map<String, Object>> bulkUploadExamRegData2(String connectionString, List<Map<String, Object>> dataTableList, int userid) {
-        IIIDL.ExamRegistrations objSp = null;
+        iiidl.ExamRegistrations objSp = null;
         List<Map<String, Object>> resultTable = null; // Translated from DataSet
 
         try {
-            objSp = new IIIDL.ExamRegistrations();
+            objSp = new iiidl.ExamRegistrations();
             // Directly call the DAL method with the List<Map>
             // C# calls ExecProcedure(..., out AllParameters, out objDataSet); (no 'true')
             // Let's assume this overload also implies readDataSet=true, as it receives objDataSet.
@@ -383,11 +383,11 @@ public class ExamRegistration {
 
     // C# DataSet -> Java List<Map<String, Object>>
     public List<Map<String, Object>> getPaymentModes(String connectionString, int insurerId) {
-        IIIDL.ExamRegistrations objDP = null;
+        iiidl.ExamRegistrations objDP = null;
         List<Map<String, Object>> resultDataSetTable = null; // Translated from DataSet
 
         try {
-            objDP = new IIIDL.ExamRegistrations();
+            objDP = new iiidl.ExamRegistrations();
             resultDataSetTable = objDP.getPaymentMode(connectionString, insurerId);
         } catch (Exception ex) {
             throw ex;
