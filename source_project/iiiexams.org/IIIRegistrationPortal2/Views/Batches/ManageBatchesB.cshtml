@@ -1,0 +1,110 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutPage2.cshtml";
+}
+@*@Scripts.Render("~/js/app/managebatchesB")*@
+<script src="~/js/app/managebatchesB.js" type="text/javascript"></script>
+
+<div id="pnlMain" class="notificationBox">
+    <h3>Manage Batches</h3>
+    <div class="row">
+        <div class="col-sm-12">
+            <form id="frmSearch" method="post" action="" autocomplete="off">
+                <div class="row mt10">
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label for="cboSearchBy">Search By :</label>
+                            <select id="cboSearchBy" name="cboSearchBy" class="form-control" required>
+                                <option value="">-- Select --</option>
+                                <option value="BATCHNO">Batch No</option>
+                                <option value="DATERANGE">Batch Creation Date</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-6" id="divBatchNo" style="display:none">
+                        <div class="form-group">
+                            <label for="txtBatchNo">Batch No :</label>
+                            <input id="txtBatchNo" name="txtBatchNo" type="text" class="form-control" required maxlength="50" autocomplete="off" />
+                        </div>
+                    </div>
+                    <div class="col-sm-2" id="divFromDate" style="display:none">
+                        <div class="form-group">
+                            <label for="txtFromDate">From Date :</label>
+                            <input id="txtFromDate" name="txtFromDate" type="text" class="form-control dtpick" required maxlength="15" autocomplete="off" />
+                        </div>
+                    </div>
+                    <div class="col-sm-2" id="divToDate" style="display:none">
+                        <div class="form-group">
+                            <label for="txtToDate">Till Date :</label>
+                            <input id="txtToDate" name="txtToDate" type="text" class="form-control dtpick" required maxlength="15" autocomplete="off" />
+                        </div>
+                    </div>
+                    <div class="col-sm-2" id="divStatus" style="display:none">
+                        <div class="form-group">
+                            <label for="cboStatus">Status :</label>
+                            <select id="cboStatus" name="cboStatus" required class="form-control">
+                                <option value="">-- Select --</option>
+                                <option value="1">All</option>
+                                <option value="2">Payment Pending</option>
+                                <option value="3">Payment Successful</option>
+                                <option value="4">Scheduling Pending</option>
+                                <option value="5">Scheduled</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-2" id="divSubmit" style="display:none">
+                        <div class="form-group">
+                            <label>&nbsp;</label>
+                            <input type="submit" class="btn btn-md btn-warning btn-block" value="Search">&nbsp;&nbsp;
+                        </div>
+                    </div>
+                    <div class="col-sm-2" id="divExcel" style="display:none">
+                        <div class="form-group">
+                            <label>&nbsp;</label><br />
+                            <button type="submit">
+                                <img src="~/Images/Excel.png" height="25" width="25" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div id="divBatches" class="col-sm-12">
+            <div class="row mt10">
+                <div class="col-md-12" style="overflow:auto">
+                    <table class=" table table-bordered table-striped table-hover" id="tblBatches"></table>
+                </div>
+            </div>
+        </div>
+        <div id="divBatchDetails" title="Batch details">
+            <form id="frmMain" name="frmMain" method="post" action="" autocomplete="off" style="display:none">
+                <div class="row mt10">
+                    <div class="col-sm-2" style="text-align:left; font-weight:700">Exam Batch No : </div>
+                    <div class="col-sm-4" style="text-align:left; font-weight:700" id="exambatchno"></div>
+                </div>
+                <div class="row mt10">
+                    <div class="col-sm-2" style="text-align:left; font-weight:700">URNs : </div>
+                    <div class="col-sm-4" style="text-align:left; font-weight:700" id="noofurns"></div>
+                </div>
+                <div class="row mt10">
+                    <div class="col-sm-2" style="text-align:left; font-weight:700">Payment Mode : </div>
+                    <div class="col-sm-4" style="text-align:left; font-weight:700" id="paymentmode"></div>
+                </div>
+                <div class="row mt10">
+                    <div class="col-md-12">
+                        <table class=" table table-bordered table-striped table-hover" id="tblBatchData"></table>
+                    </div>
+                </div>
+                <div class="row mt10">
+                    <div class="col-md-12">
+                        <table class=" table table-bordered table-striped table-hover" id="tblPaymentData"></table>
+                    </div>
+                </div>
+                <div class="row mt10" style="text-align:right">
+                    <input type="hidden" id="hdBatchNo" name="hdBatchNo" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

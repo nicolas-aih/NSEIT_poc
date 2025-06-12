@@ -1,0 +1,71 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+@using System.Data;
+@*@Scripts.Render("~/js/app/Roles")*@
+<script src="~/js/app/Roles.js"></script>
+
+<div id="pnlNotifications" class="notificationBox">
+    <h3>Roles</h3>
+    <div class="row" id="GridFilter">
+        <div class="col-sm-12">
+            <form id="frmSearch" autocomplete="off">
+                <div class="row mt10">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <input type="button" id="butNew" class="btn btn-md btn-warning btn-block" value="New Role">
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="row mt10">
+                <div class="col-sm-12">
+                    <form id="frmMain" autocomplete="off">
+                        <div class="row mt10">
+                            <div class="col-sm-3 form-group">
+                                <label for="txtRoleCode">Role Code <span class="mandatory">*</span></label>
+                                <input id="txtRoleCode" name="txtRoleCode" type="text" class="form-control" autocomplete="off" maxlength="10" />
+                                <input id="hdnRoleId" name="hdnRoleId" type="hidden">
+                            </div>
+                            <div class="col-sm-6 form-group">
+                                <label for="txtRoleName">Role name <span class="mandatory">*</span></label>
+                                <input id="txtRoleName" name="txtRoleName" type="text" class="form-control" autocomplete="off" maxlength="256" />
+                            </div>
+                        </div>
+                        <div class="row mt10">
+                            <div class="col-sm-9 form-group">
+                                <label for="txtRoleDescription">Role description <span class="mandatory">*</span></label>
+                                <input id="txtRoleDescription" name="txtRoleDescription" type="text" class="form-control" autocomplete="off" maxlength="1024" />
+                            </div>
+                        </div>
+                        <div class="row mt10">
+                            <div class="col-sm-4 form-group">
+                                <label for="chkIsActive">Is Active ?</label>
+                                <input type="checkbox" id="chkIsActive" name="chkIsActive" style="width:20px;height:20px" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="row mt10">
+                            <div class="col-sm-3">
+                                <input type="submit" class="btn btn-md btn-warning btn-block" value="Save" />
+                            </div>
+                            <div class="col-sm-3">
+                                <input type="button" id="butCancel" class="btn btn-md btn-warning btn-block" value="Cancel" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="row mt10">
+                <div class="col-sm-12">
+                    <div id="data" class="table-responsive">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

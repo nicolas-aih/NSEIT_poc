@@ -1,0 +1,224 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+@using System.Data;
+<script>
+    $(document).ready(function(){
+        $("#txtDOB").datepicker({
+            showMonthAfterYear: true,
+            dateFormat: 'dd-M-yy',
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "c-100:c+0"
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "../Users/GetProfile",
+            //data: JSON.stringify(JsonObject),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (msg) {
+                debugger;
+                //alert(msg);
+                var s = '';
+                var retval = JSON.parse(msg);
+
+                $("#cboCompanyType").val(retval[0].company_type)
+                $("#txtCompanyName").val(retval[0].varUserName)
+                $("#txtAddress").val(retval[0].Address);
+                $("#txtSTDCode").val(retval[0].varSTDCode);
+                $("#txtLandlineNo").val(retval[0].PhoneNumber);
+                $("#txtMobilePO").val(retval[0].varMobileNo);
+                $("#txtEmailPO").val(retval[0].varEmailID);
+                $("#txtNamePO").val(retval[0].ContactPersonName);
+            },
+            error: function (msg) {
+                alert(msg.d);
+            }
+        });
+
+        $("#frmMain").validate({
+            rules:
+            {
+                txtAddress: {
+                    required: true,
+                    check_exp: regexLowAscii
+                },
+                txtSTDCode: {
+                    required: true,
+                    digits: true,
+                },
+                txtLandlineNO: {
+                    required: true,
+                    digits: true,
+                },
+                txtMobilePO: {
+                    required: true,
+                    digits: true,
+                },
+                txtEmailPO: {
+                    required: true,
+                    email: true,
+                },
+                txtNamePO: {
+                    required: true,
+                    check_exp: regexAlphaOnlyWithSpace,
+                }
+            },
+            messages:
+            {
+                txtAddress: {
+                    required: MandatoryFieldMsg,
+                    check_exp: "Please enter valid address"
+                },
+                txtSTDCode: {
+                    required: MandatoryFieldMsg,
+                    digits: "Please enter valid STD Code. STD Code should be a numeric",
+                },
+                txtLandlineNO: {
+                    required: MandatoryFieldMsg,
+                    digits: "Please enter valid landline number. landline number should be numeric",
+                    maxlength: ""
+                },
+                txtMobilePO: {
+                    required: MandatoryFieldMsg,
+                    digits: "Please enter valid mobile number. Mobile number should be numeric",
+                    maxlength: ""
+                },
+                txtEmailPO: {
+                    required: MandatoryFieldMsg,
+                    email: "Please enter valid email id",
+                },
+                txtNamePO: {
+                    required: MandatoryFieldMsg,
+                    check_exp: "Please enter valid name. Name may contain alphabets and space"
+                }
+            },
+            submitHandler: function (Form) {
+                var _Address1 = $("#txtAddress").val();
+                var _Pincode =  $("#txtPincode").val();
+                var _STDCode =  $("#txtSTDCode").val();
+                var _PhoneNo =  $("#txtLandlineNo").val();
+                var _MobileNo = $("#txtMobilePO").val();
+                var _EMailId =  $("#txtEmailPO").val();
+                var _POName =   $("#txtNamePO").val();
+
+                var JsonObject = {
+                    Address1: _Address1,
+                    POName : _POName,
+                    EMailId : _EMailId,
+                    MobileNo : _MobileNo,
+                    STDCode : _STDCode,
+                    PhoneNo : _PhoneNo,
+                };
+                debugger;
+                $.ajax({
+                    type: "POST",
+                    url: "../Users/UpdateProfile",
+                    data: JSON.stringify(JsonObject),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (msg) {
+                        //debugger;
+                        var s = '';
+                        var retval = JSON.parse(msg);
+                        alert(retval.Result);
+                    },
+                    error: function (msg) {
+                        alert(msg.d);
+                    }
+                });
+            }
+        });
+    });
+</script>
+<div id="pnlMain" class="notificationBox">
+    <h3>Profile</h3>
+    <div class="row">
+        <div class="col-sm-12">
+            <form id="frmMain">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="cboCompanyType">Company type :</label>
+                            <select id="cboCompanyType" name="cboCompanyType" class="form-control form-control-sm password" disabled>
+                                @foreach (DataRow dr in PortalApplication.CompanyType.Rows)
+                                {
+                                    <option value="@dr["company_type_id"]">@dr["company_type"]</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label for="txtCompanyName">Company name :</label>
+                            <input id="txtCompanyName" name="txtCompanyName" type="text" class="form-control form-control-sm" disabled/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label for="txtAddress">Company address : <span class="mandatory">*</span></label>
+                            <input id="txtAddress" name="txtAddress" type="text" class="form-control form-control-sm" maxlength="512" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="txtSTDCode">STD code : <span class="mandatory">*</span></label>
+                            <input id="txtSTDCode" name="txtSTDCode" type="text" class="form-control form-control-sm" maxlength="5" required >
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="txtLandlineNo">Landline number : <span class="mandatory">*</span></label>
+                            <input id="txtLandlineNo" name="txtLandlineNo" type="text" class="form-control form-control-sm" maxlength="8" required >
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="txtMobilePO">Mobile number of principal officer / designated person : <span class="mandatory">*</span></label>
+                            <input id="txtMobilePO" name="txtMobilePO" type="text" class="form-control form-control-sm" maxlength="10" required >
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label for="txtEmailPO">Email id of principal officer / designated person : <span class="mandatory">*</span></label>
+                            <input id="txtEmailPO" name="txtEmailPO" type="email" class="form-control form-control-sm" maxlength="50" required >
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label for="txtNamePO">Name of principal officer / designated person : <span class="mandatory">*</span></label>
+                            <input id="txtNamePO" name="txtNamePO" type="text" class="form-control form-control-sm" maxlength="255" required >
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="offset-sm-9 col-sm-3">
+                        <input type="submit" class="btn btn-md btn-warning btn-block" value="Save" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12" id="data">
+                        <!--Post save messages go here-->
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

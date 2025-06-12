@@ -1,0 +1,113 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+@using System.Data;
+@{
+    DataTable objStates = PortalApplication.States;
+}
+@*@Scripts.Render("~/js/app/viewbranches")*@
+<script src="~/js/app/viewbranches.js" type="text/javascript"></script>
+
+<div id="pnlMain" class="notificationBox">
+    <h3>Corporate Agent - Branch Offices</h3>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="row mt10" id="GridFilter">
+                <form id="frmFilter" name="frmFilter">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="cboStatesF">Select State : <span class="mandatory">*</span></label>
+                            <select id="cboStatesF" name="cboStatesF" class="form-control">
+                                <option value="">Select</option>
+                                @foreach (DataRow dr in objStates.Rows)
+                                {
+                                    <option value="@dr["state_id"]">@dr["state_name"]</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="cboDistrictsF">Select District : <span class="mandatory">*</span></label>
+                            <select id="cboDistrictsF" name="cboDistrictsF" class="form-control"></select>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label><span class="mandatory">&nbsp;</span></label>
+                            <input id="btnView" type="submit" class="btn btn-md btn-warning btn-block" value="View">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="row mt10" id="frm" style="display:none">
+                <div class="col-sm-12">
+                    <form id="frmMain" method="post" action="../Home/Branches" autocomplete="off">
+                        <div class="row mt10">
+                            <div class="col-sm-6 form-group">
+                                <input type="hidden" id="txtBranchNo" name="txtBranchNo" value="" />
+                                <label for="txtBranchCode">Branch Code : <span class="mandatory">*</span></label>
+                                <input id="txtBranchCode" name="txtBranchCode" type="text" class="form-control" required maxlength="50" autocomplete="off" />
+                            </div>
+                            <div class="col-sm-6 form-group">
+                                <label for="txtBranchName">Branch Name : <span class="mandatory">*</span></label>
+                                <input id="txtBranchName" name="txtBranchName" type="text" class="form-control" required maxlength="100" autocomplete="off" />
+                            </div>
+                        </div>
+                        <div class="row mt10">
+                            <div class="col-sm-6 form-group">
+                                <label for="txtBranchAddress">Address : <span class="mandatory">*</span></label>
+                                <input id="txtBranchAddress" name="txtBranchAddress" type="text" class="form-control" required maxlength="512" autocomplete="off" />
+                            </div>
+                            <div class="col-sm-6 form-group">
+                                <label for="txtPlace">Place : <span class="mandatory">*</span></label>
+                                <input id="txtPlace" name="txtPlace" type="text" class="form-control" required maxlength="50" autocomplete="off" />
+                            </div>
+                        </div>
+                        <div class="row mt10">
+                            <div class="col-sm-6 form-group">
+                                <label for="cboStates">Select State : <span class="mandatory">*</span></label>
+                                <select id="cboStates" name="cboStates" class="form-control">
+                                    <option value="">Select</option>
+                                    @foreach (DataRow dr in objStates.Rows)
+                                    {
+                                        <option value="@dr["state_id"]">@dr["state_name"]</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-sm-6 form-group">
+                                <label for="cboDistricts">Select District : <span class="mandatory">*</span></label>
+                                <select id="cboDistricts" name="cboDistricts" class="form-control"></select>
+                            </div>
+                        </div>
+                        <div class="row mt10">
+                            <div class="col-sm-6 form-group">
+                                <label for="cboIsActive">Is Active ?: <span class="mandatory">*</span></label>
+                                <select id="cboIsActive" name="cboIsActive" class="form-control">
+                                    <option value="">Select</option>
+                                    <option value="ACTIVE">ACTIVE</option>
+                                    <option value="INACTIVE">INACTIVE</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mt10">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <input type="submit" class="btn btn-md btn-warning btn-block" value="Save">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="row mt10">
+                <div class="col-sm-12">
+                    <div id="data" class="table-responsive" style="display:none">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,57 @@
+﻿
+@{
+    ViewBag.Title = "Payment Receipt";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+<script src="~/js/MonthPicker.min.js"></script>
+<script src="~/js/app/RequestPaymentReceipt.js"></script>
+
+
+<div class="notificationBox">
+    <h3>@ViewBag.Title</h3>   
+
+    <div class="row mt10">
+        <div class="col-sm-12">
+            <form id="frmMain" autocomplete="off">
+                <div class="row mt10">
+                    <div class="col-sm-12">
+                        
+                    </div>
+                </div>
+                <div class="row mt10">
+                    <div class="col-sm-4 form-group">
+                        <label for="txtFile">Select Month : <span class="mandatory">*</span></label>
+                        <input type="text" class="form-control" id="txtMonth" name="txtMonth" required readonly="readonly" style="cursor:pointer; background-color:white;" />
+                        
+                    </div>
+                    <div class="col-sm-3 form-group">
+                        <label>&nbsp;<span class="mandatory">&nbsp;</span></label>
+                        <input type="Submit" class="btn btn-md btn-warning btn-block" value="Send Request" />
+                    </div>
+                </div>
+                
+                <div class="row mt10">
+                    <div class="col-sm-12">
+                        <div>
+                            <ul>
+                                <li><i>Payment receipts are available only for the payments that are made as a <span class="error">online payment</span>.</i></li>                                
+                                <li><i>Your request will be processed in some time and files will be available for download on the 'Reports Dashboard' page</i></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt10">
+                    <div class="col-sm-9" id="Results">
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+

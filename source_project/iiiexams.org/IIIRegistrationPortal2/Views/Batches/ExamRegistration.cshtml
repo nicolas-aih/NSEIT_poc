@@ -1,0 +1,158 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+@using System.Data;
+<script language="javascript" type="text/javascript">
+    var minimumDate = '@System.DateTime.Now.AddDays(2).ToString("dd-MMM-yyyy")';
+</script>
+@*@Scripts.Render("~/js/app/ExamRegistration")*@
+<script src="~/js/app/ExamRegistration.js" type="text/javascript"></script>
+
+<div id="pnlMain" class="notificationBox">
+    <h3>Exam Registration</h3>
+    <div class="row  mt10">
+        <div class="col-sm-12">
+            <div class="col-sm-12" style="background-color:lightgray"><H4>Upload File</H4></div>
+        </div>
+    </div>
+    <div class="row mt10">
+        <div class="col-md-12">
+            <form id="frmUploadMain" method="post" autocomplete="off">
+                <div class="row mt10">
+                    <div class="col-md-12">
+                        <label class="pull-right">To Download Template for bulk upload <a id="lnkDownload" href="/UploadTemplates/ExaminationRegistration.xls">Click Here</a></label>
+                    </div>
+                </div>
+
+                <div class="col-sm-9 form-group">
+                    <label for="txtFile">Select File : <span class="mandatory">*</span></label>
+                    <input id="blkfile" name="blkfile" type="file" class="form-control" required>
+                </div>
+                <div class="col-sm-3 form-group" style="vertical-align:bottom">
+                    <label>&nbsp;<span class="mandatory">&nbsp;</span></label>
+                    <input id="btnupload" type="Submit" class="btn btn-md btn-warning btn-block" value="Upload" />
+                </div>
+
+                <div class="row mt10">
+                    <div class="col-sm-9" id="ResponseFile">
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="row  mt10">
+        <div class="col-sm-12">
+            <div class="col-sm-12" style="background-color:lightgray"><H4>Manual Batch Creation</H4></div>
+        </div>
+    </div>
+    <div class="row mt-10">
+        <div class="col-sm-12" id="dvApplicantDetails">
+            <form id="frmFilter" name="frmFilter" method="post" autocomplete="off">
+                <div class="row mt10">
+                    <div class="col-sm-4 form-group">
+                        <label for="lblFromDate"> From Date<span class="mandatory">*</span></label>
+                        <input id="txtFromDate" readonly="readonly" style="cursor:pointer;background-color:white;" name="txtFromDate" type="text" class="form-control dtpick" autocomplete="off" />
+
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label for="lblToDate">To Date<span class="mandatory">*</span></label>
+                        <input id="txtToDate" readonly="readonly" style="cursor:pointer;background-color:white;" name="txtToDate" type="text" class="form-control dtpick" autocomplete="off" />
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label for="lblExamBody">Exam Body<span class="mandatory">*</span></label>
+                        <select id="ddlExamBody" name="ddlExamBody" class="form-control">
+                            <option value="">--Select--</option>
+                            @foreach (DataRow drInsurer in PortalApplication.ExamBody.Rows)
+                            {
+                                <option value="@drInsurer["exam_body_id"]">@drInsurer["exam_body_name"]</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="row mt10">
+                    <div class="col-md-6 form-group">
+                        <label for="lblExamCenter">Exam Center<span class="mandatory">*</span></label>
+                        <select id="ddlCenter" name="ddlCenter" class="form-control">
+                            <option value="0">--All--</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 form-group"></div>
+                    <div class="col-md-3 form-group" style="vertical-align:bottom">
+                        <label><span class="mandatory">&nbsp;</span></label>
+                        <input id="btnShowRecords" name="btnShowRecords" type="submit" value="Search Candidates..." class="btn btn-md btn-warning btn-block">
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="col-sm-12" id="dvBatch">
+            <form id="frmMain" method="post" autocomplete="off">
+                <div class="row mt10">
+                    <div class="col-sm-4">
+                        <label for="lblToDate">Payment Mode<span class="mandatory">*</span></label>
+                        <select name="ddlpaymentmode" id="ddlpaymentmode" class="form-control" required></select>
+                    </div>
+                    <div class="col-sm-4">
+                        <label for="lbl">Batch Mode<span class="mandatory">*</span></label>
+                        <select name="ddlBatchmode" id="ddlBatchmode" class="form-control" required>
+                            <option value=''>--Select--</option>
+                            <option value="1">Bulk Batch</option>
+                            <option value="2">Single Candidate Batch</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-4">
+                        <label for="lblSchMode">Scheduling Mode<span class="mandatory">*</span></label>
+                        <select name="ddlSchedulingMode" id="ddlSchedulingMode" class="form-control" required>
+                            <option value=''>--Select--</option>
+                            <option value="1">Auto Scheduling</option>
+                            <option value="2">Self Scheduling</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mt10">
+                    <div class="col-sm-12">
+                        <label for="lblSchMode">Remarks</label>
+                        <input type="text" name="txtRemarks" id="txtRemarks" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="row  mt10">
+                    <div class="col-sm-12">
+                        <div class="col-sm-12" style="background-color:lightgray">
+                            @*<H4>Trained Applicants</H4>*@
+                            <span style="text-align:right">
+                                <input type="checkbox" id="chkAll" />
+                                <label for="lblAll">Process All records on this page</label>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="dvTrainedApplicants" class="row mt10" style="overflow:auto">
+                    <div class="col-sm-12">
+                        <div style="overflow:auto">
+                            <table class=" table table-bordered table-responsive" id="tbldata"></table>
+                        </div>
+                    </div>
+                </div>
+                <div id="dvbuttons" class="row mt10" style="margin: 40px 0px 0px 330px;">
+                    <div class="btn-outline-dark col-sm4">
+                        <input type="submit" class="btn btn-md btn-warning" value="Save" />
+                        <input id="btncancel" name="btncancel" type="reset" value="Cancel" class="btn btn-md btn-warning">
+
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-sm-12" id="ResponseFile1">
+
+        </div>
+        <div class="modal" style="display: none">
+            <div class="center">
+                <img alt="" src="~/Images/Loader.gif" />
+            </div>
+        </div>
+    </div>
+</div>

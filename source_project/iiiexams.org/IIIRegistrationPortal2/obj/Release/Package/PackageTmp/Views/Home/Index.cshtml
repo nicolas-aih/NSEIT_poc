@@ -1,0 +1,28 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+@using System.Data;
+@{
+    DataTable objDataTableNotification = (DataTable)ViewBag.Notifications;
+}
+<div id="pnlNotifications" class="notificationBox">
+    <h3>Notifications</h3>
+    <div class="row">
+        <div class="col-sm-12 scrollDiv">
+            <ul>
+                @foreach (DataRow dr in objDataTableNotification.Rows)
+                {
+                <li>
+                    <div>@Convert.ToDateTime(dr["start_date"]).ToString("dd-MMM-yyyy")</div>
+                    <div>@dr["notification_text"]</div>
+                    @if (dr["attachment"] != DBNull.Value)
+                    {
+                        <div>@dr["attachment"]</div>
+                    }
+                </li>
+                }
+            </ul>
+        </div>
+    </div>
+    <p class="text-right"><a href="#">View All</a></p>
+</div>

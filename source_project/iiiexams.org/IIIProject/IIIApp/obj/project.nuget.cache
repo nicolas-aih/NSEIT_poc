@@ -1,0 +1,18 @@
+{
+  "version": 2,
+  "dgSpecHash": "Sn2g9lReHfc=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\akliv\\Downloads\\Code for ai-horizon.io (2)\\Code for ai-horizon.io\\Code for ai-horizon.io\\iiiexams.org\\IIIProject\\IIIApp\\IIIApp.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\akliv\\.nuget\\packages\\microsoft.extensions.configuration\\9.0.5\\microsoft.extensions.configuration.9.0.5.nupkg.sha512",
+    "C:\\Users\\akliv\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\9.0.5\\microsoft.extensions.configuration.abstractions.9.0.5.nupkg.sha512",
+    "C:\\Users\\akliv\\.nuget\\packages\\microsoft.extensions.configuration.fileextensions\\9.0.5\\microsoft.extensions.configuration.fileextensions.9.0.5.nupkg.sha512",
+    "C:\\Users\\akliv\\.nuget\\packages\\microsoft.extensions.configuration.json\\9.0.5\\microsoft.extensions.configuration.json.9.0.5.nupkg.sha512",
+    "C:\\Users\\akliv\\.nuget\\packages\\microsoft.extensions.fileproviders.abstractions\\9.0.5\\microsoft.extensions.fileproviders.abstractions.9.0.5.nupkg.sha512",
+    "C:\\Users\\akliv\\.nuget\\packages\\microsoft.extensions.fileproviders.physical\\9.0.5\\microsoft.extensions.fileproviders.physical.9.0.5.nupkg.sha512",
+    "C:\\Users\\akliv\\.nuget\\packages\\microsoft.extensions.filesystemglobbing\\9.0.5\\microsoft.extensions.filesystemglobbing.9.0.5.nupkg.sha512",
+    "C:\\Users\\akliv\\.nuget\\packages\\microsoft.extensions.primitives\\9.0.5\\microsoft.extensions.primitives.9.0.5.nupkg.sha512",
+    "C:\\Users\\akliv\\.nuget\\packages\\system.data.datasetextensions\\4.5.0\\system.data.datasetextensions.4.5.0.nupkg.sha512"
+  ],
+  "logs": []
+}

@@ -1,0 +1,114 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+@using System.Data;
+@{
+    Boolean IsPostback = (Boolean)ViewBag.IsPostback;
+    Boolean Status = IsPostback ? (Boolean)ViewBag._STATUS_ : false;
+    String Message = IsPostback ? (String)ViewBag._MESSAGE_ : String.Empty;
+    DataTable objDataTable = IsPostback ? (DataTable)ViewBag._DATA_ : null;
+    String URN = (String)ViewBag.URN;
+}
+
+<script>
+    $(document).ready(function () {
+        $("#txtDOB").datepicker({
+            showMonthAfterYear: true,
+            dateFormat: 'dd-M-yy',
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "c-100:c+0"
+        });
+
+        $("#frmMain").validate({
+            rules:
+            {
+                txtURN: {
+                    required: true,
+                    minlength: 13
+                }
+            },
+            messages:
+            {
+                txtURN: {
+                    required: MandatoryFieldMsg,
+                    minlength: "URN should be minimum 13 characters in length"
+                }
+            },
+            submitHandler: function (form) {
+                form.submit();
+            }
+
+        });
+    });
+</script>
+<div id="pnlMain" class="notificationBox">
+    <h3>URN Details</h3>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="row mt10">
+                <form id="frmMain" method="post" action="../Candidates/URNLookup">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <input id="txtURN" name="txtURN" type="text" class="form-control" placeholder="URN" required maxlength="14">
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <input type="submit" class="btn btn-md btn-warning btn-block" value="View">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="row mt10">
+                <div id="data" class="col-sm-12">
+                    <div class="table-responsive">
+                        @if (Status)
+                        {
+                            if (objDataTable == null)
+                            {
+                                <span>@Message</span>
+                            }
+                            else
+                            {
+                                <table cellpadding="5" cellspacing="5">
+                                    @{ 
+                                    DataRow dr = objDataTable.Rows[0];
+                                    }
+                                    @foreach (DataColumn dc in objDataTable.Columns)
+                                    {
+                                    <tr>
+                                        @if (dc.ColumnName.StartsWith("--"))
+                                        {
+                                            <td colspan="2" style="font-weight:bold; text-align:left">@dc.ColumnName.Substring(2)</td>
+                                        }
+                                        else if (dc.ColumnName.StartsWith("Photo Size"))
+                                        {
+                                            <td>@dc.ColumnName</td>
+                                            <td>@Convert.ToString(dr[dc.ColumnName])&nbsp;&nbsp;<a href="../Candidates/DownloadPhoto?URN=@URN">download</a></td>
+                                        }
+                                        else if (dc.ColumnName.StartsWith("Signature Size"))
+                                        {
+                                            <td>@dc.ColumnName</td>
+                                            <td>@Convert.ToString(dr[dc.ColumnName])&nbsp;&nbsp;<a href="../Candidates/DownloadSign?URN=@URN">download</a></td>
+                                        }
+                                        else
+                                        {
+                                            <td>@dc.ColumnName</td>
+                                            <td>@Convert.ToString(dr[dc.ColumnName])</td>
+                                        }
+                                    </tr>
+                                    }
+                                </table>
+                            }
+                        }
+                        else
+                        {
+                            <span>@Message</span>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

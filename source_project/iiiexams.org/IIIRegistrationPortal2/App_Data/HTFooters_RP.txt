@@ -1,0 +1,22 @@
+﻿Instructions Applicable only for Remote Proctoring Exam:
+
+1. Download and install the Secure Browser setup following the steps explained on the screen. This setup would be required for appearing the practice test as well as actual examination.
+       Link to install the secure browser - https://irdaie.onlineregistrationform.org/proctor/#/secure-exam
+
+2. Ensure that the Practice Test and the System compatibility check is completed at least one or two days prior to the exam date between 09:00 AM to 06:00 PM.
+
+3. Credential to be used for practice test and actual exam:
+       Username – URN No.
+       Password – Date of Birth in format DD-MM-YYYY (Eg: 01-01-1990)
+
+4. Please login at least 30 minutes prior to the scheduled start time for practice test and on actual examination day. 
+
+5. In case, actual exam halts in between due to any unforeseen reason then candidate needs to resume within 30 minutes else exam will be submitted automatically.
+
+6. Please keep your valid hard copy of Photo Identity Card (in original) ready for identification at the time of verification during Practice test and Actual examination
+
+7. Adhere all the points mentioned in the Candidate Declaration form for Remote Proctoring exam that is available on www.iiiexams.org.  Candidates found indulging in any malpractices or unfair means or violating any rules or instructions will be debarred from the examination and their results will be withheld.
+
+8. For technical support write an email to "irdairpsupport@nseit.com" between 09:00 AM to 06:00 PM (Monday to Saturday except on holidays)
+
+9. Scorecard of the candidates will be available on "iiiexams.org" from where the candidates can download them after 72 hours from the end of the exam.

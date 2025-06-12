@@ -1,0 +1,1106 @@
+﻿@using System.Data;
+@{
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+<script>
+    $(document).ready(function () {
+        function readURL(input, target) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    target.attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        jQuery.validator.addMethod(
+            "ValidateDOB",
+            //function (value, element)
+            //{
+            //    debugger;
+            //    return(element.value.length == 0 || (Date.parse($("#txtApplicationDate").val()) - Date.parse(element.value)) / (1000 * 60 * 60 * 24 * 365) >= 18)
+            //}, ""
+            function (value, element) {
+                //debugger;
+                var JsonObject = {
+                    date: value,
+                };
+                $.ajax({
+                    type: "POST",
+                    async: false,
+                    url: "../Services/ValidateDOB",
+                    data: JSON.stringify(JsonObject),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (msg) {
+                        //debugger;
+                        var s = '';
+                        var retval = JSON.parse(msg);
+                        if (retval._STATUS_ == "FAIL") {
+                            return false;
+                        }
+                        else {
+                            return true;
+                        }
+                    },
+                    error: function (msg) {
+                        return false;
+                        //alert(msg);
+                    }
+                });
+            }, 'The candidate must be minimum 18 years old'
+        );
+
+        $("#txtDOB").datepicker({
+            showMonthAfterYear: true,
+            dateFormat: 'dd-M-yy',
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "c-100:c+0",
+            onClose: function () {
+                /* Validate a specific element: */
+                $("form").validate().element("#txtDOB");
+                //$(this).valid();
+                //$("form #txtDOB").trigger("blur"); 
+            }
+        });
+
+        $("#txtYearofPassing").datepicker({
+            showMonthAfterYear: true,
+            dateFormat: 'M-yy',
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "c-100:c+0"
+        });
+
+        $("#Result").hide();
+        $("#Form").show();
+
+        $("#txtFilePhoto").change(function () {
+            var file = this.files[0];
+            name = file.name;
+            size = file.size;
+            type = file.type;
+            validator.element($('#txtFilePhoto'));
+            if ($(this).valid()) {
+                readURL(this, $('#imgFilePhoto'));
+            }
+        });
+        $('#imgFilePhoto').click(function () {
+            $("#txtFilePhoto").trigger('click');
+        })
+
+        $("#txtFileSign").change(function () {
+            var file = this.files[0];
+            name = file.name;
+            size = file.size;
+            type = file.type;
+            validator.element($('#txtFileSign'));
+            if ($(this).valid()) {
+                readURL(this, $('#imgFileSign'));
+            }
+        });
+        $('#imgFileSign').click(function () {
+            $("#txtFileSign").trigger('click');
+        })
+
+        $("#cboSalutation").change(function () {
+            // debugger;
+            var Salutation = $("#cboSalutation option:selected").val();
+            if (Salutation == "Mr.") {
+                $("#cboGender").val("M");
+                $("#cboGender").attr("disabled", true);
+            }
+            if (Salutation == "Mx.") {
+                $("#cboGender").val("O");
+                $("#cboGender").attr("disabled", true);
+            }
+            if (Salutation == "Mrs." || Salutation == "Ms.") {
+                $("#cboGender").val("F");
+                $("#cboGender").attr("disabled", true);
+            }
+            if (Salutation == "Dr.") {
+                $("#cboGender").val("");
+                $("#cboGender").attr("disabled", false);
+            }
+        })
+
+        $("#cboStates_current").change(function (event, DistrictId) {
+            //debugger;
+            $("#cboDistricts_current").html('');
+            var _StateId = $("#cboStates_current option:selected").val();
+            var JsonObject = {
+                StateId: _StateId,
+            };
+            $.ajax({
+                type: "POST",
+                url: "../Home/GetDistrictsForStates",
+                data: JSON.stringify(JsonObject),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    debugger;
+                    var s = '';
+                    var result = JSON.parse(msg);
+                    if (result._STATUS_ == 'FAIL') {
+                        alert(result._MESSAGE_);
+                    }
+                    else {
+                        var data = JSON.parse(result._DATA_);
+                        if (data.length == undefined || data.length == 0) {
+                            alert("No districts were found for selected state");
+                        }
+                        else {
+                            s += "<option value=''>-- Select --</option>"
+                            for (i = 0; i < data.length; i++) {
+                                s += "<option value=" + data[i].district_id + ">" + data[i].district_name + "</option>"
+                            }
+                            $("#cboDistricts_current").html(s);
+                            if (DistrictId != undefined) {
+                                $("#cboDistricts_current").val(DistrictId);
+                            }
+                        }
+                    }
+                },
+                error: function (msg) {
+                    alert(msg.d);
+                }
+            });
+        })
+
+        $("#cboStates_perm").change(function (event, DistrictId) {
+            $("#cboDistricts_perm").html('');
+            var _StateId = $("#cboStates_perm option:selected").val();
+            var JsonObject = {
+                StateId: _StateId,
+            };
+            $.ajax({
+                type: "POST",
+                url: "../Home/GetDistrictsForStates",
+                data: JSON.stringify(JsonObject),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    debugger;
+                    var s = '';
+                    var result = JSON.parse(msg);
+                    if (result._STATUS_ == 'FAIL') {
+                        alert(result._MESSAGE_);
+                    }
+                    else {
+                        var data = JSON.parse(result._DATA_);
+                        if (data.length == undefined || data.length == 0) {
+                            alert("No districts were found for selected state");
+                        }
+                        else {
+                            s += "<option value=''>-- Select --</option>"
+                            for (i = 0; i < data.length; i++) {
+                                s += "<option value=" + data[i].district_id + ">" + data[i].district_name + "</option>"
+                            }
+                            $("#cboDistricts_perm").html(s);
+                            if (DistrictId != undefined) {
+                                $("#cboDistricts_perm").val(DistrictId);
+                            }
+                        }
+                    }
+                },
+                error: function (msg) {
+                    alert(msg.d);
+                }
+            });
+        })
+
+        $("#cboBranchState").change(function (event, DistrictId) {
+            $("#cboBranchDistrict").html('');
+            var _StateId = $("#cboBranchState option:selected").val();
+            var JsonObject = {
+                StateId: _StateId,
+            };
+            $.ajax({
+                type: "POST",
+                url: "../Home/GetDistrictsForStates",
+                data: JSON.stringify(JsonObject),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    debugger;
+                    var s = '';
+                    var result = JSON.parse(msg);
+                    if (result._STATUS_ == 'FAIL') {
+                        alert(result._MESSAGE_);
+                    }
+                    else {
+                        var data = JSON.parse(result._DATA_);
+                        if (data.length == undefined || data.length == 0) {
+                            alert("No districts were found for selected state");
+                        }
+                        else {
+                            s += "<option value=''>-- Select --</option>"
+                            for (i = 0; i < data.length; i++) {
+                                s += "<option value=" + data[i].district_id + ">" + data[i].district_name + "</option>"
+                            }
+                            $("#cboBranchDistrict").html(s);
+                            if (DistrictId != undefined) {
+                                $("#cboBranchDistrict").val(DistrictId);
+                            }
+                        }
+                    }
+                },
+                error: function (msg) {
+                    alert(msg.d);
+                }
+            });
+        })
+
+        $("#cboBranchDistrict").change(function (event, BranchNo) {
+            $("#cboBranch").html('');
+            var _StateId = $("#cboBranchState option:selected").val();
+            var _DistrictId = $("#cboBranchDistrict option:selected").val();
+            var JsonObject = {
+                StateId: _StateId,
+                DistrictId: _DistrictId,
+            };
+            $.ajax({
+                type: "POST",
+                url: "../Branches/GetBranchesForStateDistrict",
+                data: JSON.stringify(JsonObject),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg){
+                    //debugger;
+                    //alert(msg);
+                    var s = '';
+                    var retval = JSON.parse(msg);
+                    if (retval.length == undefined || retval.length == 0) {
+                        alert("No branches were found for selected state and district combination");
+                    }
+                    else {
+                        s += "<option value=''>-- Select --</option>"
+                        for (i = 0; i < retval.length; i++) {
+                            s += "<option value=" + retval[i].BranchNo + ">" + retval[i].BranchCode + " - " + retval[i].BranchName + "</option>"
+                        }
+                        $("#cboBranch").html(s);
+                        if (BranchNo != undefined)
+                        {
+                            $("#cboBranch").val(BranchNo);
+                        }
+                    }
+                },
+                error: function (msg) {
+                    alert(msg.d);
+                }
+            });
+        })
+
+        $("#txtPincode_current").blur(function (event, ExamCenter) {
+            //debugger;
+            var _Pincode = $("#txtPincode_current").val().trim();
+            if (_Pincode == undefined || _Pincode == "" || _Pincode == null) {
+                //alert("Please enter the current pincode, to view the list of centers");
+                return;
+            }
+            else {
+                $("#cboExamCenter").html('');
+                var JsonObject = { Pincode: _Pincode };
+                $.ajax({
+                    type: "POST",
+                    url: "../Home/FindNearestExamCenter",
+                    data: JSON.stringify(JsonObject),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (msg) {
+                        var s = '';
+                        var result = JSON.parse(msg);
+                        if (result._STATUS_ == 'FAIL') {
+                            alert(result._ERROR_);
+                        }
+                        else {
+                            
+                            var data = JSON.parse(result._DATA_);
+                            if (data.length == undefined) {
+                                s += "<span>No data found</span>"
+                            }
+                            else {
+                                s += "<option value=''>-- Select --</option>"
+                                for (i = 0; i < data.length; i++) {
+                                    s += "<option value=" + data[i].sntExamCenterID + "|" + data[i].numDistance + ">" + data[i].varExamCenterName + "</li>";
+                                }
+                            }
+                            $("#cboExamCenter").html(s);
+                        }
+                        //alert(msg);
+                    },
+                    error: function (msg) {
+                        alert(msg);
+                    }
+                });
+            }
+        });
+
+        $("#cboExamCenter").change(function () {
+            var Value = $("#cboExamCenter option:selected").val();
+            var X = Value.split("|");
+            if (X[1] == "" || X[1] == undefined || X[1] == null || X[1] == 'null') 
+            {
+                $("#centerHelp").html("distance data is not available");
+            }
+            else
+            {
+                $("#centerHelp").html(X[1] + " kms");
+            }
+        })
+
+        var validator = $("#frmMain").validate(
+            {
+                ignore: [],
+                rules: {
+                    txtApplicantName: {
+                        required: true,
+                        check_exp: regexAlphaOnlyWithSpace,
+                    },
+                    txtFHName: {
+                        required: true,
+                        check_exp: regexAlphaOnlyWithSpace,
+                    },
+                    txtDOB: {
+                        required: true,
+                        //ValidateDOB: true
+                        //validation for completion of 18 years of age
+                    },
+                    txtPAN: {
+                        required: true,
+                        check_exp: regexPAN,
+                    },
+                    txtAadhaar: {
+                        required: false,
+                        digits: true,
+                    },
+                    txtFilePhoto: {
+                        required: true,
+                        extension: "jpg|jpeg|png",
+                        filesize: 51200
+                    },
+                    txtFileSign: {
+                        required: true,
+                        extension: "jpg|jpeg|png",
+                        filesize: 51200
+                    },
+                    txtBoardName: {
+                        required: true,
+                        check_exp: regexAlphaOnlyWithSpace,
+                    },
+                    txtRollnumber: {
+                        required: true,
+                        check_exp: regexAlphaNumeric,
+                    },
+                    txtYearofPassing: {
+                        required: true,
+                    },
+                    txtHouseNo_current: {
+                        required: true,
+                        check_exp: regexAlphaNumericWithSpace,
+                    },
+                    txtStreet_current: {
+                        required: true,
+                        check_exp: regexAlphaNumericWithSpace,
+                    },
+                    txtCity_current: {
+                        required: true,
+                        check_exp: regexAlphaNumericWithSpace,
+                    },
+                    cboDistricts_current: {
+                        required: true,
+                    },
+                    txtPincode_current: {
+                        required: true,
+                        digits: true,
+                    },
+                    txtHouseNo_perm: {
+                        required: true,
+                        check_exp: regexAlphaNumericWithSpace,
+                    },
+                    txtStreet_perm: {
+                        required: true,
+                        check_exp: regexAlphaNumericWithSpace,
+                    },
+                    txtCity_perm: {
+                        required: true,
+                        check_exp: regexAlphaNumericWithSpace,
+                    },
+                    cboDistricts_perm: {
+                        required: true,
+                    },
+                    txtPincode_perm: {
+                        required: true,
+                        digits: true,
+                    },
+                    txtLandlineNo: {
+                        required: true,
+                        digits: true,
+                    },
+                    txtMobileNo: {
+                        required: true,
+                        digits: true,
+                    },
+                    txtEMailId: {
+                        required: true,
+                        email: true,
+                    },
+                    txtCPEMailId: {
+                        required: true,
+                        email: true,
+                        //notEqualTo: "#txtEMailId"
+                    },
+                    txtPrimaryOccupation: {
+                        required: true,
+                        check_exp: regexAlphaNumericWithSpace,
+                    },
+                    txtExmployeeCode: {
+                        required: true,
+                        check_exp: regexAlphaNumericWithSpace,
+                    },
+                    cboBranchState: {
+                        required: true,
+                    },
+                    cboBranchDistrict: {
+                        required: true,
+                    },
+                    cboBranch: {
+                        required: true,
+                    }
+                },
+                messages: {
+                    txtApplicantName: {
+                        required: MandatoryFieldMsg,
+                        check_exp: "Please enter valid name",
+                    },
+                    txtFHName: {
+                        required: MandatoryFieldMsg,
+                        check_exp: "Please enter valid name",
+                    },
+                    txtDOB: {
+                        required: MandatoryFieldMsg,
+                        //ValidateDOB: "The candidate must be minimum 18 years old"
+                        //validation for completion of 18 years of age
+                    },
+                    txtPAN: {
+                        required: MandatoryFieldMsg,
+                        check_exp: "Please enter valid PAN",
+                    },
+                    txtAadhaar: {
+                        required: MandatoryFieldMsg,
+                        digits: "Please enter valid Aadhaar",
+                    },
+                    txtFilePhoto: {
+                        required: "Please select photo",
+                        extension: "Please upload image file (*.jpg / *.jpeg / *.png)",
+                        filesize: "File size must be less than 50 kilobytes"
+                    },
+                    txtFileSign: {
+                        required: "Please select signature",
+                        extension: "Please upload image file (*.jpg / *.jpeg / *.png)",
+                        filesize: "File size must be less than 50 kilobytes"
+                    },
+                    txtBoardName: {
+                        required: MandatoryFieldMsg,
+                        check_exp: "Please enter valid name",
+                    },
+                    txtRollnumber: {
+                        required: MandatoryFieldMsg,
+                        check_exp: "Please enter valid roll number",
+                    },
+                    txtYearofPassing: {
+                        required: MandatoryFieldMsg,
+                    },
+                    txtHouseNo_current: {
+                        required: MandatoryFieldMsg,
+                        check_exp: "Please enter valid address",
+                    },
+                    txtStreet_current: {
+                        required: MandatoryFieldMsg,
+                        check_exp: "Please enter valid address",
+                    },
+                    txtCity_current: {
+                        required: MandatoryFieldMsg,
+                        check_exp: "Please enter valid address",
+                    },
+                    cboDistricts_current: {
+                        required: MandatoryFieldMsg,
+                    },
+                    txtPincode_current: {
+                        required: MandatoryFieldMsg,
+                        digits: ValidPincodeMsg,
+                    },
+                    txtHouseNo_perm: {
+                        required: MandatoryFieldMsg,
+                        check_exp: "Please enter valid address",
+                    },
+                    txtStreet_perm: {
+                        required: MandatoryFieldMsg,
+                        check_exp: "Please enter valid address",
+                    },
+                    txtCity_perm: {
+                        required: MandatoryFieldMsg,
+                        check_exp: "Please enter valid address",
+                    },
+                    cboDistricts_perm: {
+                        required: MandatoryFieldMsg,
+                    },
+                    txtPincode_perm: {
+                        required: MandatoryFieldMsg,
+                        digits: ValidPincodeMsg,
+                    },
+                    txtLandlineNo: {
+                        required: MandatoryFieldMsg,
+                        digits: ValidPhoneMsg,
+                    },
+                    txtMobileNo: {
+                        required: MandatoryFieldMsg,
+                        digits: ValidMobileMsg,
+                    },
+                    txtEMailId: {
+                        required: MandatoryFieldMsg,
+                        email: ValidEmailIdMsg,
+                    },
+                    txtCPEMailId: {
+                        required: MandatoryFieldMsg,
+                        email: ValidEmailIdMsg,
+                        //notEqualTo: "The contact person's email id should be different than candidate's email id"
+                    },
+                    txtPrimaryOccupation: {
+                        required: MandatoryFieldMsg,
+                        check_exp: "Invalid Input. Only alphabets, numbers and space is allowed" ,
+                    },
+                    txtExmployeeCode: {
+                        required: MandatoryFieldMsg,
+                        check_exp: "Invalid Input. Only alphabets, numbers and space is allowed",
+                    },
+                    cboBranchState: {
+                        required: MandatoryFieldMsg,
+                    },
+                    cboBranchDistrict: {
+                        required: MandatoryFieldMsg,
+                    },
+                    cboBranch: {
+                        required: MandatoryFieldMsg,
+                    }
+                },
+                submitHandler: function (form) {
+                    var data = new FormData(form);
+
+                    $.ajax({
+                        type: "POST",
+                        enctype: 'multipart/form-data',
+                        url: "../Candidates/URNCreation",
+                        data: data,
+                        processData: false,
+                        contentType: false,
+                        cache: false,
+                        success: function (msg) {
+                            debugger;
+                            var s = '';
+                            var Result = JSON.parse(msg);
+                            if (Result._STATUS_ == "SUCCESS") {
+                                var x = '<H4>' + Result._MESSAGE_ + '<br>' + 'The URN no generated is : ' + Result.URN + '</H4>';
+                                $("#Result").html(x);
+                                $("#Result").show();
+                                form.reset();
+                                $("#Form").hide();
+                            }
+                            else {
+                                var x = Result._MESSAGE_;
+                                $("#Result").html(x);
+                                $("#Result").show();
+                            }
+                        },
+                        error: function (msg) {
+                            alert(msg);
+                        }
+                    });
+                }
+            })
+    })
+
+</script>
+
+<div class="notificationBox">
+    <h3>Training Registration</h3>
+    <div class="row">
+        <div id="Form" class="col-sm-12">
+            <form id="frmMain" method="post" action="">
+                <div class="row mt10">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="c">Application date<span class="mandatory"></span></label>
+                            <input id="txtApplicationDate" name="txtApplicationDate" type="text" class="form-control" readonly value="@System.DateTime.Now.ToString("dd-MMM-yyyy")" />
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="cboInsuranceCategory">Insurance Category : <span class="mandatory">*</span></label>
+                            <select id="cboInsuranceCategory" name="cboInsuranceCategory" class="form-control">
+                                <option value="">-- Select --</option>
+                                @if (PortalSession.RoleCode == "CA" || PortalSession.RoleCode == "WA" || PortalSession.RoleCode == "IMF" || PortalSession.RoleCode == "BR")
+                                {
+                                    foreach (DataRow dr in PortalApplication.InsuranceTypeSpecific.Rows)
+                                    {
+                                        <option value="@dr["insurance_type_code"]">@dr["insurance_type"]</option>
+                                    }
+                                }
+                                else
+                                {
+                                    foreach (DataRow dr in PortalApplication.InsuranceTypeSpecific.Rows)
+                                    {
+                                        if (Convert.ToString(dr["insurance_type_code"]) == PortalSession.InsurerTypeNew)
+                                        {
+                                            <option value="@dr["insurance_type_code"]">@dr["insurance_type"]</option>
+                                        }
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    @if (PortalSession.RoleCode == "CA" || PortalSession.RoleCode == "WA" || PortalSession.RoleCode == "IMF" || PortalSession.RoleCode == "BR")
+                    {
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="cboCORType">CoR Type : <span class="mandatory">*</span></label>
+                            <select id="cboCORType" name="cboCORType" class="form-control">
+                                <option value="">-- Select --</option>
+                                @foreach (DataRow dr in PortalApplication.CORTypeSpecific.Rows)
+                                {
+                                    <option value="@dr["COR_code"]">@dr["cor"]</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    }
+                </div>
+                <div class="row  mt10">
+                    <div class="col-sm-12">
+                        <div class="col-sm-12" style="background-color:lightgray"><H4>Personal Information :</H4></div>
+                    </div>
+                </div>
+                <div class="row  mt10">
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label for="cboSalutation">Salutation : <span class="mandatory">*</span></label>
+                            <select id="cboSalutation" name="cboSalutation" class="form-control">
+                                <option value="">-- Select --</option>
+                                @foreach (DataRow dr in PortalApplication.Salutation.Rows)
+                                {
+                                    <option value="@dr["salutation"]">@dr["salutation"]</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-7">
+                        <div class="form-group">
+                            <label for="txtApplicantName">Applicant's name : <span class="mandatory">*</span></label>
+                            <input id="txtApplicantName" name="txtApplicantName" type="text" class="form-control" required  maxlength="256"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row  mt10">
+                    <div class="col-sm-9">
+                        <div class="form-group">
+                            <label for="txtFHName">Father's / Husband's Name : <span class="mandatory">*</span></label>
+                            <input id="txtFHName" name="txtFHName" type="text" class="form-control" required maxlength="256"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row  mt10">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="txtDOB">Date of Birth : <span class="mandatory">*</span></label>
+                            <input id="txtDOB" name="txtDOB" type="text" class="form-control dtpick" required readonly="readonly" style="cursor:pointer; background-color:white;"/>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="cboGender">Gender : <span class="mandatory">*</span></label>
+                            <select id="cboGender" name="cboGender" class="form-control">
+                                <option value="">-- Select --</option>
+                                @foreach (DataRow dr in PortalApplication.Gender.Rows)
+                                {
+                                    <option value="@dr["gender_code"]">@dr["gender"]</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="cboCategory">Category : <span class="mandatory">*</span></label>
+                            <select id="cboCategory" name="cboCategory" class="form-control">
+                                <option value="">-- Select --</option>
+                                @foreach (DataRow dr in PortalApplication.CasteCategory.Rows)
+                                {
+                                    <option value="@dr["caste_category_code"]">@dr["caste_category"]</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="cboArea">Area : <span class="mandatory">*</span></label>
+                            <select id="cboArea" name="cboArea" class="form-control">
+                                <option value="">-- Select --</option>
+                                @foreach (DataRow dr in PortalApplication.Area.Rows)
+                                {
+                                    <option value="@dr["locality_code"]">@dr["locality_type"]</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row  mt10">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="cboNationality">Nationality : <span class="mandatory">*</span></label>
+                            <select id="cboNationality" name="cboNationality" class="form-control">
+                                <option value="">-- Select --</option>
+                                @foreach (DataRow dr in PortalApplication.Countries.Rows)
+                                {
+                                    <option value="@dr["country_id"]">@dr["country_name"]</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="txtPAN">PAN : <span class="mandatory">*</span></label>
+                            <input id="txtPAN" name="txtPAN" type="text" class="form-control" required maxlength="10" style="text-transform: uppercase;" />
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="txtAadhaar">Aadhaar No :<span class="mandatory"></span></label>
+                            <input id="txtAadhaar" name="txtAadhaar" type="text" class="form-control" maxlength="12" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row  mt10">
+                    <div class="col-sm-12">
+                        <div class="col-sm-12" style="background-color:lightgray"><H4>Candidate's Photo and Signature :</H4></div>
+                    </div>
+                </div>
+                <div class="row  mt10">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="txtFilePhoto">Candidate's Photo : <span class="mandatory">*</span></label>
+                            <img id="imgFilePhoto" src="~/Images/Photo.jpg" style="cursor:pointer; width:100px; height:125px; border:2px solid black;" />
+                            <input type="file" id="txtFilePhoto" name="txtFilePhoto" required style="display:none" /><br /><br />
+                            <I>(click on the image to select)</I>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="txtFileSign">Candidate's Signature : <span class="mandatory">*</span></label>
+                            <img id="imgFileSign" src="~/Images/Signature.jpg" style="cursor:pointer; width:100px; height:35px; border:2px solid black;" />
+                            <input type="file" id="txtFileSign" name="txtFileSign" required style="display:none" /><br /><br />
+                            <I>(click on the image to select)</I>
+                        </div>
+                    </div>
+                </div>
+                <div class="row  mt10">
+                    <div class="col-sm-12">
+                        <div class="col-sm-12" style="background-color:lightgray"><H4>Educational background :</H4></div>
+                    </div>
+                </div>
+                <div class="row  mt10">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="cboBasicQualification">Basic Qualification : <span class="mandatory">*</span></label>
+                            <select id="cboBasicQualification" name="cboBasicQualification" class="form-control">
+                                <option value="">-- Select --</option>
+                                @foreach (DataRow dr in PortalApplication.BasicQualificationSpecific.Rows)
+                                {
+                                    <option value="@dr["qualification_code"]">@dr["qualification"]</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="txtBoardName">Board Name : <span class="mandatory">*</span></label>
+                            <input id="txtBoardName" name="txtBoardName" class="form-control" type="text" required maxlength="500" />
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="txtRollnumber">Roll number : <span class="mandatory">*</span></label>
+                            <input id="txtRollnumber" name="txtRollnumber" class="form-control" type="text" required maxlength="100" />
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="txtYearofPassing">Year of passing : <span class="mandatory">*</span></label>
+                            <input id="txtYearofPassing" name="txtYearofPassing" class="form-control dtpick" type="text" required readonly="readonly" style="cursor:pointer; background-color:white;"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row  mt10">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="cboProfessionalQualification">Professional Qualification : <span class="mandatory">*</span></label>
+                            <select id="cboProfessionalQualification" name="cboProfessionalQualification" class="form-control">
+                                <option value="">-- Select --</option>
+                                @foreach (DataRow dr in PortalApplication.ProQualificationSpecific.Rows)
+                                {
+                                    <option value="@dr["qualification_code"]">@dr["qualification"]</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row  mt10">
+                    <div class="col-sm-12">
+                        <div class="col-sm-12" style="background-color:lightgray"><H4>Contact Information : </H4></div>
+                    </div>
+                </div>
+                <div class="row  mt10">
+                    <div class="col-sm-12">
+                        <H5>A ] Current Address : </H5>
+                        <div class="col-sm-12" style="background-image: url('../../Images/secsep.png'); background-repeat:repeat-x">
+                        </div>
+                    </div>
+                </div>
+                <div class="row  mt10">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="txtHouseNo_current">House No : <span class="mandatory">*</span></label>
+                            <input id="txtHouseNo" name="txtHouseNo" class="form-control" type="text" required  maxlength="256" />
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="txtStreet_current">Street / Road : <span class="mandatory">*</span></label>
+                            <input id="txtStreet_current" name="txtStreet_current" class="form-control" type="text" required maxlength="256" />
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="txtCity_current">Town / City : <span class="mandatory">*</span></label>
+                            <input id="txtCity_current" name="txtCity_current" class="form-control" type="text" required maxlength="256" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row  mt10">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="cboStates_current">State : <span class="mandatory">*</span></label>
+                            <select id="cboStates_current" name="cboStates_current" class="form-control" required>
+                                <option value="">-- Select --</option>
+                                @foreach (DataRow dr in PortalApplication.States.Rows)
+                                {
+                                    <option value="@dr["state_id"]">@dr["state_name"]</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="cboDistricts_current">District : <span class="mandatory">*</span></label>
+                            <select id="cboDistricts_current" name="cboDistricts_current" class="form-control"></select>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="txtPincode_current">Pincode : <span class="mandatory">*</span></label>
+                            <input id="txtPincode_current" name="txtPincode_current" class="form-control" type="text" required maxlength="6" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row  mt10">
+                    <div class="col-sm-12">
+                        <H5>B ] Permanent Address :</H5>
+                        <div class="col-sm-12" style="background-image: url('../../Images/secsep.png'); background-repeat:repeat-x">
+                        </div>
+                    </div>
+                </div>
+                <div class="row  mt10">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="txtHouseNo_perm">House No : <span class="mandatory">*</span></label>
+                            <input id="txtHouseNo_perm" name="txtHouseNo_perm" class="form-control" type="text" required maxlength="256" />
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="txtStreet_perm">Street / Road : <span class="mandatory">*</span></label>
+                            <input id="txtStreet_perm" name="txtStreet_perm" class="form-control" type="text" required maxlength="256" />
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="txtCity_perm">Town / City : <span class="mandatory">*</span></label>
+                            <input id="txtCity_perm" name="txtCity_perm" class="form-control" type="text" required maxlength="256" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row  mt10">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="cboStates_perm">State : <span class="mandatory">*</span></label>
+                            <select id="cboStates_perm" name="cboStates_perm" class="form-control" required>
+                                <option value="">-- Select --</option>
+                                @foreach (DataRow dr in PortalApplication.States.Rows)
+                                {
+                                    <option value="@dr["state_id"]">@dr["state_name"]</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="cboDistricts_perm">District : <span class="mandatory">*</span></label>
+                            <select id="cboDistricts_perm" name="cboDistricts_perm" class="form-control" required></select>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="txtPincode_perm">Pincode : <span class="mandatory">*</span></label>
+                            <input id="txtPincode_perm" name="txtPincode_perm" class="form-control" type="text" required maxlength="6" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row  mt10">
+                    <div class="col-sm-12">
+                        <H5>C ] Speedy Contact : </H5>
+                        <div class="col-sm-12" style="background-image: url('../../Images/secsep.png'); background-repeat:repeat-x">
+                        </div>
+                    </div>
+                </div>
+                <div class="row  mt10">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="txtLandlineNo">Landline Number : <span class="mandatory">*</span></label>
+                            <input id="txtLandlineNo" name="txtLandlineNo" class="form-control" type="text" required maxlength="8" />
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="txtMobileNo">Mobile Number : <span class="mandatory">*</span></label>
+                            <input id="txtMobileNo" name="txtMobileNo" class="form-control" type="text" required maxlength="15" />
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="txtEMailId">Email Id : <span class="mandatory">*</span></label>
+                            <input id="txtEMailId" name="txtEMailId" class="form-control" type="text" required maxlength="256" />
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="txtCPEMailId">Contact Person's Email Id : <span class="mandatory">*</span></label>
+                            <input id="txtCPEMailId" name="txtCPEMailId" class="form-control" type="text" required maxlength="256"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row  mt10">
+                    <div class="col-sm-12">
+                        <div class="col-sm-12" style="background-color:lightgray"><H4>Employment Details : </H4></div>
+                    </div>
+                </div>
+                <div class="row  mt10">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="txtPrimaryOccupation">Primary Occupation  :<span class="mandatory">*</span></label>
+                            <input id="txtPrimaryOccupation" name="txtPrimaryOccupation" class="form-control" required type="text" maxlength="100" />
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="txtEmployeeCode">Employee Code :<span class="mandatory">*</span></label>
+                            <input id="txtEmployeeCode" name="txtEmployeeCode" class="form-control" required type="text" maxlength="100" />
+                        </div>
+                    </div>
+                </div>
+                @if (PortalSession.RoleCode == "CA")
+                {
+                <div class="row  mt10">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="cboBranchState">Branch State  :<span class="mandatory">*</span></label>
+                            <select id="cboBranchState" name="cboBranchState" class="form-control" required>
+                                <option value="">-- Select --</option>
+                                @foreach (DataRow dr in PortalApplication.States.Rows)
+                                {
+                                    <option value="@dr["state_id"]">@dr["state_name"]</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="cboBranchDistrict">Branch District  :<span class="mandatory">*</span></label>
+                            <select id="cboBranchDistrict" name="cboBranchDistrict" class="form-control" required></select>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="cboBranch">Branch :<span class="mandatory">*</span></label>
+                            <select id="cboBranch" name="cboBranch" class="form-control" required></select>
+                        </div>
+                    </div>
+                </div>
+                }
+                <div class="row  mt10">
+                    <div class="col-sm-12">
+                        <div class="col-sm-12" style="background-color:lightgray"><H4>Examination Preferences : </H4></div>
+                    </div>
+                </div>
+                <div class="row  mt10">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="txtExamMode">Exam Mode<span class="mandatory"></span></label>
+                            <input id="txtExamMode" name="txtExamMode" class="form-control" type="text" required value="Online" readonly/>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="cboExamBody">Exam Body : <span class="mandatory">*</span></label>
+                            <select id="cboExamBody" name="cboExamBody" class="form-control" required>
+                                <option value="">-- Select --</option>
+                                @foreach (DataRow dr in PortalApplication.ExamBody.Rows)
+                                {
+                                    <option value="@dr["exam_body_id"]">@dr["exam_body_name"]</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="cboExamCenter">Examination Center : <span class="mandatory">*</span></label>
+                            <select id="cboExamCenter" name="cboExamCenter" class="form-control" required>
+                                <option value="">-- Select --</option>
+                            </select>
+                            <br /><span id="centerHelp"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="cboLanguage">Language : <span class="mandatory">*</span></label>
+                            <select id="cboLanguage" name="cboLanguage" class="form-control" required>
+                                <option value="">-- Select --</option>
+                                @foreach (DataRow dr in PortalApplication.ExamLanguage.Rows)
+                                {
+                                    <option value="@dr["language_id"]">@dr["language_name"]</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3" style="align-content:flex-end">
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-md btn-warning btn-block" value="Save" />
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div id="Result" class="col-sm-12">
+
+        </div>
+    </div>
+</div>

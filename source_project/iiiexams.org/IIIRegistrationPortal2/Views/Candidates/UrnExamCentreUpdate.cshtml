@@ -1,0 +1,52 @@
+﻿@{
+   
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<script src="~/js/app/urnexamcentreupdate.js"></script>
+
+<div class="notificationBox">
+    <h3>Update URN Exam Centre</h3>
+    <div class="row  mt10">
+        <div class="col-sm-12">
+            <div class="col-sm-12" style="background-color:lightgray"><H4>Upload File :</H4></div>
+        </div>
+    </div>
+
+    <div class="row mt10">
+        <div class="col-sm-12">
+            <form id="frmUploadMain" autocomplete="off">
+                <div class="row mt10">
+                    <div class="col-sm-12">
+                        <label><a href="../UploadTemplates/ChangeTestCenter.xlsx">Download Template</a></label>
+                    </div>
+                </div>
+                <div class="row mt10">
+                    <div class="col-sm-9 form-group">
+                        <label for="txtFile">Select File : <span class="mandatory">*</span></label>
+                        <input id="txtFile" name="txtFile" type="file" class="form-control" required />
+                    </div>
+                    <div class="col-sm-3 form-group">
+                        <label>&nbsp;<span class="mandatory">&nbsp;</span></label>
+                        <input type="Submit" class="btn btn-md btn-warning btn-block" value="Upload" />
+                    </div>
+                </div>
+                
+                <div class="row mt10">
+                    <div class="col-sm-9">
+                        <div>
+                            <ul>
+                                <li><i>File type : excel file (*.xls / *.xlsx). Check the template for reference</i></li>                               
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt10">
+                    <div class="col-sm-9" id="ResponseFile">
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+   </div>

@@ -1,0 +1,204 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>OracleDatabases</name>
+    </assembly>
+    <members>
+        <member name="T:OraDatabases.OracleDB.Database">
+            <summary>
+            The class for interaction with Microsoft SQL Server.
+            </summary>
+        </member>
+        <member name="M:OraDatabases.OracleDB.Database.CheckConnectionString(System.String)">
+            <summary>
+            For internal use only. Checks if the connection string is initialized and throws exception if found null or empty string. Any other value is taken as correct value.
+            </summary>
+            <param name="ConnectionString">The connection string to be evaluated</param>
+        </member>
+        <member name="M:OraDatabases.OracleDB.Database.PrepareCommand(System.String,System.String[],Oracle.ManagedDataAccess.Client.OracleDbType[],System.Data.ParameterDirection[],System.Object[],Oracle.ManagedDataAccess.Client.OracleCollectionType[])">
+            <summary>
+            For internal use only. Using the parameters; Prepares and returns the OracleCommand object for executing the procedure.
+            </summary>
+            <param name="ProcedureName">Name of the stored procedure to be executed</param>
+            <param name="Params">String srray of parameter names</param>
+            <param name="ParamTypes">Int32 srray of parameter type. SQLDBType enumerator typecasted to Int32</param>
+            <param name="ParamDirections">System.Data.ParameterDirection array indicating the parameter direction</param>
+            <param name="Values">System.Object array of the parameter values</param>
+            <returns></returns>
+        </member>
+        <member name="M:OraDatabases.OracleDB.Database.CheckConnectionState(Oracle.ManagedDataAccess.Client.OracleConnection)">
+            <summary>
+            For internal use only. The methods checks if the connection is open, else throws an exception. The method is used by other methods to check the connection state just before making database call.
+            </summary>
+            <param name="Connection">Connection object</param>
+        </member>
+        <member name="M:OraDatabases.OracleDB.Database.GetParamType(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="OracleType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:OraDatabases.OracleDB.Database.GetMethodParamType(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="OracleType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:OraDatabases.OracleDB.Database.ValidateNonTransactionalInvokation">
+            <summary>
+            For internal use only. validates the invokation mode i.e. whether transactional mode / non transactional mode.
+            overloads are available for transactional / non transactional mode invokation, and object needs to be constructed accordingly.
+            Object created using transactional mode cant be used to invoke non transactional overloads and vice-a-versa.
+            This methode is used by other methods to determine whether the method can continue in given mode. 
+            </summary>
+        </member>
+        <member name="M:OraDatabases.OracleDB.Database.#ctor">
+            <summary>
+            /// Constructor for Non Transactional Mode Invoke
+            </summary>
+        </member>
+        <member name="M:OraDatabases.OracleDB.Database.FetchAdhoc(System.String,System.String,System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="ConnectionString"></param>
+            <param name="sSQL"></param>
+            <param name="UseTransaction"></param>
+            <returns></returns>
+        </member>
+        <member name="M:OraDatabases.OracleDB.Database.ExecuteAdhoc(System.String,System.String,System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="ConnectionString"></param>
+            <param name="sSQL"></param>
+            <param name="UseTransaction"></param>
+            <returns></returns>
+        </member>
+        <member name="M:OraDatabases.OracleDB.Database.ExecProcedure(System.String,System.String,System.String[],Oracle.ManagedDataAccess.Client.OracleDbType[],System.Data.ParameterDirection[],System.Object[],Oracle.ManagedDataAccess.Client.OracleCollectionType[],System.Object[]@,System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="ConnectionString"></param>
+            <param name="ProcedureName"></param>
+            <param name="Params"></param>
+            <param name="ParamTypes"></param>
+            <param name="ParamDirections"></param>
+            <param name="Values"></param>
+            <param name="AllParameters"></param>
+            <param name="UseTransaction"></param>
+        </member>
+        <member name="M:OraDatabases.OracleDB.Database.ValidateTransactionalInvokation">
+            <summary>
+            For internal use only. validtaes the invokation mode i.e. whether transactional mode / non transactional mode.
+            overloads are available for transactional / non transactional mode invokation, and object needs to be constructed accordingly.
+            Object created using transactional mode cant be used to invoke non transactional overloads and vice-a-versa.
+            This methode is used by other methods to determine whether the method can continue in given mode. 
+            </summary>
+        </member>
+        <member name="M:OraDatabases.OracleDB.Database.#ctor(System.String)">
+            <summary>
+            Constructor for Transactional Mode Invoke
+            </summary>
+            <param name="ConnectionString"></param>
+        </member>
+        <member name="M:OraDatabases.OracleDB.Database.OpenConnection">
+            <summary>
+            Call this method to open the connection.
+            </summary>
+        </member>
+        <member name="M:OraDatabases.OracleDB.Database.IsConnectionOpen">
+            <summary>
+            Call this method to check if the connection is open
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:OraDatabases.OracleDB.Database.CloseConnection">
+            <summary>
+            Call this method to close the open connection
+            </summary>
+        </member>
+        <member name="M:OraDatabases.OracleDB.Database.BeginTransaction">
+            <summary>
+            Call this method to initiate new database transaction
+            </summary>
+        </member>
+        <member name="M:OraDatabases.OracleDB.Database.CommitTransaction">
+            <summary>
+            Call this method to commit the existing transaction
+            </summary>
+        </member>
+        <member name="M:OraDatabases.OracleDB.Database.RollbackTransaction">
+            <summary>
+            Call this method to roll back the existing transaction
+            </summary>
+        </member>
+        <member name="M:OraDatabases.OracleDB.Database.IsInTransaction">
+            <summary>
+            Call this method to check whether the object has initiated the transaction.
+            </summary>
+            <returns>Boolean: True: In Transaction / False : Not in Transaction</returns>
+        </member>
+        <member name="M:OraDatabases.OracleDB.Database.FetchAdhoc(System.String)">
+            <summary>
+            Use this method to execute adhoc select statement
+            </summary>
+            <param name="sSQL">SQL SELECT Query</param>
+            <returns></returns>
+        </member>
+        <member name="M:OraDatabases.OracleDB.Database.ExecuteAdhoc(System.String)">
+            <summary>
+            Use this method to execute adhoc sql statement
+            </summary>
+            <param name="sSQL">SQL Query</param>
+            <returns></returns>
+        </member>
+        <member name="M:OraDatabases.OracleDB.Database.ExecProcedure(System.String,System.String[],Oracle.ManagedDataAccess.Client.OracleDbType[],System.Data.ParameterDirection[],Oracle.ManagedDataAccess.Client.OracleCollectionType[],System.Object[],System.Object[]@)">
+            <summary>
+            Use this method to executes the stored procedure that does not return any data in dataset.
+            </summary>
+            <param name="ProcedureName">Name of the procedure to be executed</param>
+            <param name="Params">String Array Containing the parameter names without "@" prefix... (excluding the return value )</param>
+            <param name="ParamTypes">Array of type SQLDBType, with values for each parameter (excluding the return value)</param>
+            <param name="ParamDirections">ParamDirection Array, with values for each parameter (excluding the return value)</param>
+            <param name="Values">Object Array, with values for each parameter (excluding the return value). Set value to DBNull.Value for output parameters.</param>
+            <param name="AllParameters">The parameters values returned in same orders</param>
+            <returns>return value returned from the stored procedure</returns>
+        </member>
+        <member name="M:OraDatabases.OracleDB.Database.Dispose">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:OraDatabases.OracleDB.ParamLength">
+            <summary>
+            Use this structure to send in the details of parameter size
+            </summary>
+        </member>
+        <member name="P:OraDatabases.OracleDB.ParamLength.Size">
+            <summary>
+            Size of the data type
+            </summary>
+        </member>
+        <member name="P:OraDatabases.OracleDB.ParamLength.Precision">
+            <summary>
+            Precision of the numeric data type
+            </summary>
+        </member>
+        <member name="P:OraDatabases.OracleDB.ParamLength.Scale">
+            <summary>
+            Scale of the numeric data type
+            </summary>
+        </member>
+        <member name="M:OraDatabases.OracleDB.ParamLength.#ctor(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="Size">Size of the data type</param>
+            <param name="Precision">Precision of the numeric data type</param>
+            <param name="Scale">Scale of the numeric data type</param>
+        </member>
+    </members>
+</doc>

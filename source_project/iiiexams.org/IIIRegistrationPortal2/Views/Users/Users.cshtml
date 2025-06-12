@@ -1,0 +1,90 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+@using System.Data;
+@*@Scripts.Render("~/js/app/users")*@
+<script src="~/js/app/users.js"></script>
+
+<div id="pnlNotifications" class="notificationBox">
+    <h3>Users</h3>
+    <div class="row" id="GridFilter">
+        <div class="col-sm-12">
+            <form id="frmSearch" autocomplete="off">
+                <div class="row mt10">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <input type="button" id="butNew" class="btn btn-md btn-warning btn-block" value="New User">
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="row mt10">
+                <div class="col-sm-12">
+                    <form id="frmMain" autocomplete="off">
+                        <div class="row mt10">
+                            <div class="col-sm-3 form-group">
+                                <label for="txtLoginId">login id<span class="mandatory">*</span></label>
+                                <input id="txtLoginId" name="txtLoginId" type="text" class="form-control" autocomplete="off" />
+                                <input id="hdnUserId" name="hdnUserId" type="hidden">
+                            </div>
+                            <div class="col-sm-6 form-group">
+                                <label for="txtUserName">User name <span class="mandatory">*</span></label>
+                                <input id="txtUserName" name="txtUserName" type="text" class="form-control" autocomplete="off" />
+                            </div>
+                        </div>
+                        <div class="row mt10">
+                            <div class="col-sm-9 form-group">
+                                <label for="cboRoles">Role <span class="mandatory">*</span></label>
+                                <select id="cboRoles" name="cboRoles" class="form-control" required>
+                                    <option value="">-- Select --</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mt10">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="txtMobileNo">Mobile No  : <span class="mandatory">*</span></label>
+                                    <input id="txtMobileNo" name="txtMobileNo" type="text" class="form-control" maxlength="12" autocomplete="off" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt10">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="txtEmailID">Email ID : <span class="mandatory">*</span></label>
+                                    <input id="txtEmailID" name="txtEmailID" type="text" class="form-control" autocomplete="off" /><br />
+                                    <span>Must be a valid and unique Email address.The password will be sent to this Email</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt10">
+                            <div class="col-sm-4 form-group">
+                                <label for="chkIsActive">Is Active ?</label>
+                                <input type="checkbox" id="chkIsActive" name="chkIsActive" style="width:20px;height:20px" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="row mt10">
+                            <div class="col-sm-3">
+                                <input type="submit" class="btn btn-md btn-warning btn-block" value="Save" />
+                            </div>
+                            <div class="col-sm-3">
+                                <input type="button" id="butCancel" class="btn btn-md btn-warning btn-block" value="Cancel" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="row mt10">
+                <div class="col-sm-12">
+                    <div id="data" class="table-responsive">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,31 @@
+﻿<!DOCTYPE HTML>
+    <html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>PaytmReceivePayment</title>
+        <link href="~/CSS/bootstrap.min.css" rel="stylesheet" />
+        <link href="~/CSS/common.css" rel="stylesheet" />
+        <link href="~/CSS/jquery-ui.min.css" rel="stylesheet" />
+        <script src="~/js/RegexDef.js" type="text/javascript"></script>
+        <script src="~/js/jquery-3.2.1.min.js" type="text/javascript"></script>
+        <script src="~/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="~/js/jquery-ui.min.js" type="text/javascript"></script>
+        <script src="~/js/jquery.validate.min.js" type="text/javascript"></script>
+        <script src="~/js/jquery.timepicker.min.js" type="text/javascript"></script>
+        <script src="~/js/additional-methods.min.js" type="text/javascript"></script>
+        <script src="~/js/app/commonmethods.js" type="text/javascript"></script>
+        <script src="~/js/app/examfeespayment.js" type="text/javascript"></script>
+        <script src="https://securegw-stage.paytm.in/merchantpgpui/checkoutjs/merchants/@ViewBag.vbMid" crossorigin="anonymous" type='application/javascript'></script>
+    </head>
+    <body>
+        <form>
+            <input type="hidden" id="OrderId" value="@ViewBag.vbOrderId" />
+            <input type="hidden" id="TraToken" value="@ViewBag.vbTraToken" />
+            <input type="hidden" id="TraValue" value="@ViewBag.vbTraValue" />
+            <input type="hidden" id="Mid" value="@ViewBag.vbMid" />
+        </form>
+        <script src="~/js/app/PaytmReceivePayment.js"></script>
+    </body>
+    </html>
+
+

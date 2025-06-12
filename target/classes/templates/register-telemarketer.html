@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Register Telemarketer</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h3>Register Telemarketer</h3>
+        <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
+        <form th:action="@{/register-telemarketer}" th:object="${telemarketerRegistration}" method="post">
+            <div class="form-group">
+                <label for="name">Full Name: <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="name" th:field="*{name}" maxlength="255" required />
+            </div>
+            <div class="form-group">
+                <label for="address">Address: <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="address" th:field="*{address}" maxlength="255" required />
+            </div>
+            <div class="form-group">
+                <label for="traiRegNo">TRAI Reg. No.: <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="traiRegNo" th:field="*{traiRegNo}" maxlength="50" required />
+            </div>
+            <div class="form-group">
+                <label for="isActive">Is Active?: <span class="text-danger">*</span></label>
+                <select class="form-control" id="isActive" th:field="*{isActive}" required>
+                    <option value="">-- Select --</option>
+                    <option value="Y">Yes</option>
+                    <option value="N">No</option>
+                </select>
+            </div>
+            <h4>Designated Person's Details:</h4>
+            <div class="form-group">
+                <label for="dpName">Name: <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="dpName" th:field="*{dpName}" maxlength="255" required />
+            </div>
+            <div class="form-group">
+                <label for="dpEmailId">Email Id: <span class="text-danger">*</span></label>
+                <input type="email" class="form-control" id="dpEmailId" th:field="*{dpEmailId}" maxlength="255" required />
+            </div>
+            <div class="form-group">
+                <label for="dpContactNo">Mobile No.: <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="dpContactNo" th:field="*{dpContactNo}" maxlength="10" required />
+            </div>
+            <h4>Contact Person's Details:</h4>
+            <div class="form-group">
+                <label for="cpName">Name: <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="cpName" th:field="*{cpName}" maxlength="255" required />
+            </div>
+            <div class="form-group">
+                <label for="cpEmailId">Email Id: <span class="text-danger">*</span></label>
+                <input type="email" class="form-control" id="cpEmailId" th:field="*{cpEmailId}" maxlength="255" required />
+            </div>
+            <div class="form-group">
+                <label for="cpContactNo">Mobile No.: <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="cpContactNo" th:field="*{cpContactNo}" maxlength="10" required />
+            </div>
+            <button type="submit" class="btn btn-warning">Save</button>
+        </form>
+    </div>
+</body>
+</html> 

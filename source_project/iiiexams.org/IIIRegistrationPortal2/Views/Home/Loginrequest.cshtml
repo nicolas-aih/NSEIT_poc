@@ -1,0 +1,94 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+@using System.Data;
+@Scripts.Render("~/js/app/loginrequest")
+<div id="pnlMain" class="notificationBox">
+    <h3>Login Request</h3>
+    <div class="row">
+        <div class="col-sm-12">
+            <form id="frmMain" autocomplete="off">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="cboCompanyType">Company type : <span class="mandatory">*</span></label>
+                            <select id="cboCompanyType" name="cboCompanyType" class="form-control form-control-sm password" placeholder="Company Type">
+                                @foreach (DataRow dr in PortalApplication.CompanyType.Rows)
+                                {
+                                    <option value="@dr["company_type_id"]">@dr["company_type"]</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label for="txtCompanyName">Company name : <span class="mandatory">*</span></label>
+                            <input id="txtCompanyName" name="txtCompanyName" type="text" class="form-control form-control-sm" maxlength="255" required autocomplete="off"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label for="txtAddress">Company address : <span class="mandatory">*</span></label>
+                            <input id="txtAddress" name="txtAddress" type="text" class="form-control form-control-sm" maxlength="512" required autocomplete="off"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="txtSTDCode">STD code : <span class="mandatory">*</span></label>
+                            <input id="txtSTDCode" name="txtSTDCode" type="text" class="form-control form-control-sm" maxlength="5" required autocomplete="off"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="txtLandlineNO">Landline number : <span class="mandatory">*</span></label>
+                            <input id="txtLandlineNO" name="txtLandlineNO" type="text" class="form-control form-control-sm" maxlength="8" required autocomplete="off"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="txtMobilePO">Mobile number of principal officer / designated person : <span class="mandatory">*</span></label>
+                            <input id="txtMobilePO" name="txtMobilePO" type="text" class="form-control form-control-sm" maxlength="10"  required autocomplete="off"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label for="txtEmailPO">Email id of principal officer / designated person : <span class="mandatory">*</span></label>
+                            <input id="txtEmailPO" name="txtEmailPO" type="email" class="form-control form-control-sm" maxlength="50"  required>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label for="txtNamePO">Name of principal officer / designated person : <span class="mandatory">*</span></label>
+                            <input id="txtNamePO" name="txtNamePO" type="text" class="form-control form-control-sm" maxlength="255" required autocomplete="off"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="offset-sm-9 col-sm-3">
+                        <input type="submit" class="btn btn-md btn-warning btn-block" value="Save" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12" id="data">
+                        <!--Post save messages go here-->
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

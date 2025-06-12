@@ -1,0 +1,64 @@
+﻿@using System.Data;
+@{
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+@*@Scripts.Render("~/js/app/urndeletion")*@
+<script src="~/js/app/urndeletion.js" type="text/javascript"></script>
+
+<div id="pnlMain" class="notificationBox">
+    <h3>Delete URN</h3>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="row mt10">
+                <form id="frmSearch" method="post" action="" autocomplete="off">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <input id="txtURN" name="txtURN" type="text" class="form-control" placeholder="URN" required maxlength="14" autocomplete="off" />
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <input type="submit" class="btn btn-md btn-warning btn-block" value="Search">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div id="Form" class="col-sm-12">
+            <form id="frmMain" method="post" action="" autocomplete="off">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label for="txtApplicantName">Applicant Name<span class="mandatory"></span></label>
+                        <input type="text" id="txtApplicantName" class="form-control" readonly="readonly" />
+                        <input type="hidden" id="hddURN" name="hddURN" class="form-control" />
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label for="txtDOB">Date of Birth<span class="mandatory"></span></label>
+                        <input type="text" id="txtDOB" class="form-control" readonly="readonly" />
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label for="txtPAN">PAN<span class="mandatory"></span></label>
+                        <input type="text" id="txtPAN" class="form-control" readonly="readonly" />
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label for="txtEmployeeCode">External Refrence Number<span class="mandatory"></span></label>
+                        <input type="text" id="txtEmployeeCode" class="form-control" readonly="readonly">
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-md btn-warning btn-block" value="Delete" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

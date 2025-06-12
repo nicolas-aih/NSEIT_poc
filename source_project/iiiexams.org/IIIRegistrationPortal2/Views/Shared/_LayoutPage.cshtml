@@ -1,0 +1,485 @@
+﻿@using IIIRegistrationPortal2;
+@using System.Data;
+@using System.Web.Optimization;
+
+@{
+    String ClassName = (Convert.ToString(ViewBag.ClassName) == String.Empty) ? "col-sm-9" : ViewBag.ClassName;
+    DataTable objParentMenuList = null;
+    DataTable objChildMenuList = null;
+    if (PortalSession.UserID != 0)
+    {
+        objParentMenuList = PortalSession.ParentMenu;
+        objChildMenuList = PortalSession.ChildMenu;
+    }
+    Int32 i = 0;
+    //objMenuList.DefaultView.ToTable(true, new[] { "ParentMenuName" });
+
+}
+<!DOCTYPE HTML>
+<html>
+<head>
+    
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>@ViewBag.Title</title>
+
+    <link href="~/CSS/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/CSS/common.css" rel="stylesheet" />
+    <link href="~/CSS/jquery-ui.min.css" rel="stylesheet" />
+
+    <script language="javascript" type="text/javascript">
+        var ServerDate = '@System.DateTime.Now.ToString("dd-MMM-yyyy")';
+        var ServerYear = @System.DateTime.Now.Year;
+    </script>
+
+    <script src="~/js/RegexDef.js" type="text/javascript"></script>
+    <script src="~/js/jquery-3.2.1.min.js" type="text/javascript"></script>
+    <script src="~/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="~/js/jquery-ui.min.js" type="text/javascript"></script>
+    <script src="~/js/jquery.validate.min.js" type="text/javascript"></script>
+    <script src="~/js/jquery.timepicker.min.js" type="text/javascript"></script>
+    <script src="~/js/additional-methods.min.js" type="text/javascript"></script>
+    <script src="~/js/app/commonmethods.js" type="text/javascript"></script>
+
+    @if (!Convert.ToBoolean(ViewBag.IsLoggedOn))
+    {
+        @*@Scripts.Render("~/js/app/prelogin");*@
+        <script src="~/js/app/prelogin.js"></script>
+    }
+    @*@Scripts.Render("~/js/app/ticker")*@
+    <script src="~/js/app/ticker.js"></script>
+    @*<script>
+                            $(document).ready(function () {
+                                $(".toplevel").click(function () {
+                                    $(".toplevel").removeClass('active');
+                                    $(this).addClass('active');
+                                })
+                            })
+    </script>*@
+    @if (Convert.ToBoolean(ViewBag.IsLoggedOn))
+    {
+        <script>
+            var linkId = '';
+            window.onload = function () {
+                //debugger;
+                $("#collapse" + sessionStorage["value"]).addClass('.collapse in');
+            };
+
+            $(function () {
+
+                $('#accordionMenu').find('.panel-body').find('li').find('a').click(function () {
+                    //debugger;
+
+                    linkId = $(this).parent().parent().parent().parent().parent().find('div').attr("id").substr(7, 2);
+                    $("#collapse" + linkId).addClass('.collapse in');
+                    sessionStorage.setItem("value", linkId);
+                });
+
+
+                // to remove previous active element when clicked on other menu
+
+                $('li').click(function () {
+                    var selectedText = event.target.text;
+                    $('li').removeClass('active');
+                    $(this).addClass('active');
+
+                });
+
+                // to make current clicked element active (dropdown or single menu) both
+
+                $("ul a").click(function (e) {
+                    var link = $(this);
+
+                    var item = link.parent("li");
+
+
+                    if (item.hasClass("active")) {
+                        item.removeClass("active").children("a").removeClass("active");
+
+                    }
+                    else {
+                        item.addClass("active").children("a").addClass("active");
+                    }
+
+                }).each(function () {
+                    var link = $(this);
+                    if (link.get(0).href === location.href) {
+                        $('li:first').removeClass('active');
+                        sessionStorage.clear();
+                        link.addClass("active").parents("li").addClass("active");
+                        return false;
+
+                    }
+                });
+
+            });
+
+        </script>
+    }
+</head>
+<body translate="no">
+    <div class="wrap">
+        <div class="headerdiv">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6 topLeft"><img src="~/images/logo_III.jpg" id="homePageBtn" class="cursorPointer" /> </div>
+                    <div class="col-sm-6 text-right mt10">
+                        @if (PortalSession.UserID == 0)
+                        {
+                            @*<a href="~/Home/Loginrequest" id="LoginRequest" class="btn btn-sm btn-warning LogoutBtn">Login Request</a>*@
+                        }
+                        else
+                        {
+                            <span>Welcome, @PortalSession.UserName ( @PortalSession.RoleName )</span>
+                            <br />
+                            <a href="~/Users/Logout" id="Logout" class="btn btn-sm btn-warning LogoutBtn">Logout</a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="navdiv">
+            <div class="container">
+                <nav class="navbar navbar-default" role="navigation">
+                    <div class="container-fluid">
+                        <!-- Collect the nav links, forms, and other content for toggling -->
+                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                            <ul class="nav navbar-nav">
+                                <li><a href="~/Home/Index">Home</a></li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Payment<b class="caret"></b></a>
+                                    <ul class="dropdown-menu">
+                                        @if (PortalApplication.IntegrationMode == "CSS")
+                                        {
+                                            <li><a href="~/Payments/ExamFeesPayment" target="_blank">Exam fees</a></li>
+                                        }
+                                        @if (PortalApplication.IntegrationMode == "OAIMS")
+                                        {
+                                            <li><a href="http://nseitexams.com/OnlinePayment/paymentRequest.jsp" target="_blank" rel="noreferrer">Exam fees</a></li>
+                                        }
+                                        <li><a href="http://www.nseitexams.com:7010/OnlinePayment/paymentRequest.jsp" target="_blank" rel="noreferrer">Service Tax</a></li>
+                                    </ul>
+                                </li>
+                                @if (PortalApplication.IntegrationMode == "CSS")
+                                {
+                                    <li><a href="~/Scheduler/BookSeat" target="_blank">Book Seat</a></li>
+                                }
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Download<b class="caret"></b></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="~/Candidates/Hallticket">Hall Ticket</a> </li>
+                                        <li><a href="~/Candidates/Scorecard">Score card</a></li>
+                                        @if (!Convert.ToBoolean(ViewBag.IsLoggedOn))
+                                        {
+                                            <li><a href="~/Candidates/PaymentReceipt">Payment Receipt</a></li>
+                                        }
+                                    </ul>
+                                </li>
+                                @if (!Convert.ToBoolean(ViewBag.IsLoggedOn))
+                                {
+                                    <li><a href="~/Candidates/Modifications">Modifications</a></li>
+                                }
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Service Providers<b class="caret"></b></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="~/Home/ExamCenters">NSEIT Centres</a></li>
+                                        <li><a href="~/Home/TbxSchedule">TBX Schedule</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Study Material<b class="caret"></b></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="~/Home/Syllabus" id="IC38Syllabus">IC-38 Syllabus</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="~/DemoExams/examDetails.html" target="_blank">Practice Test</a></li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">FAQ's<b class="caret"></b></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="~/StaticFiles/FlowChart_CA.pdf" target="_blank" rel="noreferrer">Flowchart for Corporate Agents</a></li>
+                                        <li><a href="~/StaticFiles/FlowChart_WA.pdf" target="_blank" rel="noreferrer">Flowchart for Web Aggregators</a></li>
+                                        <li><a href="~/StaticFiles/FlowChart_IMF.pdf" target="_blank" rel="noreferrer">Flowcharts for Insurance Marketing Firms</a></li>
+                                        <li><a href="~/StaticFiles/FlowChart_BAV.pdf" target="_blank" rel="noreferrer">Flowcharts for Insurance Brokers</a></li>
+                                    </ul>
+                                </li>
+
+                            </ul>
+                        </div>
+                        <!-- /.navbar-collapse -->
+                    </div>
+                    <!-- /.container-fluid -->
+                </nav>
+            </div>
+        </div>
+        <div class="newsdiv">
+            <div class="container">
+                <marquee id="m1">
+
+                </marquee>
+            </div>
+        </div>
+
+        <div class="maindiv">
+            <div class="maindivContainer container">
+                @if (!Convert.ToBoolean(ViewBag.IsLoggedOn))
+                {
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div id="pnlLoginBox" class="loginBox">
+                                        <form id="frmLogin" autocomplete="off">
+                                            <h3>Quick Login</h3>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="form-group">
+                                                        <input id="txtUserId" name="txtUserId" type="text" class="form-control username" placeholder="User Id" required autocomplete="off" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row mt10">
+                                                <div class="col-sm-12">
+                                                    <div class="form-group">
+                                                        <input id="txtPassword" name="txtPassword" type="password" class="form-control password" placeholder="Password" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <p class="bottomLink"><a href="#" id="fp">Forgot Password?</a> | <a href="#" id="cp">Change Password?</a></p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <input type="submit" id="btnLogin" class="btn btn-md btn-warning btn-block" value="Login" />
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div id="pnlForgotPassword" class="loginBox" style="display: none;">
+                                        <form id="frmForgotPassword" autocomplete="off">
+                                            <h3>Forgot Password</h3>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="form-group">
+                                                        <input id="txtfpUserId" name="txtfpUserId" type="text" class="form-control username" placeholder="User Id" required maxlength="20" autocomplete="off" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row mt10">
+                                                <div class="col-sm-12">
+                                                    <div class="form-group">
+                                                        <input id="txtfpEmailId" name="txtfpEmailId" type="text" class="form-control" placeholder="Your e-mail id" required maxlength="50" autocomplete="off" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <p class="bottomLink"><a href="#" id="backToLogin">Back</a></p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <input type="submit" id="btnResetPassword" class="btn btn-md btn-warning btn-block" value="Reset Password" />
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div id="pnlChangePassword" class="loginBox" style="display: none;">
+                                        <form id="frmChangePassword" autocomplete="off">
+                                            <h3>Change Password</h3>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="form-group">
+                                                        <input id="txtcpUserID" name="txtcpUserId" type="text" class="form-control username" placeholder="User Id" required autocomplete="off" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row mt10">
+                                                <div class="col-sm-12">
+                                                    <div class="form-group">
+                                                        <input id="txtcpOldPwd" name="txtcpOldPwd" type="password" class="form-control password" placeholder="Your old password" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row mt10">
+                                                <div class="col-sm-12">
+                                                    <div class="form-group">
+                                                        <input id="txtcpNewPwd" name="txtcpNewPwd" type="password" class="form-control password" placeholder="New password" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row mt10">
+                                                <div class="col-sm-12">
+                                                    <div class="form-group">
+                                                        <input id="txtcpConfirmPwd" name="txtcpConfirmPwd" type="password" class="form-control password" placeholder="Confirm password" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <p class="bottomLink"><a href="#" id="backToLogin2">Back</a></p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <input type="submit" id="btnChangePassword" class="btn btn-md btn-warning btn-block" value="Change Password" />
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                @RenderBody()
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="exCenterBox">
+                                        <h3>Find Exam Center</h3>
+                                        <div class="row mt10">
+                                            <div class="col-sm-12">
+                                                <form id="frmSearchCenters" autocomplete="off">
+                                                    <div class="input-group">
+                                                        <div>
+                                                            <input id="txtPincode" name="txtPincode" type="text" maxlength="6" class="form-control locationPin" placeholder="Enter your PIN Code" required autocomplete="off" />
+                                                        </div>
+                                                        <div class="input-group-btn" style="vertical-align:top">
+                                                            <button id="btnSearchCenters" class="btn btn-warning" type="submit"><img src="~/images/searchBtn.png" width="20" height="20" /></button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <div class="row mt20">
+                                            <div class="col-sm-12">
+                                                <ul id="Nearest3Centers"></ul>
+                                                <p class="text-right">@*<a href="#">View All</a>*@</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt20">
+                                <div class="col-sm-12">
+                                    <div class="helpDeskBox">
+                                        <h3>Help Desk</h3>
+                                        <div class="row mt10">
+                                            <div class="col-sm-12">
+                                                <table width="100%" border="0" cellspacing="5" cellpadding="0">
+                                                    <tr>
+                                                        <td width="35" align="left" valign="top"><img src="~/images/telephone.png" width="21" height="20"></td>
+                                                        <td>
+                                                            <p>
+                                                                022-62507740<br>
+                                                                022-42706500
+                                                            </p>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td width="35" align="left" valign="top"><img src="~/images/mail_icon.png" width="21" height="16"></td>
+                                                        <td><p><a href="mailto: tech.support@nseit.com" target="_blank" rel="noreferrer">tech.support@nseit.com</a></p></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="2" align="left" valign="top"><h5>Timing</h5></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="2" align="left" valign="top">
+                                                            <p>
+                                                                Monday To Saturday <br />
+                                                                9:30 am To 05:30 pm
+                                                            </p>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="panel-group" id="accordionMenu" role="tablist" aria-multiselectable="true">
+                                        @foreach (DataRow dr in objParentMenuList.Rows)
+                                        {
+                                            String idParent = String.Format("heading{0}", i);
+                                            String idChild = String.Format("collapse{0}", i);
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading" role="tab" id="@idParent">
+                                                    <h4 class="panel-title">
+                                                        <a role="button" data-toggle="collapse" data-parent="#accordionMenu" href="#@idChild" aria-expanded="false" aria-controls="@idChild"> @Convert.ToString(dr["ParentMenuName"]) </a>
+                                                    </h4>
+                                                </div>
+                                                <div id="@idChild" class="panel-collapse collapse" role="tabpanel" aria-labelledby="@idParent">
+                                                    <div class="panel-body">
+                                                        <ul class="nav">
+                                                            @foreach (DataRow drChild in objChildMenuList.Rows)
+                                                            {
+                                                                String TargetWindow = Convert.ToString(drChild["target_window"]).Trim();
+                                                                if (Convert.ToString(dr["ParentMenuName"]) == Convert.ToString(drChild["ParentMenuName"]))
+                                                                {
+                                                                    if (Convert.ToString(drChild["IsInternalPage"]) == "N")
+                                                                    {
+                                                                        if (TargetWindow == String.Empty)
+                                                                        {
+                                                                        <li><a href="@Convert.ToString(drChild["NewURL"])">@Convert.ToString(drChild["varMenu"])</a></li>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                        <li><a href="@Convert.ToString(drChild["NewURL"])" target="@TargetWindow">@Convert.ToString(drChild["varMenu"])</a></li>
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            i++;
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="@ClassName">
+                            <div class="row">
+                                @RenderBody()
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="footerdiv">
+            <div class="container container-fluid">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <p>​All Right Reserved. Portal best viewed on Internet Explorer 11 / Google  Chrome 73 and above</p>
+                    </div>
+                    <div class="col-sm-6 text-right">
+                        <p class="text-right">Portal Developed and Maintained By <img src="~/images/NSEIT_Logo.jpg" width="81" height="47"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal" style="display: none">
+        <div class="center">
+            <img alt="" src="~/Images/Loader.gif" />
+        </div>
+    </div>
+</body>
+</html>

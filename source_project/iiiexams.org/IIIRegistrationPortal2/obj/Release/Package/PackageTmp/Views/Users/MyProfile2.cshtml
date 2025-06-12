@@ -1,0 +1,322 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+@using System.Data;
+
+<script>
+    $(document).ready(function(){
+        $("#txtDOB").datepicker({
+            showMonthAfterYear: true,
+            dateFormat: 'dd-M-yy',
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "c-100:c+0"
+        });
+        debugger;
+        $.ajax({
+            type: "POST",
+            url: "../Users/GetProfile",
+            //data: JSON.stringify(JsonObject),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (msg) {
+                debugger;
+                //alert(msg);
+                var s = '';
+                var retval = JSON.parse(msg);
+                $("#txtLoginId").val(retval[0].varInsurerID);
+                $("#txtName").val(retval[0].varName);
+                $("#txtInsurer").val(retval[0].varName);
+                $("#txtDP").val(retval[0].varCDPName);
+                $("#txtAddress1").val(retval[0].varHouseNo);
+                $("#txtAddress2").val(retval[0].varStreet);
+                $("#txtAddress3").val(retval[0].varTown);
+                $("#txtPincode").val(retval[0].intPINCode);
+                $("#txtEmailId").val(retval[0].varEMailID);
+                $("#txtPhoneOffice").val(retval[0].varTelOffice);
+                $("#txtPhoneRes").val(retval[0].varTelResidence);
+                $("#txtFAX").val(retval[0].varFax);
+                $("#cboStates").val(retval[0].tntStateID);
+
+                $("#cboStates").trigger("change", [retval[0].sntDistrictID]);
+            },
+            error: function (msg) {
+                alert(msg.d);
+            }
+        });
+
+        $("#cboStates").change(function (event, DistrictId) {
+            $("#cboDistricts").html('');
+            var _StateId = $("#cboStates option:selected").val();
+            var JsonObject = {
+                StateId: _StateId,
+            };
+            $.ajax({
+                type: "POST",
+                url: "../Home/GetDistrictsForStates",
+                data: JSON.stringify(JsonObject),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    //debugger;
+                    //alert(msg);
+                    var s = '';
+                    var retval = JSON.parse(msg);
+                    if (retval.length == undefined || retval.length == 0) {
+                        alert("No districts were found for selected state");
+                    }
+                    else {
+                        for (i = 0; i < retval.length; i++) {
+                            s += "<option value=" + retval[i].district_id + ">" + retval[i].district_name + "</option>"
+                        }
+                        $("#cboDistricts").html(s);
+                        if (DistrictId != undefined) {
+                            $("#cboDistricts").val(DistrictId);
+                        }
+                    }
+                },
+                error: function (msg) {
+                    alert(msg.d);
+                }
+            });
+        })
+
+        $("#frmMain").validate({
+            rules:
+            {
+                txtAddress1: {
+                    required: true,
+                    check_exp: regexLowAscii
+                },
+                txtAddress2: {
+                    required: true,
+                    check_exp: regexLowAscii
+                },
+                txtAddress3: {
+                    required: true,
+                    check_exp: regexLowAscii
+                },
+                txtPincode: {
+                    required: true,
+                    digits: true
+                },
+                txtEmailId: {
+                    required: true,
+                    email: true
+                },
+                txtPhoneOffice: {
+                    digits: true
+                },
+                txtPhoneRes: {
+                    digits: true
+                },
+                txtFAX: {
+                    digits: true
+                }
+            },
+            messages:
+            {
+                txtAddress1: {
+                    required: MandatoryFieldMsg,
+                    check_exp: regexLowAscii
+                },
+                txtAddress2: {
+                    required: MandatoryFieldMsg,
+                    check_exp: regexLowAscii
+                },
+                txtAddress3: {
+                    required: MandatoryFieldMsg,
+                    check_exp: regexLowAscii
+                },
+                txtPincode: {
+                    required: MandatoryFieldMsg,
+                    digits: "Please enter valid pincode. Pincode should be a numeric"
+                },
+                txtEmailId: {
+                    required: MandatoryFieldMsg,
+                    email: "Please enter valid email id"
+                },
+                txtPhoneOffice: {
+                    digits: "Please enter valid phone number. Phone number should be a numeric"
+                },
+                txtPhoneRes: {
+                    digits: "Please enter valid phone number. Phone number should be a numeric"
+                },
+                txtFAX: {
+                    digits: "Please enter valid fax number. Fax number should be a numeric"
+                }
+            },
+            submitHandler: function (Form) {
+                //String Address1, String Address2, String Address3, Int32 Pincode,
+                //String TelephoneOffice, String TelephoneResidence, String Fax,
+                //String POName, String EMailId, String MobileNo, String STDCode, String PhoneNo,
+                //Int32 DistrictId
+                var _Address1 = $("#txtAddress1").val();
+                var _Address2 = $("#txtAddress2").val();
+                var _Address3 = $("#txtAddress3").val();
+                var _Pincode = $("#txtPincode").val();
+                var _TelephoneOffice = $("#txtPhoneOffice").val();
+                var _TelephoneResidence = $("#txtPhoneRes").val();
+                var _Fax = $("#txtFAX").val();
+                var _EMailId = $("#txtEmailId").val();
+                var _DistrictId = $("#cboDistrict option:selected").val();
+
+                var JsonObject = {
+                    Address1: _Address1,
+                    Address2: _Address2,
+                    Address3: _Address3,
+                    Pincode: _Pincode,
+                    TelephoneOffice : _TelephoneOffice,
+                    TelephoneResidence: _TelephoneResidence,
+                    Fax: _Fax,
+                    EMailId : _EMailId,
+                    DistrictId : _DistrictId
+                };
+                $.ajax({
+                    type: "POST",
+                    url: "../Users/UpdateProfile",
+                    data: JSON.stringify(JsonObject),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (msg) {
+                        debugger;
+                        var s = '';
+                        var retval = JSON.parse(msg);
+                        alert(retval.Result);
+                    },
+                    error: function (msg) {
+                        alert(msg.d);
+                    }
+                });
+            }
+        });
+    });
+</script>
+<div id="pnlLoginRequest" class="notificationBox">
+    <h3>Profile</h3>
+    <div class="row">
+        <div class="col-sm-12">
+            <form id="frmMain">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="txtLoginId">Login Id :</label>
+                            <input id="txtLoginId" name="txtLoginId" type="text" class="form-control form-control-sm password" disabled />
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="txtName">Name :</label>
+                            <input id="txtName" name="txtName" type="text" class="form-control form-control-sm" disabled  />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="txtRole">Role :</label>
+                            <input id="txtRole" name="txtRole" type="text" class="form-control form-control-sm" disabled />
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="txtInsurer">Insurer :</label>
+                            <input id="txtInsurer" name="txtInsurer" type="text" class="form-control form-control-sm" disabled  />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label for="txtDP">Designated Person :</label>
+                            <input id="txtDP" name="txtDP" type="text" class="form-control form-control-sm" disabled />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label for="txtAddress1">Address Line 1 : <span class="mandatory">*</span></label>
+                            <input id="txtAddress1" name="txtAddress1" type="text" class="form-control form-control-sm" required />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label for="txtAddress2">Address Line 2 : <span class="mandatory">*</span></label>
+                            <input id="txtAddress2" name="txtAddress2" type="text" class="form-control form-control-sm" required />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label for="txtAddress3">Address Line 3 : <span class="mandatory">*</span></label>
+                            <input id="txtAddress3" name="txtAddress3" type="text" class="form-control form-control-sm" required />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="cboStates">State : <span class="mandatory">*</span></label>
+                            <Select id="cboStates" name="cboStates" class="form-control form-control-sm">
+                                @foreach (DataRow drStates in PortalApplication.States.Rows)
+                                 {
+                                    <option value="@drStates["state_id"]">@drStates["state_name"]</option>
+                                 }
+                            </Select>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="cboDistricts">Districts : <span class="mandatory">*</span></label>
+                            <Select id="cboDistricts" name="cboDistricts" class="form-control form-control-sm">
+                            </Select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="txtPincode">Pincode : <span class="mandatory">*</span></label>
+                            <input id="txtPincode" name="txtPincode" type="text" class="form-control form-control-sm" required />
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <label for="txtEmailId">Email id : <span class="mandatory">*</span></label>
+                            <input id="txtEmailId" name="txtEmailId" type="text" class="form-control form-control-sm" required />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="txtPhoneOffice">Telephone (Office) :</label>
+                            <input id="txtPhoneOffice" name="txtPhoneOffice" type="text" class="form-control form-control-sm" />
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="txtPhoneRes">Telephone (Residence) :</label>
+                            <input id="txtPhoneRes" name="txtPhoneRes" type="text" class="form-control form-control-sm"  />
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="txtFAX">Fax :</label>
+                            <input id="txtFAX" name="txtFAX" type="text" class="form-control form-control-sm" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="offset-sm-9 col-sm-3">
+                        <input type="submit" class="btn btn-md btn-warning btn-block" value="Save" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

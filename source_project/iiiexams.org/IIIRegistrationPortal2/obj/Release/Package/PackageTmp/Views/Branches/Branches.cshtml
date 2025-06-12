@@ -1,0 +1,306 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+@using System.Data;
+@{
+    DataTable objStates = PortalApplication.States;
+}
+<style>
+    .mymargin {
+        margin: 5px;
+    }
+</style>
+<script>
+    $(document).ready(function(){
+        $("#txtDOB").datepicker({
+            showMonthAfterYear: true,
+            dateFormat: 'dd-M-yy',
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "c-100:c+0"
+        });
+
+        $("#txtPAN").on("onchange", function () {
+            $("#data").html('');
+        })
+
+        $("#cboStates").change(function () {
+            $("#cboDistricts").html('');
+            var _StateId = $("#cboStates option:selected").val();
+            var JsonObject = {
+                StateId: _StateId,
+            };
+            $.ajax({
+                type: "POST",
+                url: "../Home/GetDistrictsForStates",
+                data: JSON.stringify(JsonObject),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    debugger;
+                    var s = '';
+                    var result = JSON.parse(msg);
+                    if (result._STATUS_ == 'FAIL') {
+                        alert(result._MESSAGE_);
+                    }
+                    else {
+                        var data = JSON.parse(result._DATA_);
+                        if (data.length == undefined || data.length == 0) {
+                            alert("No districts were found for selected state");
+                        }
+                        else {
+                            s += "<option value=''>-- Select --</option>"
+                            for (i = 0; i < data.length; i++) {
+                                s += "<option value=" + data[i].district_id + ">" + data[i].district_name + "</option>"
+                            }
+                            $("#cboDistricts").html(s);
+                        }
+                    }
+                },
+                error: function (msg) {
+                    alert(msg.d);
+                }
+            });
+        })
+        
+
+        $("#frmMain").validate({
+            rules:
+            {
+                txtBranchCode: {
+                    required: true,
+                },
+                txtBranchName: {
+                    required: true,
+                },
+                txtBranchAddress: {
+                    required: true,
+                },
+                txtPlace: {
+                    required: true,
+                },
+                cboStates: {
+                    required: true,
+                },
+                cboDistricts: {
+                    required: true,
+                }
+            },
+            messages:
+            {
+                txtBranchCode: {
+                    required: MandatoryFieldMsg,
+                    check_exp: regexLowAscii
+                },
+                txtBranchName: {
+                    required: MandatoryFieldMsg,
+                    check_exp: regexLowAscii
+                },
+                txtBranchAddress: {
+                    required: MandatoryFieldMsg,
+                    check_exp: regexLowAscii
+                },
+                txtPlace: {
+                    required: MandatoryFieldMsg,
+                    check_exp: regexLowAscii
+                },
+                cboStates: {
+                    required: MandatoryFieldMsg,
+                },
+                cboDistricts: {
+                    required: MandatoryFieldMsg,
+                }
+            },
+            submitHandler: function (form) {
+                $("#data").html('');
+                var _BranchCode = $("#txtBranchCode").val();
+                var _BranchName = $("#txtBranchName").val();
+                var _BranchAddress = $("#txtBranchAddress").val();
+                var _Place = $("#txtPlace").val();
+                var _StateId = $("#cboStates option:selected").val();
+                var _StateName = $("#cboStates option:selected").text();
+                var _DistrictId = $("#cboDistricts option:selected").val();
+                var _DistrictName = $("#cboDistricts option:selected").text();
+
+                var JsonObject = {
+                    BranchCode: _BranchCode ,
+                    BranchName: _BranchName,
+                    BranchAddress: _BranchAddress,
+                    Place: _Place,
+                    StateId: _StateId,
+                    StateName: _StateName,
+                    DistrictId: _DistrictId,
+                    DistrictName: _DistrictName
+                };
+                $.ajax({
+                    type: "POST",
+                    url: "../Branches/AddBranch",
+                    data: JSON.stringify(JsonObject),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (msg) {
+                        debugger;
+                        var s = '';
+                        var retval = JSON.parse(msg);
+                        if (retval.result == "")
+                        {
+                            alert("Data Saved Successfully");
+                        }
+                        else
+                        {
+                            s = retval.result;
+                            $("#data").html(s);
+                        }
+                    },
+                    error: function (msg) {
+                        alert(msg);
+                    }
+                });
+            }
+        });
+
+        $("#txtFile").change(function () {
+            $("#ResponseFile").html('');
+        });
+
+        $("#frmUploadMain").validate({
+            rules: {
+                txtFile:
+                {
+                    required: true,
+                    extension: "xls|xlsx|xlsb"
+                }
+            },
+            messages: {
+                txtFile:
+                {
+                    required: MandatoryFieldMsg,
+                    extension: "Please upload excel file (*.xls / *.xlsx / *.xlsb)"
+                }
+            },
+            submitHandler: function (form) {
+                debugger;
+                var data = new FormData(form);
+
+                $.ajax({
+                    type: "POST",
+                    enctype: 'multipart/form-data',
+                    url: "../Branches/UploadBranches",
+                    data: data,
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    success: function (msg) {
+                        debugger;
+                        var s = '';
+                        var Result = JSON.parse(msg);
+                        if (Result._STATUS_ == "SUCCESS") {
+                            $("#ResponseFile").html('');
+                            $("#ResponseFile").html("<label><a href='" + Result._RESPONSE_FILE_ + "'>Download Response File</a></label>");
+                            alert(Result._MESSAGE_);
+                        }
+                        else {
+                            alert(Result._MESSAGE_);
+                        }
+                        form.reset();
+                    },
+                    error: function (msg) {
+                        alert(msg);
+                    }
+                });   
+            }
+        });
+    });
+</script>
+<div id="pnlMain" class="notificationBox">
+    <h3>Corporate Agent - Branch Offices</h3>
+    <div class="row  mt10">
+        <div class="col-sm-12">
+            <div class="col-sm-12" style="background-color:lightgray"><H4>Upload File :</H4></div>
+        </div>
+    </div>
+    <div class="row mt10">
+        <div class="col-sm-12">
+            <form id="frmUploadMain" method="post">
+                <div class="row mt10">
+                    <div class="col-sm-9">
+                        <label><a href="~/UploadTemplates/BranchDetailsBulkUploadTemplate.xls">Download Template</a></label>
+                    </div>
+                </div>
+                <div class="row mt10">
+                    <div class="col-sm-9 form-group">
+                        <label for="txtFile">Select File : <span class="mandatory">*</span></label>
+                        <input id="txtFile" name="txtFile" type="file" class="form-control" required>
+                    </div>
+                    <div class="col-sm-3 form-group" style="vertical-align:bottom">
+                        <label>&nbsp;<span class="mandatory">&nbsp;</span></label>
+                        <input type="Submit" class="btn btn-md btn-warning btn-block" value="Upload" />
+                    </div>
+                </div>
+                <div class="row mt10">
+                    <div class="col-sm-9" id="ResponseFile">
+                        
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="row  mt10">
+        <div class="col-sm-12">
+            <div class="col-sm-12" style="background-color:lightgray"><H4>I prefer entering details :</H4></div>
+        </div>
+    </div>
+    <div class="row mt10">
+        <div class="col-sm-12">
+            <form id="frmMain" method="post" action="../Home/Branches">
+                <div class="row mt10">
+                    <div class="col-sm-6 form-group">
+                        <label for="txtBranchCode">Branch Code : <span class="mandatory">*</span></label>
+                        <input id="txtBranchCode" name="txtBranchCode" type="text" class="form-control" required maxlength="50">
+                    </div>
+                    <div class="col-sm-6 form-group">
+                        <label for="txtBranchName">Branch Name : <span class="mandatory">*</span></label>
+                        <input id="txtBranchName" name="txtBranchName" type="text" class="form-control" required maxlength="100">
+                    </div>
+                </div>
+                <div class="row mt10">
+                    <div class="col-sm-6 form-group">
+                        <label for="txtBranchAddress">Address : <span class="mandatory">*</span></label>
+                        <input id="txtBranchAddress" name="txtBranchAddress" type="text" class="form-control" required maxlength="512">
+                    </div>
+                    <div class="col-sm-6 form-group">
+                        <label for="txtPlace">Place : <span class="mandatory">*</span></label>
+                        <input id="txtPlace" name="txtPlace" type="text" class="form-control" required maxlength="50">
+                    </div>
+                </div>
+                <div class="row mt10">
+                    <div class="col-sm-6 form-group">
+                        <label for="cboStates">Select State : <span class="mandatory">*</span></label>
+                        <select id="cboStates" name="cboStates" class="form-control">
+                            <option value="select">Select</option>
+                            @foreach (DataRow dr in objStates.Rows)
+                            {
+                            <option value="@dr["state_id"]">@dr["state_name"]</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-sm-6 form-group">
+                        <label for="cboDistricts">Select District : <span class="mandatory">*</span></label>
+                        <select id="cboDistricts" name="cboDistricts" class="form-control"></select>
+                    </div>
+                </div>
+                <div class="row mt10">
+                    <div class="col-sm-4 form-group">
+                        <input type="submit" class="btn btn-md btn-warning btn-block" value="Save">
+                    </div>
+                </div>
+                <div class="row mt10">
+                    <div id="data" class="col-sm-9">
+                    </div>
+                </div>
+
+</form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,369 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+@using System.Data;
+@{
+    DataTable objStates = PortalApplication.States;
+}
+<script>
+    $(document).ready(function () {
+        $("#txtDOB").datepicker({
+            showMonthAfterYear: true,
+            dateFormat: 'dd-M-yy',
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "c-100:c+0"
+        });
+
+        $("#txtPAN").on("onchange", function () {
+            $("#data").html('');
+        })
+
+        $("#frm").hide();
+
+        $("#cboStates").change(function (event, DistrictId) {
+            $("#cboDistricts").html('');
+            var _StateId = $("#cboStates option:selected").val();
+            var JsonObject = {
+                StateId: _StateId,
+            };
+            $.ajax({
+                type: "POST",
+                url: "../Home/GetDistrictsForStates",
+                data: JSON.stringify(JsonObject),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    debugger;
+                    var s = '';
+                    var result = JSON.parse(msg);
+                    if (result._STATUS_ == 'FAIL') {
+                        alert(result._MESSAGE_);
+                    }
+                    else {
+                        var data = JSON.parse(result._DATA_);
+                        if (data.length == undefined || data.length == 0) {
+                            alert("No districts were found for selected state");
+                        }
+                        else {
+                            s += "<option value=''>-- Select --</option>"
+                            for (i = 0; i < data.length; i++) {
+                                s += "<option value=" + data[i].district_id + ">" + data[i].district_name + "</option>"
+                            }
+                            $("#cboDistricts").html(s);
+                            if (DistrictId != undefined) {
+                                $("#cboDistricts").val(DistrictId);
+                            }
+                        }
+                    }
+                },
+                error: function (msg) {
+                    alert(msg.d);
+                }
+            });
+        })
+
+        $("#cboStatesF").change(function () {
+            $("#cboDistrictsF").html('');
+            var _StateId = $("#cboStatesF option:selected").val();
+            var JsonObject = {
+                StateId: _StateId,
+            };
+            $.ajax({
+                type: "POST",
+                url: "../Home/GetDistrictsForStates",
+                data: JSON.stringify(JsonObject),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    debugger;
+                    var s = '';
+                    var result = JSON.parse(msg);
+                    if (result._STATUS_ == 'FAIL') {
+                        alert(result._MESSAGE_);
+                    }
+                    else {
+                        var data = JSON.parse(result._DATA_);
+                        if (data.length == undefined || data.length == 0) {
+                            alert("No districts were found for selected state");
+                        }
+                        else {
+                            s += "<option value=''>-- Select --</option>"
+                            for (i = 0; i < data.length; i++) {
+                                s += "<option value=" + data[i].district_id + ">" + data[i].district_name + "</option>"
+                            }
+                            $("#cboDistrictsF").html(s);
+                        }
+                    }
+                },
+                error: function (msg) {
+                    alert(msg.d);
+                }
+            });
+        })
+
+        $("#btnView").click(function () {
+            $("#data").html("");
+            var _StateId = $("#cboStatesF option:selected").val();
+            var _DistrictId = $("#cboDistrictsF option:selected").val();
+            var JsonObject = {
+                StateId: _StateId,
+                DistrictId: _DistrictId,
+            };
+            $.ajax({
+                type: "POST",
+                url: "../Branches/GetBranchesForStateDistrict",
+                data: JSON.stringify(JsonObject),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    debugger;
+                    var s = '';
+                    var retval = JSON.parse(msg);
+                    if (retval == undefined || retval.length == undefined || retval.length == 0) {
+                        alert(msg);
+                    }
+                    else {
+                        s = "<table class='table table-striped table-bordered table-hover'>"
+                        s += "<thead><tr><td>&nbsp</td><td>Branch Code</td><td>Branch Name</td><td>State Name</td><td>District Name</td><td>Branch Address</td></tr></thead>";
+                        for (i = 0; i < retval.length; i++) {
+                            s += "<tr>";
+                            s += "<td><a href='javascript:edit(" + retval[i].BranchNo + ")'>Edit</a></td><td>" + retval[i].BranchCode + "</td><td>" + retval[i].BranchName + "</td><td>" + retval[i].State + "</td><td>" + retval[i].DistrictName + "</td><td>" + retval[i].BranchAddress + "</td>"
+                            s += "</tr>";
+                        }
+                        s += "</table>";
+                        $("#data").html(s);
+                        $("#data").show();
+                    }
+                },
+                error: function (msg) {
+                    alert(msg);
+                }
+            });
+        })
+
+        window.edit = function (BranchNo) {
+            debugger;
+            $("#GridFilter").hide();
+            $("#data").hide();
+            $("#frm").show();
+            var JsonObject = {
+                BranchId: BranchNo,
+            };
+            $.ajax({
+                type: "POST",
+                url: "../Branches/GetBranchDetailsForModification",
+                data: JSON.stringify(JsonObject),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    //debugger;
+                    var s = '';
+                    var retval = JSON.parse(msg);
+                    if (retval == undefined || retval.length == undefined || retval.length == 0) {
+                        alert(msg);
+                    }
+                    else {
+                        $("#txtBranchNo").val(retval[0].BranchNo);
+                        $("#txtBranchAddress").val(retval[0].BranchAddress);
+                        $("#txtBranchCode").val(retval[0].BranchCode);
+                        $("#txtBranchName").val(retval[0].BranchName);
+                        $("#txtPlace").val(retval[0].BranchPlace);
+                        $("#cboStates").val(retval[0].StateId);
+                        $("#cboStates").trigger("change", [retval[0].DistrictId]);
+                        //$("#cboDistricts").val(retval[0].DistrictId);
+                    }
+                },
+                error: function (msg) {
+                    alert(msg);
+                }
+            });
+        }
+
+        $("#frmMain").validate({
+            rules:
+            {
+                txtBranchCode: {
+                    required: true,
+                },
+                txtBranchName: {
+                    required: true,
+                },
+                txtBranchAddress: {
+                    required: true,
+                },
+                txtPlace: {
+                    required: true,
+                },
+                cboStates: {
+                    required: true,
+                },
+                cboDistricts: {
+                    required: true,
+                }
+            },
+            messages:
+            {
+                txtBranchCode: {
+                    required: MandatoryFieldMsg,
+                    check_exp: regexLowAscii
+                },
+                txtBranchName: {
+                    required: MandatoryFieldMsg,
+                    check_exp: regexLowAscii
+                },
+                txtBranchAddress: {
+                    required: MandatoryFieldMsg,
+                    check_exp: regexLowAscii
+                },
+                txtPlace: {
+                    required: MandatoryFieldMsg,
+                    check_exp: regexLowAscii
+                },
+                cboStates: {
+                    required: MandatoryFieldMsg,
+                },
+                cboDistricts: {
+                    required: MandatoryFieldMsg,
+                }
+            },
+            submitHandler: function (form) {
+                $("#data").html('');
+                var _BranchId = $("#txtBranchNo").val();
+                var _BranchCode = $("#txtBranchCode").val();
+                var _BranchName = $("#txtBranchName").val();
+                var _BranchAddress = $("#txtBranchAddress").val();
+                var _Place = $("#txtPlace").val();
+                var _StateId = $("#cboStates option:selected").val();
+                var _StateName = $("#cboStates option:selected").text();
+                var _DistrictId = $("#cboDistricts option:selected").val();
+                var _DistrictName = $("#cboDistricts option:selected").text();
+
+                var JsonObject = {
+                    BranchId: _BranchId,
+                    BranchCode: _BranchCode,
+                    BranchName: _BranchName,
+                    BranchAddress: _BranchAddress,
+                    Place: _Place,
+                    StateId: _StateId,
+                    StateName: _StateName,
+                    DistrictId: _DistrictId,
+                    DistrictName: _DistrictName
+                };
+                $.ajax({
+                    type: "POST",
+                    url: "../Branches/UpdateBranch",
+                    data: JSON.stringify(JsonObject),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (msg) {
+                        debugger;
+                        var s = '';
+                        var retval = JSON.parse(msg);
+                        if (retval.result == "") {
+                            alert("Data Saved Successfully");
+                        }
+                        else {
+                            s = retval.result;
+                            $("#data").html(s);
+                        }
+                    },
+                    error: function (msg) {
+                        alert(msg);
+                    }
+                });
+            }
+        });
+    });
+</script>
+<div id="pnlMain" class="notificationBox">
+    <h3>Corporate Agent - Branch Offices</h3>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="row mt10" id="GridFilter">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="cboStatesF">Select State : <span class="mandatory">*</span></label>
+                        <select id="cboStatesF" name="cboStatesF" class="form-control">
+                            <option value="select">Select</option>
+                            @foreach (DataRow dr in objStates.Rows)
+                            {
+                                <option value="@dr["state_id"]">@dr["state_name"]</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="cboDistrictsF">Select District : <span class="mandatory">*</span></label>
+                        <select id="cboDistrictsF" name="cboDistrictsF" class="form-control"></select>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label><span class="mandatory">&nbsp;</span></label>
+                        <input id="btnView" type="button" class="btn btn-md btn-warning btn-block" value="View">
+                    </div>
+                </div>
+            </div>
+            <div class="row mt10" id="frm">
+                <div class="col-sm-12">
+                    <form id="frmMain" method="post" action="../Home/Branches">
+                        <div class="row mt10">
+                            <div class="col-sm-6 form-group">
+                                <input type="hidden" id="txtBranchNo" name="txtBranchNo" value="" />
+                                <label for="txtBranchCode">Branch Code : <span class="mandatory">*</span></label>
+                                <input id="txtBranchCode" name="txtBranchCode" type="text" class="form-control" required maxlength="50">
+                            </div>
+                            <div class="col-sm-6 form-group">
+                                <label for="txtBranchName">Branch Name : <span class="mandatory">*</span></label>
+                                <input id="txtBranchName" name="txtBranchName" type="text" class="form-control" required maxlength="100">
+                            </div>
+                        </div>
+                        <div class="row mt10">
+                            <div class="col-sm-6 form-group">
+                                <label for="txtBranchAddress">Address : <span class="mandatory">*</span></label>
+                                <input id="txtBranchAddress" name="txtBranchAddress" type="text" class="form-control" required maxlength="512">
+                            </div>
+                            <div class="col-sm-6 form-group">
+                                <label for="txtPlace">Place : <span class="mandatory">*</span></label>
+                                <input id="txtPlace" name="txtPlace" type="text" class="form-control" required maxlength="50">
+                            </div>
+                        </div>
+                        <div class="row mt10">
+                            <div class="col-sm-6 form-group">
+                                <label for="cboStates">Select State : <span class="mandatory">*</span></label>
+                                <select id="cboStates" name="cboStates" class="form-control">
+                                    <option value="select">Select</option>
+                                    @foreach (DataRow dr in objStates.Rows)
+                                    {
+                                        <option value="@dr["state_id"]">@dr["state_name"]</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-sm-6 form-group">
+                                <label for="cboDistricts">Select District : <span class="mandatory">*</span></label>
+                                <select id="cboDistricts" name="cboDistricts" class="form-control"></select>
+                            </div>
+                        </div>
+                        <div class="row mt10">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <input type="submit" class="btn btn-md btn-warning btn-block" value="Save">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="row mt10">
+                <div class="col-sm-12">
+                    <div id="data" class="table-responsive">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

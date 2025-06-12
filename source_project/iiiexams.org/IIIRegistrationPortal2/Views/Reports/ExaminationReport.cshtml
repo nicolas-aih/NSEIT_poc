@@ -1,0 +1,24 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+@*@Scripts.Render("~/js/app/examinationreport")*@
+<script src="~/js/app/examinationreport.js" type="text/javascript"></script>
+
+<div id="pnlMain" class="notificationBox">
+    <h3>
+        Examination Report
+    </h3>
+    <form id="frmMain">
+        <div class="row mt-10">
+            <div class="col-sm-12" id="dvApplicantDetails">
+                <br /><br />
+                <label><a href="javascript:fr(1);">Click here to get last two days examination report</a></label><br /><br />
+                <label><a href="javascript:fr(2);">Click here to get the details of candidates registered for examination</a></label><br /><br />
+                <label><a href="javascript:fr(3);">Click here to get the details of trained candidates who are yet to register for examination</a></label><br /><br /><br />
+                <div class="col-sm-9" id="ResponseFile">
+
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

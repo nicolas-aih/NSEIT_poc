@@ -1,0 +1,105 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+<script src="~/js/app/RegisterTelemarketer.js" type="text/javascript"></script>
+<div id="pnlMain" class="notificationBox">
+    <h3>Register Telemarketer</h3>
+    <div class="row">
+        <div id="Form" class="col-sm-12">
+            <form id="frmMain" autocomplete="off">
+                <div class="row mt10">
+                    <div class="col-sm-9">
+                        <div class="form-group">
+                            <label for="txtName">Full Name : <span class="mandatory">*</span></label>
+                            <input id="txtName" name="txtName" class="form-control" type="text"  maxlength="255" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt10">
+                    <div class="col-sm-9">
+                        <div class="form-group">
+                            <label for="txtAddress">Address : <span class="mandatory">*</span></label>
+                            <input type="text" id="txtAddress" name="txtAddress" class="form-control" maxlength="255"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt10">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="txtTraiRegNo">TRAI Reg. No. : <span class="mandatory">*</span></label>
+                            <input id="txtTraiRegNo" name="txtTraiRegNo" class="form-control" type="text" maxlength="50"/>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="cboIsActive">Is Active ?: <span class="mandatory">*</span></label>
+                            <select name="cboIsActive" id="cboIsActive" class="form-control">
+                                <option value="">-- Select --</option>
+                                <option value="Y">Yes</option>
+                                <option value="N">No</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row  mt10">
+                    <div class="col-sm-9">
+                        <div class="col-sm-12" style="background-color:lightgray"><H4>Designated Person's Details:</H4></div>
+                    </div>
+                </div>
+                <div class="row  mt10">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="txtDPName">Name : <span class="mandatory">*</span></label>
+                            <input id="txtDPName" name="txtDPName" class="form-control" type="text" maxlength="255" />
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="txtDPEmailId">Email Id : <span class="mandatory">*</span></label>
+                            <input id="txtDPEmailId" name="txtDPEmailId" class="form-control" type="email" maxlength="255"/>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="txtDPContactNo">Mobile No. : <span class="mandatory">*</span></label>
+                            <input id="txtDPContactNo" name="txtDPContactNo" class="form-control" type="text" maxlength="10"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row  mt10">
+                    <div class="col-sm-9">
+                        <div class="col-sm-12" style="background-color:lightgray"><H4>Contact Person's Details:</H4></div>
+                    </div>
+                </div>
+                <div class="row  mt10">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="txtCPName">Name : <span class="mandatory">*</span></label>
+                            <input id="txtCPName" name="txtCPName" class="form-control" type="text" maxlength="255"/>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="txtCPEmailId">Email Id : <span class="mandatory">*</span></label>
+                            <input id="txtCPEmailId" name="txtCPEmailId" class="form-control" type="email" maxlength="255"/>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="txtCPContactNo">Mobile No. : <span class="mandatory">*</span></label>
+                            <input id="txtCPContactNo" name="txtCPContactNo" class="form-control" type="text" maxlength="10"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt10">
+                    <div class="col-sm-3" style="align-content:flex-end">
+                        <div class="form-group">
+                            <input type="submit" class="btn btn-md btn-warning btn-block" value="Save" />
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>

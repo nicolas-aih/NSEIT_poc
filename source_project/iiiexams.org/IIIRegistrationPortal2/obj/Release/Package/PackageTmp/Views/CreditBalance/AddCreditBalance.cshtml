@@ -1,0 +1,211 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+@using System.Data;
+
+<style>
+    .mymargin {
+        margin: 5px;
+    }
+</style>
+<script>
+    $(document).ready(function () {
+        $("#txtDateOfPayment").datepicker({
+            showMonthAfterYear: true,
+            dateFormat: 'dd-M-yy',
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "c-100:c+0"
+        });
+
+        $("#frmMain").validate({
+            rules:
+            {
+                cboInstructionType: {
+                    required: true,
+                },
+                txtReferenceNo: {
+                    required: true,
+                },
+                txtAmount: {
+                    required: true,
+                    digits: true,
+                },
+                cboModeOfPayment: {
+                    required: true,
+                },
+                txtDateOfPayment: {
+                    required: true,
+                },
+                txtRemarks: {
+                    required: true,
+                    check_exp: regexLowAscii
+                }
+            },
+            messages:
+            {
+                cboInstructionType: {
+                    required: MandatoryFieldMsg,
+                },
+                txtReferenceNo: {
+                    required: MandatoryFieldMsg,
+                },
+                txtAmount: {
+                    required: MandatoryFieldMsg,
+                    digits: "Please enter valid amount",
+                },
+                cboModeOfPayment: {
+                    required: MandatoryFieldMsg,
+                },
+                txtDateOfPayment: {
+                    required: MandatoryFieldMsg,
+                },
+                txtRemarks: {
+                    required: MandatoryFieldMsg,
+                    check_exp: regexLowAscii
+                }
+            },
+            submitHandler: function (form) {
+                $("#data").html('');
+
+                var _InstructionId      = null;
+                var _InstructionType    = $("#cboInstructionType").val();
+                var _ReferenceNo       = $("#txtReferenceNo").val();
+                var _Amount              = $("#txtAmount").val();
+                var _ModeOfPayment     = $("#cboModeOfPayment").val();
+                var _DateOfPayment     = $("#txtDateOfPayment").val();
+                var _Remarks              = $("#txtRemarks").val();
+
+                var JsonObject = {
+                    InstructionType: _InstructionType,
+                    ReferenceNo: _ReferenceNo,
+                    Amount: _Amount,
+                    ModeOfPayment: _ModeOfPayment,
+                    DateOfPayment: _DateOfPayment,
+                    Remarks: _Remarks,
+                };
+                $.ajax({
+                    type: "POST",
+                    url: "../CreditBalance/AddCreditBalance",
+                    data: JSON.stringify(JsonObject),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (msg) {
+                        debugger;
+                        var s = '';
+                        var retval = JSON.parse(msg);
+                        if (retval.result == "") {
+                            alert("Data Saved Successfully");
+                            form.reset();
+                        }
+                        else {
+                            s = retval.result;
+                            $("#data").html(s);
+                        }
+                    },
+                    error: function (msg) {
+                        alert(msg);
+                    }
+                });
+            }
+        });
+
+    });
+</script>
+<div id="pnlMain" class="notificationBox">
+    <h3>Credit Balance Instruction</h3>
+    @*instruction_id
+        company_code
+        instruction_type
+        instrument_no
+        amount
+        mode_of_payment
+        date_of_payment
+        remark
+        status
+        created_by
+        creation_datetime
+        approvers_remark
+        approved_by
+        approval_datetime*@
+    <div class="row mt10">
+        <div class="col-sm-12">
+            <form id="frmMain" method="post" action="../Home/Branches">
+                @if (@PortalSession.RoleCode == "BO")
+                {
+                    <div class="row mt10">
+                        <div class="col-sm-3 form-group">
+                            <label for="cboCompanyType">Company Type : <span class="mandatory">*</span></label>
+                            <Select id="cboCompanyType" name="cboCompanyType" class="form-control" required>
+                                <option value="IN">Insurer</option>
+                                <option value="CA">Corporate Agent</option>
+                                <option value="WA">Web Aggregator</option>
+                                <option value="IMF">Insurance Marketing Firm</option>
+                                <option value="BR">Insurance Broker</option>
+                            </Select>
+                        </div>
+                        <div class="col-sm-6 form-group">
+                            <label for="cboCompany">Company : <span class="mandatory">*</span></label>
+                            <select id="cboCompany" name="txtReferenceNo" class="form-control" required></select>
+                        </div>
+                    </div>
+                }
+                <div class="row mt10">
+                    <div class="col-sm-4 form-group">
+                        <label for="txtDateOfPayment">Date of Payment : <span class="mandatory">*</span></label>
+                        <input type="text" id="txtDateOfPayment" name="txtDateOfPayment" class="form-control dtpick" readonly="readonly" style="cursor:pointer; background-color:white;"/>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label for="cboInstructionType">Instruction Type : <span class="mandatory">*</span></label>
+                        @if (@PortalSession.RoleCode == "BO")
+                        {
+                        <Select id="cboInstructionType" name="cboInstructionType" class="form-control" required>
+                            <option value="credit">Credit</option>
+                            <option value="debit">Debit</option>
+                        </Select>
+                        }
+                        else
+                        {
+                        <input type="text" id="cboInstructionType" name="cboInstructionType" class="form-control" required value="Credit" disabled="disabled">
+                        }
+                    </div>
+                </div>
+                <div class="row mt10">
+                    <div class="col-sm-4 form-group">
+                        <label for="txtReferenceNo">Reference Number : <span class="mandatory">*</span></label>
+                        <input id="txtReferenceNo" name="txtReferenceNo" type="text" class="form-control" required maxlength="100">
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label for="cboModeOfPayment">Mode of Payment : <span class="mandatory">*</span></label>
+                        <select id="cboModeOfPayment" name="cboModeOfPayment" type="text" class="form-control" required>
+                            <option value="NEFT">NEFT</option>
+                            @*<option value="RTGS">RTGS</option>
+                                <option value="IMPS">IMPS</option>*@
+                        </select>
+                    </div>
+                </div>
+                <div class="row mt10">
+                    <div class="col-sm-4 form-group">
+                        <label for="txtAmount">Amount : <span class="mandatory">*</span></label>
+                        <input id="txtAmount" name="txtAmount" type="text" class="form-control" required maxlength="512">
+                    </div>
+                </div>
+                <div class="row mt10">
+                    <div class="col-sm-9 form-group">
+                        <label for="txtRemarks">Remarks : <span class="mandatory">*</span></label>
+                        <input type="text" id="txtRemarks" name="txtRemarks" class="form-control" />
+                    </div>
+                </div>
+                <div class="row mt10">
+                    <div class="col-sm-4 form-group">
+                        <input type="submit" class="btn btn-md btn-warning btn-block" value="Save">
+                    </div>
+                </div>
+                <div class="row mt10">
+                    <div id="data" class="col-sm-9">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

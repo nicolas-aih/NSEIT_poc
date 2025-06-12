@@ -1,0 +1,126 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>@ViewBag.Title</title>
+
+    <link href="~/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link href="~/css/common.css" rel="stylesheet" />
+    <link href="~/CSS/jquery-ui.min.css" rel="stylesheet" />
+    <script src="~/js/RegexDef.js"></script>
+    <script src="~/js/jquery-3.2.1.min.js" type="text/javascript"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/js/jquery-ui.min.js"></script>
+    <script src="~/js/jquery.validate.js"></script>
+
+</head>
+<body>
+    <div class="wrap">
+        <div class="headerdiv">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6 topLeft"><img src="~/images/NSE_III_logo.png" id="homePageBtn" class="cursorPointer" /> </div>
+                    @*<div class="col-sm-6 text-right mt10">
+                            @if (PortalSession.UserID == 0)
+                            {
+                                <a href="~/Home/Loginrequest" id="LoginRequest" class="btn btn-sm btn-warning LogoutBtn">Login Request</a>
+                            }
+                            else
+                            {
+                                <span>Welcome !, @PortalSession.UserName ( @PortalSession.RoleName )</span>
+                                <br />
+                                <a href="~/Users/Logout" id="Logout" class="btn btn-sm btn-warning LogoutBtn">Logout</a>
+                            }
+                        </div>*@
+                </div>
+            </div>
+        </div>
+        <div class="navdiv">
+            <div class="container">
+                <nav class="navbar navbar-default" role="navigation">
+                    <div class="container-fluid">
+                    </div>
+                    <!-- /.container-fluid -->
+                </nav>
+            </div>
+        </div>
+        <div class="newsdiv">
+            <div class="container">
+            </div>
+        </div>
+
+        <div class="maindiv">
+            <div class="maindivContainer container">
+                <div class="row">
+                    <div class="col-sm-10 col-sm-offset-1">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="paymentBox">
+                                    <h3>Online Payment Of Examination Fees</h3>
+                                    <div class="row">
+                                        <div class="col-sm-12 BlueBox">
+                                            <h5>Transaction ID / URN </h5>
+                                            <form method="post" action="../home/PGRequest">
+                                                <div class="row mt10">
+                                                    <div class="col-sm-4">
+                                                        <div class="input-group">
+                                                            <input type="text" class="form-control" placeholder="" name="txtBatchNo" id="txtBatchNo">
+                                                            <div class="input-group-btn">
+                                                                <button class="btn btn-warning" type="submit"><img src="../images/searchBtn.png" width="20" height="20" /></button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+
+                                            <div class="row mt10">
+                                                <div class="col-sm-8">
+                                                    @ViewBag.Response
+                                                </div>
+                                            </div>
+                                            <div class="row mt10">
+                                                <div class="col-sm-8">
+                                                    @ViewBag.Status
+                                                </div>
+                                            </div>
+                                            <div class="row mt20">
+                                                <div class="col-sm-12">
+                                                    <h5>Instructions: </h5>
+                                                    <ol>
+                                                        <li>Candidate can make a payment next day after confirmed for examination.</li>
+                                                        <li>For any payment related query, insurance company/candidate needs to contact the respective bank. </li>
+                                                        <li>Please do not close the browser till you get an appropriate message (Payment Successful/Unsuccessful) and note down the Customer Reference number.													 </li>
+                                                        <li>In case the message shows as payment is &quot;Unsuccessful&quot; and amount is debited from bank account then kindly contact your respective bank.</li>
+                                                        <li>Exam fees once paid will not be refunded under any circumstances once scheduled, even if candidate chooses to remain absent for the examination. </li>
+                                                        <li class="txt_red">In case of payment confirmation not received, transaction amount will be refunded back within 3-4 working days.</li>
+                                                        <li>Our helpline number is 022-42706500 ( timing 9:30 am to 5:30 pm ). You may also send an email to <a href="mailto: iiiexam_reg@nseit.com" target="_blank">iiiexam_reg@nseit.com</a></li>
+                                                    </ol>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footerdiv">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    <p>​All Right Reserved</p>
+                </div>
+                <div class="col-sm-6 text-right">
+                    <p>Portal Developed and Maintained By <img src="~/images/NSEIT_Logo.jpg" width="81" height="47"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+

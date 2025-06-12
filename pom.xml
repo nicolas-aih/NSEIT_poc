@@ -21,6 +21,7 @@
     <groupId>com.yourcompany</groupId>       <!-- Change this to your company's or project's group ID -->
     <artifactId>nse-it-java-translation</artifactId> <!-- Change this to your project's artifact ID -->
     <version>0.0.1-SNAPSHOT</version>       <!-- Your project's version -->
+    <packaging>war</packaging>
 
     <name>NSEIT Java Translation</name>      <!-- Human-readable name -->
     <description>Java translation of C# code</description> <!-- Project description -->
@@ -40,13 +41,31 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <!-- JDBC for SQL Server -->
+        <!-- Spring Boot Thymeleaf Starter -->
         <dependency>
-            <groupId>com.microsoft.sqlserver</groupId>
-            <artifactId>mssql-jdbc</artifactId>
-            <scope>runtime</scope> <!-- Usually scope 'runtime' for JDBC drivers -->
-             <!-- Version is often managed by Spring Boot parent, but if not, specify it -->
-             <!-- <version>12.4.2.jre11</version> -->
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+
+        <!-- Spring Boot Data JPA -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+
+        <!-- H2 Database -->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- Spring Boot DevTools -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <scope>runtime</scope>
+            <optional>true</optional>
         </dependency>
 
         <!-- Apache Commons Lang3 for utility functions -->
@@ -64,6 +83,13 @@
             <version>5.2.4</version> <!-- Specify version, often not managed by Spring Boot parent -->
         </dependency>
 
+        <!-- Spring Boot Test -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
         <!-- Optional: Spring Boot Security if you implement AuthorizationExt/AJAX -->
         <!-- Uncomment this if you add Spring Security for authorization -->
         <!--
@@ -74,6 +100,13 @@
         -->
 
         <!-- Add your other dependencies here if any -->
+
+        <!-- Jakarta Servlet API -->
+        <dependency>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
 
     </dependencies>
 

@@ -1,0 +1,53 @@
+﻿
+@{
+    ViewBag.Title = "Bulk Upload Training Details";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<script src="~/js/app/BulkUploadTrainingDetails.js" type="text/javascript"></script>
+<div id="pnlMain" class="notificationBox">
+    <h3>
+        Bulk Upload Training Details
+    </h3>
+    <form id="frmUploadMain">
+
+        <div class="row mt-10">
+            <div class="col-sm-12">
+                <div>
+                    <div class="row mt10">
+                        <label><a href="~/UploadTemplates/TrainingDataUpdate.csv">Download Template</a></label>
+                    </div>
+                </div>
+                <div>
+                    <div class="row mt10">
+                        <div class="col-sm-9 form-group">
+                            <label for="txtFile">Select File : <span class="mandatory">*</span></label>
+                            <input id="txtFile" name="txtFile" type="file" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row mt10">
+                        <div class="col-sm-6">
+                            <div>
+                                <ul>
+                                    <li><i>File Type: Pipe ( '|' ) seperated values with extension csv. Check the template for reference</i></li>
+                                    <li><i>Maximum size : 5 megabytes.</i></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt10" style="text-align:">
+                    <div class="col-sm-3 form-group">
+                        <input type="Submit" class="btn btn-md btn-warning btn-block" value="Proceed" />
+                    </div>
+                </div>
+                <div class="row mt10">
+                    <div class="col-sm-9" id="ResponseFile">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>URN Creation</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h3>URN Creation</h3>
+        <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
+        <form th:action="@{/urn-creation}" method="post">
+            <div class="form-group">
+                <label for="dummy">Dummy Field: <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="dummy" name="dummy" required />
+            </div>
+            <button type="submit" class="btn btn-warning">Create URN</button>
+        </form>
+    </div>
+</body>
+</html> 

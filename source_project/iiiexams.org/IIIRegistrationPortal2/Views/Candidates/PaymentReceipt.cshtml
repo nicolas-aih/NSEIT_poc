@@ -1,0 +1,43 @@
+﻿
+@{
+    ViewBag.Title = "Receipt";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+<script src="~/js/app/PaymentReceipt.js" type="text/javascript"></script>
+<script type="text/javascript">
+    MaxDate = "@DateTime.Now.AddDays(-1).ToString("dd-MMM-yyyy")"; 
+</script>
+<div class="notificationBox">
+    <h3>Download Payment Receipt</h3>
+    <div class="row">
+        <div class="col-sm-12">
+            <form id="frmMain" autocomplete="off">
+                <div class="row mt10">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="txtURN">URN : <span class="mandatory">*</span></label>
+                            <input id="txtURN" name="txtURN" type="text" class="form-control" required autocomplete="off" />
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="txtDOB">Date of birth : <span class="mandatory"></span></label>
+                            <input id="txtDOB" name="txtDOB" type="text" class="form-control dtpick" readonly="readonly" style="cursor:pointer; background-color:white;" autocomplete="off" />
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label class=""></label>
+                            <input type="submit" class="btn btn-md btn-warning btn-block mt10" value="Download">
+                        </div>
+                    </div>
+                </div>               
+                
+                <div class="row mt10">
+                    <div class="col-sm-4" id="Results">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

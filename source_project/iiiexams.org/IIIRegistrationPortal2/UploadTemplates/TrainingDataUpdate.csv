@@ -1,0 +1,22 @@
+urn|training_start_date|training_end_date|training_hours|tcc_expiry_date
+
+
+
+
+Format Details:
+===============
+1. File extension : .csv
+2. Field Separator : Pipe ( '|' )
+3. Header Required : Yes ( 1st line above )  
+
+Individual Field Details:
+=========================
+1. urn -> IRDA URN. Required
+2. training_start_date -> Training Start Date in dd-MMM-yyyy date format. Required. Cannot be future date.
+3. training_end_date -> Training End Date in dd-MMM-yyyy date format. Required. Cannot be future date. Should be greater than training_start_date 
+4. training_hours -> Training Hours - number. Required.  Cannot be zero or negative number.
+5. tcc_expiry_date -> TCC Expiry Date in dd-MMM-yyyy date format. Required.  Cannot be past or current date.
+
+*** The Format Details / Individual Field Details sections are to be removed from the file being uploaded.
+*** These sections are present in template only to provide more clarification.
+*** THE FILE SHOULD CONTAIN ONLY THE HEADER ROW AND THE DATA ROWS.

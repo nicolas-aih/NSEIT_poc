@@ -1,0 +1,198 @@
+﻿@{
+    ViewBag.Title = "DPDetails";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+@using System.Data;
+@*@Scripts.Render("~/js/app/viewdp")*@
+<script src="~/js/app/viewdp.js"></script>
+
+<div id="pnlNotifications" class="notificationBox">
+    <h3>Designated Person</h3>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="row mt10" id="GridFilter">
+                <form id="frmSearch" autocomplete="off">
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <label for="cboInsurer">Insurer : <span class="mandatory">*</span></label>
+                            <select id="cboInsurer" name="cboInsurer" class="form-control" required>
+                                <option value="">-- Select --</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-2 offset-sm-2">
+                        <div class="form-group">
+                            <label><span class="mandatory">&nbsp;</span></label>
+                            <input type="button" id="butNewDP" class="btn btn-md btn-warning btn-block" value="New DP">
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="row mt10">
+                <div class="col-sm-12">
+                    <form id="frmMain" autocomplete="off" style="display:none">
+                        <div class="row mt10">
+                            <div class="col-sm-8">
+                                <div class="form-group">
+                                    <label for="txtInsurerName">Insurer : <span class="mandatory">*</span></label>
+                                    <input type="text" id="txtInsurerName" name="txtInsurerName" class="form-control" readonly autocomplete="off" />
+                                    <input type="hidden" id="hdnInsurerUserId" name="hdnInsurerUserId" />
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="txtDPId"> DP ID : <span class="mandatory">*</span></label>
+                                    <input id="txtDPId" name="txtDPId" type="text" readonly="readonly" class="form-control" maxlength="255" required autocomplete="off" />
+                                    <input type="hidden" id="hdnDPUserId" name="hdnDPUserId" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt10">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label for="txtInsurerType"> Insurer Type : <span class="mandatory">*</span></label>
+                                    <input type="text" class="form-control" id="txtInsurerType" name="txtInsurerType" disabled autocomplete="off" />
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label for="txtName">Name : <span class="mandatory">*</span></label>
+                                    <input id="txtName" name="txtName" type="text" class="form-control " maxlength="256" required autocomplete="off" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt10">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="txtAddress"> Address line 1: <span class="mandatory">*</span></label>
+                                    <input id="txtAddress" name="txtAddress" type="text" class="form-control" required maxlength="256" autocomplete="off" />
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="txtStreet"> Address line 2: <span class="mandatory">*</span></label>
+                                    <input id="txtStreet" name="txtStreet" type="text" class="form-control" required maxlength="256" autocomplete="off" />
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="txtTown"> Address line 3: <span class="mandatory">*</span></label>
+                                    <input id="txtTown" name="txtTown" type="text" class="form-control" required maxlength="256" autocomplete="off" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt10">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="cboStates">State : <span class="mandatory">*</span></label>
+                                    <select id="cboStates" name="cboStates" class="form-control">
+                                        <option value="">-- Select --</option>
+                                        @foreach (DataRow dr in PortalApplication.States.Rows)
+                                        {
+                                            <option value="@dr["state_id"]">@dr["state_name"]</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="cboDistricts">District : <span class="mandatory">*</span></label>
+                                    <select id="cboDistricts" name="cboDistricts" class="form-control"></select>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="txtPincode">Pincode : <span class="mandatory">*</span></label>
+                                    <input id="txtPincode" name="txtPincode" type="text" class="form-control" maxlength="6" autocomplete="off" />
+                                    <br /><span id="pincodeRange"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt10">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="txtTelephoneO">Telephone (Office): <span class="mandatory">&nbsp;</span></label>
+                                    <input id="txtTelephoneO" name="txtTelephoneO" type="text" class="form-control" maxlength="12" autocomplete="off" />
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="txtTelephoneR">Telephone (Residence) : <span class="mandatory">&nbsp;</span></label>
+                                    <input id="txtTelephoneR" name="txtTelephoneR" type="text" class="form-control" maxlength="12" autocomplete="off" />
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="txtMobileNo">Mobile No  : <span class="mandatory">*</span> </label>
+                                    <input id="txtMobileNo" name="txtMobileNo" type="text" class="form-control" maxlength="12" autocomplete="off" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt10">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="txtFax">Fax : <span class="mandatory">&nbsp;</span></label>
+                                    <input id="txtFax" name="txtFax" type="text" class="form-control" maxlength="12" autocomplete="off" />
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="txtEmailID">Email ID : <span class="mandatory">*</span></label>
+                                    <input id="txtEmailID" name="txtEmailID" type="text" class="form-control" autocomplete="off" />
+                                    <br /><span>Must be a valid and unique Email address.The password will be sent to this Email</span>
+                                </div>
+                            </div>
+                            @*<div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="txtDate">Activated Date: <span class="mandatory">*</span></label>
+                                        <input id="txtDate" name="txtDate" type="text" readonly="readonly" class="form-control" value="@DateTime.Now.ToString("dd-MMM-yyyy")" autocomplete="off" />
+                                    </div>
+                                </div>*@
+                        </div>
+                        <div class="row mt10">
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="txtFileSign">Corporate DP Signature : <span class="mandatory">*</span></label>
+                                    <img id="ImgSign" src="~/Images/Signature.jpg" name="ImgSign" style="cursor:pointer; width:100px; height:35px; border:2px solid black;">
+                                    <input type="file" id="txtFileSign" name="txtFileSign" required style="display:none" /><br /><br />
+                                    <I>(click on the image to select)</I>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div>
+                                    <ul>
+                                        <li><i>File type : image files (*.jpg / *.jpeg / *.png ).</i></li>
+                                        <li><i>Maximum size : 50 kilobytes.</i></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt10">
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="chkActive">Active: <span class="mandatory">*</span></label>
+                                    <input id="chkActive" name="chkActive" type="checkbox" checked="checked" class="form-control form-control-sm">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt10">
+                            <div class="col-sm-3">
+                                <input type="submit" class="btn btn-md btn-warning btn-block" value="Save">
+                            </div>
+                            <div class="col-sm-3">
+                                <input type="button" id="butCancel" class="btn btn-md btn-warning btn-block" value="Cancel">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="row mt10">
+                <div class="col-sm-12">
+                    <div id="data" class="table-responsive" style="display:none">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

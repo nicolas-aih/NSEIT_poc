@@ -1,0 +1,635 @@
+﻿@using System.Data;
+@{
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+@*@Scripts.Render("~/js/app/urnrequestmodification")*@
+<script src="~/js/app/urnrequestmodification.js" type="text/javascript"></script>
+
+<div id="pnlMain" class="notificationBox">
+    <h3>@ViewBag.Title</h3>
+    <div class="row" id="divData">
+        <div id="Form" class="col-sm-12">
+            <form id="frmMain" method="post" action="" autocomplete="off">
+                @*<input type="hidden" id="hdnAadhaarMessage" name="hdnAadhaarMessage" />*@
+                <input type="hidden" id="hdnEmailMessage" name="hdnEmailMessage" />
+                <input type="hidden" id="hdnMobileMessage" name="hdnMobileMessage" />
+                <input type="hidden" id="hdnWhatsAppMessage" name="hdnWhatsAppMessage" />
+                <div class="row mt10">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="txtApplicationDate">Application date<span class="mandatory"></span></label>
+                            <input id="txtApplicationDate" name="txtApplicationDate" type="text" class="form-control" readonly autocomplete="off" />
+                            <input type="hidden" id="hdnId" name="hdnId" value="@ViewBag.Id">
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="cboInsuranceCategory">Insurance Category : <span class="mandatory">*</span></label>
+                            <select id="cboInsuranceCategory" name="cboInsuranceCategory" class="form-control" disabled>
+                                @*<option value="">-- Select --</option>*@
+                                @if (PortalSession.RoleCode == "CA" || PortalSession.RoleCode == "WA" || PortalSession.RoleCode == "IMF")
+                                {
+                                    foreach (DataRow dr in PortalApplication.InsuranceTypeSpecific.Rows)
+                                    {
+                                        <option value="@dr["insurance_type_code"]">@dr["insurance_type"]</option>
+                                    }
+                                }
+                                else if (PortalSession.RoleCode == "BR")
+                                {
+                                    foreach (DataRow dr in PortalApplication.InsuranceTypeSpecific.Rows)
+                                    {
+                                        if (PortalSession.InsurerTypeNew == Convert.ToString(dr["insurance_type_code"]).Trim())
+                                        {
+                                            <option value="@dr["insurance_type_code"]">@dr["insurance_type"]</option>
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    foreach (DataRow dr in PortalApplication.InsuranceTypeSpecific.Rows)
+                                    {
+                                        if (Convert.ToString(dr["insurance_type_code"]) == PortalSession.InsurerTypeNew)
+                                        {
+                                            <option value="@dr["insurance_type_code"]">@dr["insurance_type"]</option>
+                                        }
+                                    }
+                                }
+                            </select>
+                            <input type="hidden" id="hdnInsuranceCategory" name="hdnInsuranceCategory">
+                        </div>
+                    </div>
+                    @if (PortalSession.RoleCode == "CA" || PortalSession.RoleCode == "WA" || PortalSession.RoleCode == "IMF" || PortalSession.RoleCode == "BR")
+                    {
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="cboCORType">CoR Type : <span class="mandatory">*</span></label>
+                                <select id="cboCORType" name="cboCORType" class="form-control">
+                                    @*<option value="">-- Select --</option>*@
+                                    @foreach (DataRow dr in PortalApplication.CORTypeSpecific.Rows)
+                                    {
+                                        <option value="@dr["COR_code"]">@dr["cor"]</option>
+                                    }
+                                </select>
+                                <input type="hidden" id="hdnCORType" name="hdnCORType">
+                            </div>
+                        </div>
+                    }
+                </div>
+                <div class="row  mt10">
+                    <div class="col-sm-12">
+                        <div class="col-sm-12" style="background-color:lightgray"><H4>Personal Information :</H4></div>
+                    </div>
+                </div>
+                <div class="row  mt10">
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label for="cboSalutation">Salutation : <span class="mandatory">*</span></label>
+                            <select id="cboSalutation" name="cboSalutation" class="form-control">
+                                <option value="">-- Select --</option>
+                                @foreach (DataRow dr in PortalApplication.Salutation.Rows)
+                                {
+                                    <option value="@dr["salutation"]">@dr["salutation"]</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-7">
+                        <div class="form-group">
+                            <label for="txtApplicantName">Applicant's name : <span class="mandatory">*</span></label>
+                            <input id="txtApplicantName" name="txtApplicantName" type="text" class="form-control" required maxlength="256" autocomplete="off" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row  mt10">
+                    <div class="col-sm-9">
+                        <div class="form-group">
+                            <label for="txtFHName">Father's / Husband's Name : <span class="mandatory">*</span></label>
+                            <input id="txtFHName" name="txtFHName" type="text" class="form-control" required maxlength="256" autocomplete="off" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row  mt10">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="txtDOB">Date of Birth : <span class="mandatory">*</span></label>
+                            <input id="txtDOB" name="txtDOB" type="text" class="form-control dtpick" required readonly="readonly" style="cursor:pointer; background-color:white;" autocomplete="off" />
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="cboGender">Gender : <span class="mandatory">*</span></label>
+                            <select id="cboGender" name="cboGender" class="form-control">
+                                <option value="">-- Select --</option>
+                                @foreach (DataRow dr in PortalApplication.Gender.Rows)
+                                {
+                                    <option value="@dr["gender_code"]">@dr["gender"]</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="cboCategory">Category : <span class="mandatory">*</span></label>
+                            <select id="cboCategory" name="cboCategory" class="form-control">
+                                <option value="">-- Select --</option>
+                                @foreach (DataRow dr in PortalApplication.CasteCategory.Rows)
+                                {
+                                    <option value="@dr["caste_category_code"]">@dr["caste_category"]</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="cboArea">Area : <span class="mandatory">*</span></label>
+                            <select id="cboArea" name="cboArea" class="form-control">
+                                <option value="">-- Select --</option>
+                                @foreach (DataRow dr in PortalApplication.Area.Rows)
+                                {
+                                    <option value="@dr["locality_code"]">@dr["locality_type"]</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row  mt10">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="cboNationality">Nationality : <span class="mandatory">*</span></label>
+                            <select id="cboNationality" name="cboNationality" class="form-control">
+                                <option value="">-- Select --</option>
+                                @foreach (DataRow dr in PortalApplication.Countries.Rows)
+                                {
+                                    if (Convert.ToString(@dr["country_name"]).ToLower() == "india")
+                                    {
+                                        <option value="@dr["country_id"]">Indian</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@dr["country_id"]">@dr["country_name"]</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="txtPAN">PAN : <span class="mandatory">*</span></label>
+                            <input id="txtPAN" name="txtPAN" type="text" class="form-control" required maxlength="10" style="text-transform: uppercase;" autocomplete="off" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row  mt10">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="txtDrivingLic">Driving License No :</label>
+                            <input id="txtDrivingLic" name="txtDrivingLic" type="text" class="form-control" maxlength="20" style="text-transform: uppercase;" autocomplete="off" />
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="txtPassport">Passport No :</label>
+                            <input id="txtPassport" name="txtPassport" type="text" class="form-control" maxlength="10" style="text-transform: uppercase;" autocomplete="off" />
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="txtVoterId">Voter Identity Card :</label>
+                            <input id="txtVoterId" name="txtVoterId" type="text" class="form-control" maxlength="20" style="text-transform: uppercase;" autocomplete="off" />
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="txtPhotoId">Photo Id Card of Govt :</label>
+                            <input id="txtPhotoId" name="txtPhotoId" type="text" class="form-control" maxlength="20" style="text-transform: uppercase;" autocomplete="off" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row  mt10">
+                    <div class="col-sm-12">
+                        <div class="col-sm-12" style="background-color:lightgray"><H4>Candidate's Photo and Signature :</H4></div>
+                    </div>
+                </div>
+                <div class="row  mt10">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="txtFilePhoto">Candidate's Photo : <span class="mandatory">*</span></label>
+                            <img id="imgFilePhoto" src="~/Images/Photo.jpg" style="cursor:pointer; width:100px; height:125px; border:2px solid black;" />
+                            <input type="file" id="txtFilePhoto" name="txtFilePhoto" style="display:none" /><br /><br />
+                            <I>(click on the image to select)</I>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="txtFileSign">Candidate's Signature : <span class="mandatory">*</span></label>
+                            <img id="imgFileSign" src="~/Images/Signature.jpg" style="cursor:pointer; width:100px; height:35px; border:2px solid black;" />
+                            <input type="file" id="txtFileSign" name="txtFileSign" style="display:none" /><br /><br />
+                            <I>(click on the image to select)</I>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div>
+                            <ul>
+                                <li><i>File type : image files (*.jpg / *.jpeg / *.png ).</i></li>
+                                <li><i>Maximum size : 50 kilobytes.</i></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="row  mt10">
+                    <div class="col-sm-12">
+                        <div class="col-sm-12" style="background-color:lightgray"><H4>Educational background :</H4></div>
+                    </div>
+                </div>
+                <div class="row  mt10">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="cboBasicQualification">Basic Qualification : <span class="mandatory">*</span></label>
+                            <select id="cboBasicQualification" name="cboBasicQualification" class="form-control">
+                                <option value="">-- Select --</option>
+                                @if (PortalSession.RoleCode == "I")
+                                {
+                                    foreach (DataRow dr in PortalApplication.BasicQualificationSpecific.Rows)
+                                    {
+                                        <option value="@dr["qualification_code"]">@dr["qualification"]</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="txtBoardName">Board Name : <span class="mandatory">*</span></label>
+                            <input id="txtBoardName" name="txtBoardName" class="form-control" type="text" required maxlength="500" autocomplete="off" />
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="txtRollnumber">Roll number : <span class="mandatory">*</span></label>
+                            <input id="txtRollnumber" name="txtRollnumber" class="form-control" type="text" required maxlength="100" autocomplete="off" />
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="txtYearofPassing">Year of passing : <span class="mandatory">*</span></label>
+                            <input id="txtYearofPassing" name="txtYearofPassing" class="form-control dtpick" type="text" required readonly="readonly" style="cursor:pointer; background-color:white;" autocomplete="off" />
+                        </div>
+                    </div>
+                </div>
+                @if (PortalSession.RoleCode == "CA" || PortalSession.RoleCode == "WA" || PortalSession.RoleCode == "IMF" || PortalSession.RoleCode == "BR")
+                {
+                    <div class="row mt10">
+                        <div class="col-sm-6" id="divBasicQualificationDoc" name="divBasicQualificationDoc" style="display:none">
+                            <div class="form-group">
+                                <label id="lblBasicQualificationDoc" for="txtBasicQualificationDoc">Basic Qualification Certificate: <span class="mandatory">*</span></label>
+                                <input id="txtBasicQualificationDoc" name="txtBasicQualificationDoc" class="form-control" type="file" autocomplete="off" />&nbsp;&nbsp;Click <a href="javascript:r(@ViewBag.Id)">here</a> to check the currently uploaded document.
+                                <ul>
+                                    <li><i>Please scan your certificate and upload the copy.</i></li>
+                                    <li><i>File type : image files (*.jpg / *.jpeg ).</i></li>
+                                    <li><i>Maximum size : 50 kilobytes.</i></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                }
+                <div class="row  mt10">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="cboProfessionalQualification">Professional Qualification : <span class="mandatory">*</span></label>
+                            <select id="cboProfessionalQualification" name="cboProfessionalQualification" class="form-control">
+                                <option value="">-- Select --</option>
+                                @foreach (DataRow dr in PortalApplication.ProQualificationSpecific.Rows)
+                                {
+                                    <option value="@dr["qualification_code"]">@dr["qualification"]</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-3" id="divOtherQualification" name="divOtherQualification">
+                        <div class="form-group">
+                            <label id="lblOtherQualification" for="txtOtherQualification">Other Qualification : <span class="mandatory">&nbsp;</span></label>
+                            <input id="txtOtherQualification" name="txtOtherQualification" class="form-control" type="text" required maxlength="100" disabled="disabled" autocomplete="off" />
+                        </div>
+                    </div>
+                    <div class="col-sm-6" id="divQualificationDoc" name="divQualificationDoc" style="display:none">
+                        <div class="form-group">
+                            <label id="lblQualificationDoc" for="txtQualificationDoc">Professional Qualification Certificate: <span class="mandatory">*</span></label>
+                            <input id="txtQualificationDoc" name="txtQualificationDoc" class="form-control" type="file" autocomplete="off" />&nbsp;&nbsp;Click <a href="javascript:q(@ViewBag.Id)">here</a> to check the currently uploaded document.
+                            <ul>
+                                <li><i>Please scan your certificate and upload the copy.</i></li>
+                                <li><i>File type : image files (*.jpg / *.jpeg ).</i></li>
+                                <li><i>Maximum size : 50 kilobytes.</i></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="row  mt10">
+                    <div class="col-sm-12">
+                        <div class="col-sm-12" style="background-color:lightgray"><H4>Contact Information : </H4></div>
+                    </div>
+                </div>
+                <div class="row  mt10">
+                    <div class="col-sm-12">
+                        <H5>A ] Current Address : </H5>
+                        <div class="col-sm-12" style="background-image: url('../../Images/secsep.png'); background-repeat:repeat-x">
+                        </div>
+                    </div>
+                </div>
+                <div class="row  mt10">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="txtHouseNo_current">House No : <span class="mandatory">*</span></label>
+                            <input id="txtHouseNo_current" name="txtHouseNo_current" class="form-control" type="text" required maxlength="256" autocomplete="off" />
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="txtStreet_current">Street / Road : <span class="mandatory">*</span></label>
+                            <input id="txtStreet_current" name="txtStreet_current" class="form-control" type="text" required maxlength="256" autocomplete="off" />
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="txtCity_current">Town / City : <span class="mandatory">*</span></label>
+                            <input id="txtCity_current" name="txtCity_current" class="form-control" type="text" required maxlength="256" autocomplete="off" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row  mt10">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="cboStates_current">State : <span class="mandatory">*</span></label>
+                            <select id="cboStates_current" name="cboStates_current" class="form-control" required>
+                                <option value="">-- Select --</option>
+                                @foreach (DataRow dr in PortalApplication.States.Rows)
+                                {
+                                    <option value="@dr["state_id"]">@dr["state_name"]</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="cboDistricts_current">District : <span class="mandatory">*</span></label>
+                            <select id="cboDistricts_current" name="cboDistricts_current" class="form-control"></select>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="txtPincode_current">Pincode : <span class="mandatory">*</span></label>
+                            <input id="txtPincode_current" name="txtPincode_current" class="form-control" type="text" required maxlength="6" autocomplete="off" />
+                            <br /><span id="pincodeRange_current"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row  mt10">
+                    <div class="col-sm-12">
+                        <H5>B ] Permanent Address : (&nbsp;&nbsp;<input type="checkbox" id="chkSameAsCurrent" name="chkSameAscurrent">&nbsp;<label for="chkSameAsCurrent">Same as current address</label>&nbsp;&nbsp;)</H5>
+                        <div class="col-sm-12" style="background-image: url('../../Images/secsep.png'); background-repeat:repeat-x">
+                        </div>
+                    </div>
+                </div>
+                <div class="row  mt10">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="txtHouseNo_perm">House No : <span class="mandatory">*</span></label>
+                            <input id="txtHouseNo_perm" name="txtHouseNo_perm" class="form-control" type="text" required maxlength="256" autocomplete="off" />
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="txtStreet_perm">Street / Road : <span class="mandatory">*</span></label>
+                            <input id="txtStreet_perm" name="txtStreet_perm" class="form-control" type="text" required maxlength="256" autocomplete="off" />
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="txtCity_perm">Town / City : <span class="mandatory">*</span></label>
+                            <input id="txtCity_perm" name="txtCity_perm" class="form-control" type="text" required maxlength="256" autocomplete="off" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row  mt10">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="cboStates_perm">State : <span class="mandatory">*</span></label>
+                            <select id="cboStates_perm" name="cboStates_perm" class="form-control" required>
+                                <option value="">-- Select --</option>
+                                @foreach (DataRow dr in PortalApplication.States.Rows)
+                                {
+                                    <option value="@dr["state_id"]">@dr["state_name"]</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="cboDistricts_perm">District : <span class="mandatory">*</span></label>
+                            <select id="cboDistricts_perm" name="cboDistricts_perm" class="form-control" required></select>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="txtPincode_perm">Pincode : <span class="mandatory">*</span></label>
+                            <input id="txtPincode_perm" name="txtPincode_perm" class="form-control" type="text" required maxlength="6" autocomplete="off" />
+                            <br /><span id="pincodeRange_perm"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row  mt10">
+                    <div class="col-sm-12">
+                        <H5>C ] Speedy Contact : </H5>
+                        <div class="col-sm-12" style="background-image: url('../../Images/secsep.png'); background-repeat:repeat-x">
+                        </div>
+                    </div>
+                </div>
+                <div class="row  mt10">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="txtLandlineNo">Landline Number :<span class="mandatory">&nbsp;</span></label>
+                            <input id="txtLandlineNo" name="txtLandlineNo" class="form-control" type="text" maxlength="12" autocomplete="off" />
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="txtMobileNo">Mobile Number : <span class="mandatory">*</span></label>
+                            <input id="txtMobileNo" name="txtMobileNo" class="form-control" type="text" required maxlength="15" autocomplete="off" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row  mt10">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="cboWhatsAppStatus">Does candidate wish to get WhatsApp Messages? : <span class="mandatory">*</span></label>
+                            <select id="cboAllowWhatsappMessage" name="cboAllowWhatsappMessage" class="form-control" required>
+                                <option value=''>-- Select --</option>
+                                <option value="Y">Yes</option>
+                                <option value="N">No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label id="lblWhatsAppNo" for="txtWhatsAppNo" style="display:none">WhatsApp Number: <span class="mandatory">&nbsp;</span></label>
+                            <input id="txtWhatsAppNo" name="txtWhatsAppNo" style="display:none" class="form-control" type="text" maxlength="15" autocomplete="off" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <span style="color:blue">
+                            Note: If you opt for WhatsApp messages, but do not provide a WhatsApp number, then WhatsApp messages will be sent to your mobile number.
+                        </span>
+                    </div>
+                </div>
+                <div class="row mt10">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="txtEMailId">Email Id : <span class="mandatory">*</span></label>
+                            <input id="txtEMailId" name="txtEMailId" class="form-control" type="text" required maxlength="256" autocomplete="off" />
+                        </div>
+                    </div>
+                    @if (PortalSession.RoleCode == "CA" || PortalSession.RoleCode == "WA" || PortalSession.RoleCode == "IMF" || PortalSession.RoleCode == "BR")
+                    {
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="txtCPEMailId">Contact Person's Email Id : <span class="mandatory">*</span></label>
+                                <input id="txtCPEMailId" name="txtCPEMailId" class="form-control" type="text" required maxlength="256" autocomplete="off" />
+                            </div>
+                        </div>
+                    }
+                </div>
+                <div class="row  mt10">
+                    <div class="col-sm-12">
+                        <div class="col-sm-12" style="background-color:lightgray"><H4>Employment Details : </H4></div>
+                    </div>
+                </div>
+                <div class="row  mt10">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="txtPrimaryOccupation">Primary Profession  :<span class="mandatory">*</span></label>
+                            <input id="txtPrimaryOccupation" name="txtPrimaryOccupation" class="form-control" required type="text" maxlength="100" autocomplete="off" />
+                        </div>
+                    </div>
+                    @*<div class="col-sm-4" id="divTelemarketer" style="display:none;">
+                        <div class="form-group">
+                            <label for="cboTelemarketer">Telemarketer : <span class="mandatory">*</span></label>
+                            <select id="cboTelemarketer" name="cboTelemarketer" class="form-control" >
+                                <option value=''>-- Select --</option>
+                            </select>
+                        </div>
+                    </div>*@
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            @if (PortalSession.RoleCode == "CA" || PortalSession.RoleCode == "WA" || PortalSession.RoleCode == "IMF" || PortalSession.RoleCode == "BR")
+                            {
+                                <label for="txtEmployeeCode">Employee No :<span class="mandatory">*</span></label>
+                            }
+                            else
+                            {
+                                <label for="txtEmployeeCode">Insurer Ref. No. :<span class="mandatory">*</span></label>
+                            }
+                            <input id="txtEmployeeCode" name="txtEmployeeCode" class="form-control" required type="text" maxlength="100" autocomplete="off" />
+                        </div>
+                    </div>
+                </div>
+                @if (PortalSession.RoleCode == "CA")
+                {
+                    <div class="row  mt10">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="cboBranchState">Branch State  :<span class="mandatory">*</span></label>
+                                <select id="cboBranchState" name="cboBranchState" class="form-control" required>
+                                    <option value="">-- Select --</option>
+                                    @foreach (DataRow dr in PortalApplication.States.Rows)
+                                    {
+                                        <option value="@dr["state_id"]">@dr["state_name"]</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="cboBranchDistrict">Branch District  :<span class="mandatory">*</span></label>
+                                <select id="cboBranchDistrict" name="cboBranchDistrict" class="form-control" required></select>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="cboBranch">Branch :<span class="mandatory">*</span></label>
+                                <select id="cboBranch" name="cboBranch" class="form-control" required></select>
+                            </div>
+                        </div>
+                    </div>
+                }
+                <div class="row  mt10">
+                    <div class="col-sm-12">
+                        <div class="col-sm-12" style="background-color:lightgray"><H4>Examination Preferences : </H4></div>
+                    </div>
+                </div>
+                <div class="row  mt10">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="txtExamMode">Examination Mode<span class="mandatory"></span></label>
+                            <input id="txtExamMode" name="txtExamMode" class="form-control" type="text" required value="Online" readonly autocomplete="off" />
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="cboExamBody">Examination Body : <span class="mandatory">*</span></label>
+                            <select id="cboExamBody" name="cboExamBody" class="form-control" required>
+                                <option value="">-- Select --</option>
+                                @foreach (DataRow dr in PortalApplication.ExamBody.Rows)
+                                {
+                                    <option value="@dr["exam_body_id"]">@dr["exam_body_name"]</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="cboExamCenter">Examination Center : <span class="mandatory">*</span></label>
+                            <select id="cboExamCenter" name="cboExamCenter" class="form-control" required>
+                                <option value="">-- Select --</option>
+                            </select>
+                            <br /><span id="centerHelp"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="cboLanguage">Examination Language : <span class="mandatory">*</span></label>
+                            <select id="cboLanguage" name="cboLanguage" class="form-control" required>
+                                <option value="">-- Select --</option>
+                                @foreach (DataRow dr in PortalApplication.ExamLanguage.Rows)
+                                {
+                                    <option value="@dr["language_id"]">@dr["language_name"]</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt10">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <b>Declaration:</b><br />
+                            <label id="lblDeclaration">
+                                <input id="chkDeclaration" name="chkDeclaration" type="checkbox" />
+                                We hereby declare that all the information submitted by us is true and we will be held liable for any false information or misrepresentation as per IRDAI Regulations.
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-3" style="align-content:flex-end">
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-md btn-warning btn-block" value="Save" />
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div id="Result" class="col-sm-12">
+        </div>
+    </div>
+</div>

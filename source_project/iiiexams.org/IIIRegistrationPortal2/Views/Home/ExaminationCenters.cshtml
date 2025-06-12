@@ -1,0 +1,158 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+@using System.Data;
+@*@Scripts.Render("~/js/app/viewexamcenterpl")*@
+<script src="~/js/app/viewexamcenterpl.js"></script>
+<div id="pnlNotifications" class="notificationBox">
+    <h3>Exam Centers</h3>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="row mt10" id="GridFilter">
+                <form id="frmSearch" autocomplete="off">
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <label for="cboStatesF">State : <span class="mandatory">*</span></label>
+                            <select id="cboStatesF" name="cboStatesF" class="form-control" required>
+                                <option value="">-- Select --</option>
+                                @foreach (DataRow dr in PortalApplication.States.Rows)
+                                {
+                                    <option value="@dr["state_id"]">@dr["state_name"]</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-2 offset-sm-2">
+                        <div class="form-group">
+                            <label><span class="mandatory">&nbsp;</span></label>
+                            <input type="button" id="butNewCenter" class="btn btn-md btn-warning btn-block" value="New Center">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="row mt10">
+                <div class="col-sm-12">
+                    <form id="frmMain" autocomplete="off"  style="display:none">
+                        <div class="row mt10">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="txtExamCenterCode">Exam Center Code (Exams Engine Code) : <span class="mandatory">*</span></label>
+                                    <input type="text" id="txtExamCenterCode" name="txtExamCenterCode" class="form-control" autocomplete="off" maxlength="5" />
+                                    <input type="hidden" id="hdnExamCenterId" name="hdnExamCenterId" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt10">
+                            <div class="col-sm-4">
+                                <div class="form-group" style="vertical-align:bottom">
+                                    <label for="txtCSSCode">CSS Center Code : <span class="mandatory">*</span></label>
+                                    <input type="text" id="txtCSSCode" name="txtCSSCode" class="form-control" autocomplete="off" maxlength="10" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mt10">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="txtExamCenterName">Exam Center Name : <span class="mandatory">*</span></label>
+                                    <input id="txtExamCenterName" name="txtExamCenterName" type="text" class="form-control" maxlength="256" required autocomplete="off" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt10">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="txtAddress1">Address line 1: <span class="mandatory">*</span></label>
+                                    <input id="txtAddress1" name="txtAddress1" type="text" class="form-control" required maxlength="256" autocomplete="off" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt10">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="txtAddress2">Address line 2: <span class="mandatory">*</span></label>
+                                    <input id="txtAddress2" name="txtAddress2" type="text" class="form-control" required maxlength="256" autocomplete="off" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt10">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="txtAddress3">Address line 3: <span class="mandatory">*</span></label>
+                                    <input id="txtAddress3" name="txtAddress3" type="text" class="form-control" required maxlength="256" autocomplete="off" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt10">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="cboStates">State : <span class="mandatory">*</span></label>
+                                    <select id="cboStates" name="cboStates" class="form-control">
+                                        <option value="">-- Select --</option>
+                                        @foreach (DataRow dr in PortalApplication.States.Rows)
+                                        {
+                                            <option value="@dr["state_id"]">@dr["state_name"]</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt10">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="cboDistricts">District : <span class="mandatory">*</span></label>
+                                    <select id="cboDistricts" name="cboDistricts" class="form-control"></select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt10">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="txtPincode">Pincode : <span class="mandatory">*</span></label>
+                                    <input id="txtPincode" name="txtPincode" type="text" class="form-control" maxlength="6" autocomplete="off" />
+                                    <br /><span id="pincodeRange"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt10">
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="cboCenterType">Center type: <span class="mandatory">*</span></label>
+                                    <select id="cboCenterType" name="cboCenterType" class="form-control">
+                                        <option value="">--Select--</option>
+                                        <option value="NORMAL">Normal</option>
+                                        <option value="RP">Remote Proctoring</option>
+                                        <option value="TAB">Tab</option>
+                                    </select>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt10">
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="chkIsActive">Active: <span class="mandatory">*</span></label>
+                                    <input id="chkIsActive" name="chkIsActive" type="checkbox" checked="checked" class="form-control form-control-sm">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt10">
+                            <div class="col-sm-3">
+                                   <input type="submit" class="btn btn-md btn-warning btn-block" value="Save">
+                            </div>
+                            <div class="col-sm-3">
+                                <input type="button" id="butCancel" class="btn btn-md btn-warning btn-block" value="Cancel">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="row mt10">
+                <div class="col-sm-12">
+                    <div id="data" class="table-responsive"  style="display:none">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

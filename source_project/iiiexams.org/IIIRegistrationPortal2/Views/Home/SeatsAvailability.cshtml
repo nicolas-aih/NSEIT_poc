@@ -1,0 +1,91 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+@using System.Data;
+@*@Scripts.Render("~/js/app/viewexamcenterNonpl")*@
+
+<script language="javascript" type="text/javascript">
+    var ServerDatePlusYear = '@System.DateTime.Now.AddMonths(1).ToString("dd-MMM-yyyy")';
+</script>
+<script src="~/js/app/seatsavailability.js" type="text/javascript"></script>
+<style>
+    thead {
+        position: sticky;
+        top: 0;
+    }
+
+    th {
+        position: sticky;
+        top: 0;
+    }
+</style>
+
+<div id="pnlNotifications" class="notificationBox">
+    <h3>Seats Availability</h3>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="row mt10" id="GridFilter">
+                <form id="frmSearch" autocomplete="off">
+                    <div class="row mt10">
+                        <div class="col-sm-12">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="cboStates">State : <span class="mandatory">*</span></label>
+                                    <select id="cboStates" name="cboStates" class="form-control" required>
+                                        <option value="">-- Select --</option>
+                                        @foreach (DataRow dr in PortalApplication.States.Rows)
+                                        {
+                                            <option value="@dr["state_id"]">@dr["state_name"]</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="txtFromDate">From Date : <span class="mandatory">*</span></label>
+                                    <input id="txtFromDate" name="txtFromDate" type="text" class="form-control dtpick" required readonly="readonly" style="cursor:pointer; background-color:white;" autocomplete="off" />
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="txtFromDate"><span class="mandatory">&nbsp;</span></label>
+                                    <button type="submit" class="btn btn-md btn-warning btn-block">Check Availability!</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="row mt10">
+                <div class="col-sm-12" style="color:red; font-weight:700">
+                    Note:- The seats availability shown is based on the lastest search. Availability keeps on changing as seats are being booked continuously via self-scheduling and auto scheduling.
+                </div>
+            </div>
+            <div id="divSeatSummary" title="Seats Availability Summary" style="display:none">
+                <div class="row mt10">
+                    <div class="col-sm-12" style="color:red; font-weight:700">
+                        Note:- If the seats shown is greater than zero, then click on the numbers ( non zero ) to see the batch wise availability for that center & date.<br>
+                        <marquee>In case the seats are not available at regular centers on the date of your choice, You can opt for TAB based exams. Get in touch with us to check the feasibility.</marquee>
+                    </div>
+                </div>
+                <div class="row mt10">
+                    <div class="col-sm-12">
+                        <div id="data" class="table-responsive">
+
+                        </div>
+                    </div>
+                </div>
+
+                <div id="divSeatDetails" title="Seats Availability Details" style="display:none">
+                    <div class="row mt10">
+                        <div class="col-sm-12">
+                            <div id="data2" class="table-responsive">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

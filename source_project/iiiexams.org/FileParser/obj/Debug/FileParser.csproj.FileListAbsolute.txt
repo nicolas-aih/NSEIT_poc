@@ -1,0 +1,6 @@
+C:\Users\akliv\Downloads\Code for ai-horizon.io (2)\Code for ai-horizon.io\Code for ai-horizon.io\iiiexams.org\FileParser\bin\Debug\Utilities.FileParser.dll
+C:\Users\akliv\Downloads\Code for ai-horizon.io (2)\Code for ai-horizon.io\Code for ai-horizon.io\iiiexams.org\FileParser\bin\Debug\Utilities.FileParser.pdb
+C:\Users\akliv\Downloads\Code for ai-horizon.io (2)\Code for ai-horizon.io\Code for ai-horizon.io\iiiexams.org\FileParser\obj\Debug\FileParser.csproj.AssemblyReference.cache
+C:\Users\akliv\Downloads\Code for ai-horizon.io (2)\Code for ai-horizon.io\Code for ai-horizon.io\iiiexams.org\FileParser\obj\Debug\FileParser.csproj.CoreCompileInputs.cache
+C:\Users\akliv\Downloads\Code for ai-horizon.io (2)\Code for ai-horizon.io\Code for ai-horizon.io\iiiexams.org\FileParser\obj\Debug\Utilities.FileParser.dll
+C:\Users\akliv\Downloads\Code for ai-horizon.io (2)\Code for ai-horizon.io\Code for ai-horizon.io\iiiexams.org\FileParser\obj\Debug\Utilities.FileParser.pdb

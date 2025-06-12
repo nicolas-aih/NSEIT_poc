@@ -1,0 +1,170 @@
+﻿@using System.Configuration;
+@{
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+    String ActivePGString = ConfigurationManager.AppSettings.Get("ActivePG");
+    String[] ActivePGList = ActivePGString.Split('|');
+}
+@*@Scripts.Render("~/js/app/managebatches")*@
+<script src="~/js/app/managebatches.js"></script>
+
+<div id="pnlMain" class="notificationBox">
+    <h3>Manage Batches</h3>
+    <div class="row">
+        <div class="col-sm-12">
+            <form id="frmSearch" method="post" action="" autocomplete="off">
+                <div class="row mt10">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="cboSearchBy">Search By :</label>
+                            <select id="cboSearchBy" name="cboSearchBy" class="form-control" required>
+                                <option value="">-- Select --</option>
+                                <option value="BATCHNO">Batch No</option>
+                                <option value="DATERANGE">Batch Creation Date</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt10">
+                    <div class="col-sm-6" id="divBatchNo" style="display:none">
+                        <div class="form-group">
+                            <label for="txtBatchNo">Batch No :</label>
+                            <input id="txtBatchNo" name="txtBatchNo" type="text" class="form-control" required maxlength="50" autocomplete="off" />
+                        </div>
+                    </div>
+                    <div class="col-sm-3" id="divFromDate" style="display:none">
+                        <div class="form-group">
+                            <label for="txtFromDate">From Date :</label>
+                            <input id="txtFromDate" name="txtFromDate" type="text" class="form-control dtpick" required maxlength="15" autocomplete="off" />
+                        </div>
+                    </div>
+                    <div class="col-sm-3" id="divToDate" style="display:none">
+                        <div class="form-group">
+                            <label for="txtToDate">Till Date :</label>
+                            <input id="txtToDate" name="txtToDate" type="text" class="form-control dtpick" required maxlength="15" autocomplete="off" />
+                        </div>
+                    </div>
+                    <div class="col-sm-3" id="divStatus" style="display:none">
+                        <div class="form-group">
+                            <label for="cboStatus">Status :</label>
+                            <select id="cboStatus" name="cboStatus" required class="form-control">
+                                <option value="">-- Select --</option>
+                                <option value="1">All</option>
+                                <option value="2">Payment Pending</option>
+                                <option value="3">Payment Successful</option>
+                                <option value="4">Scheduling Pending</option>
+                                <option value="5">Scheduled</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-3" id="divSubmit" style="display:none">
+                        <div class="form-group">
+                            <label>&nbsp;</label>
+                            <input type="submit" class="btn btn-md btn-warning btn-block" value="Search">
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div id="divBatches" class="col-sm-12">
+            <div class="row mt10">
+                <div class="col-md-12" style="overflow:auto">
+                    <table class=" table table-bordered table-striped table-hover" id="tblBatches"></table>
+                </div>
+            </div>
+        </div>
+        <div id="divBatchDetails" title="Batch details">
+            <form id="frmMain" name="frmMain" method="post" action="" autocomplete="off" style="display:none">
+                <div class="row mt10">
+                    <div class="col-sm-2" style="text-align:left; font-weight:700">Exam Batch No : </div>
+                    <div class="col-sm-4" style="text-align:left; font-weight:700" id="exambatchno"></div>
+                </div>
+                <div class="row mt10">
+                    <div class="col-sm-2" style="text-align:left; font-weight:700">URNs : </div>
+                    <div class="col-sm-4" style="text-align:left; font-weight:700" id="noofurns"></div>
+                </div>
+                <div class="row mt10">
+                    <div class="col-sm-2" style="text-align:left; font-weight:700">Payment Mode : </div>
+                    <div class="col-sm-4" style="text-align:left; font-weight:700" id="paymentmode"></div>
+                </div>
+                <div class="row mt10">
+                    <div class="col-sm-2" style="text-align:left; font-weight:700">Payment Status : </div>
+                    <div class="col-sm-4" style="text-align:left; font-weight:700" id="paymentstatus"></div>
+                </div>
+                <div class="row mt10">
+                    <div class="col-md-12">
+                        <table class="table table-bordered table-striped table-hover" id="tblBatchData"></table>
+                    </div>
+                </div>
+
+                <div class="row mt10" style="text-align:right" id="divActions">
+                    <input type="hidden" id="hdBatchNo" name="hdBatchNo" />
+                    <div class="col-sm-12" style="text-align:center">
+                        <button class="btn btn-warning" type="button" id="btnDeleteBatch">Delete Batch</button>&nbsp;&nbsp;&nbsp;
+                        <button class="btn btn-warning" type="button" id="btnDeleteProblemURNS">Delete Problem URNs</button>&nbsp;&nbsp;&nbsp;
+                        <button class="btn btn-warning" type="button" id="btnMakePayment">
+                            Pay Exam Fees
+                        </button>
+                    </div>
+                </div>
+                <div class="row mt10">
+                    <div class="col-md-12">
+                        <table class=" table table-bordered table-striped table-hover" id="tblPaymentData"></table>
+                    </div>
+                </div>
+
+                <div id="divPGSel" title="Select Payment Geteway" style="display:none">
+                    <div class="row mt10">
+                        <div class="col-sm-12">
+                            <select id="selPG" name="selPG" class="form-control col-md-3">
+                                <option value="">-- Select --</option>
+                                @for (int i = 0; i < ActivePGList.Length; i++)
+                                {
+                                    String[] s = ActivePGList[i].Split('~');
+                                    <option value="@s[0].Trim()">@s[1].Trim()</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mt10" style="text-align:center">
+                        <div class="col-sm-12">
+                            <hr />
+                            <button type="button" class="btn btn-warning" id="btnMakePayment2">Pay Now</button>&nbsp;&nbsp;&nbsp;
+                            <button type="button" class="btn btn-warning" id="btnClosePaymentDlg">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+@*<div class="modal fade" id="PaymentGatewaySelection" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="">Select Payment Gateway</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <select id="psSel" name="pgSel" class="form-control col-md-3">
+                        @for (int i = 0; i < ActivePGList.Length; i++)
+                        {
+                            String[] s = ActivePGList[i].Split('~');
+                            <option value="@s[0].Trim()">@s[1].Trim()</option>
+                        }
+                    </select>
+                </div>
+                <br />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning" id="btnMakePayment">Pay Now</button>
+                <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>*@

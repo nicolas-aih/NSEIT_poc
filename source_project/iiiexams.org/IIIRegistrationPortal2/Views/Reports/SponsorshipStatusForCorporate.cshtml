@@ -1,0 +1,145 @@
+﻿@{
+    ViewBag.Title = "SponsorshipStatusForCorporate";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+@using System.Data;
+@{
+    DataTable objExamCenters = (DataTable)ViewBag.ExamCenters;
+}
+@*@Scripts.Render("~/js/app/sponsorshipstatusforcorporate")*@
+<script src="~/js/app/sponsorshipstatusforcorporate.js" type="text/javascript"></script>
+
+<div id="sponsorshipForm" class="notificationBox">
+    <h3>Sponsorship Status Report For Corporates</h3>
+    <div class="row mt10">
+        <div class="col-sm-12">
+            <form id="frmMain" autocomplete="off">
+                <div class="row mt10">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label for="lblStatus" style="font-style:italic;color:#FF6600;font-size:small;font-family:Verdana;font-weight:400;">The Sponsorship Status report is updated only ONCE every day. Any updates made during a day would be made available in the report the next day.</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt10">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="txtURN">URN : </label>
+                            <input id="txtURN" name="txtURN" type="text" class="form-control form-control-sm" autocomplete="off" />
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="txtInsurersRefNo">Insurer's Reference No. : </label>
+                            <input id="txtInsurersRefNo" name="txtInsurersRefNo" type="text" class="form-control" autocomplete="off" />
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="txtExaminationBatchID">Examination Batch ID : </label>
+                            <input id="txtExaminationBatchID" name="txtExaminationBatchID" type="text" class="form-control" autocomplete="off" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row  mt10">
+                    <div class="col-sm-6">
+                        <label>Application Date  :</label>
+                        <div class="col-sm-12" style="background-image: url('../../Images/secsep.png'); background-repeat:repeat-x">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <label>Exam Date  :</label>
+                        <div class="col-sm-12" style="background-image: url('../../Images/secsep.png'); background-repeat:repeat-x">
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt10">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="txtAppDateFrom">From : <span class="mandatory">*</span></label>
+                            <input type="text" name="txtAppDateFrom" id="txtAppDateFrom" class="form-control dtpick" autocomplete="off" />
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="txtAppDateTo">To : <span class="mandatory">*</span></label>
+                            <input type="text" name="txtAppDateTo" id="txtAppDateTo" class="form-control dtpick" autocomplete="off" />
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="txtExamDateFrom">From : <span class="mandatory">&nbsp;</span></label>
+                            <input type="text" name="txtExamDateFrom" id="txtExamDateFrom" class="form-control dtpick" autocomplete="off" />
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="txtExamDateTo">To : <span class="mandatory">&nbsp;</span></label>
+                            <input type="text" name="txtExamDateTo" id="txtExamDateTo" class="form-control dtpick" autocomplete="off" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt10">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="cboExaminationBody">Examination Body : </label>
+                            <select id="cboExaminationBody" name="cboExaminationBody" class="form-control form-control-sm ">
+                                @foreach (DataRow dr in PortalApplication.ExamBody.Rows)
+                                {
+                                    <option value="@dr["exam_body_id"]">@dr["exam_body_name"]</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="cboExaminationCenter">Examination Center : </label>
+                            <select id="cboExaminationCenter" name="cboExaminationCenter" class="form-control form-control-sm ">
+                                <option value="0">--Select--</option>
+                                @foreach (DataRow dr in objExamCenters.Rows)
+                                {
+                                    <option value="@dr["sntExamCenterID"]">@dr["varExamCenterName"]</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt10">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="cboApplicationStatus">Application Status :</label>
+                            <select id="cboApplicationStatus" name="cboApplicationStatus" class="form-control" multiple>
+                                <option value="A" selected>ALL</option>
+                                <option value="S">Sponsored</option>
+                                <option value="T">Trained</option>
+                                <option value="EC">Confirmed For Examination</option>
+                                <option value="EA">Examination Slot Allocated</option>
+                                <option value="E">Examined</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>&nbsp;</label><br />
+                            <input type="checkbox" name="chkPhoto" id="chkPhoto" />  Include Photos <br /><br />
+                            <input type="checkbox" name="chkSign" id="chkSign" />  Include Signatures <br />
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt10">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <input type="submit" value="Get Report" class="btn btn-md btn-warning btn-block">
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt10">
+                    <div class="col-sm-12">
+                        <div class="form-group" id="ResponseFile">
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

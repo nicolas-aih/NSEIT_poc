@@ -1,0 +1,19 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+</head>
+<body>
+    <div>
+        <form name="s_3" id="s_3" action="../Payments/PGRequest" method="post">
+            <input type="hidden" id="hdBatchNo" name="hdBatchNo" value="@Session["batch_no_pmt"]">
+            <input type="hidden" id="hdAmount" name="hdAmount" value="@Session["amt_pmt"]">
+            <input type="hidden" id="selPG" name="selPG" value="@Session["selPG"]">
+            <script type='text/javascript' language='javascript'>
+                document.getElementById('s_3').submit();;
+            </script>;
+        </form>
+    </div>
+</body>
+</html>

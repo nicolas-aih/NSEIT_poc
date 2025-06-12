@@ -1,0 +1,96 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+@using System.Data;
+@{
+    DataTable objDataTableStates = (DataTable)ViewBag.States;
+    Boolean IsPostback = (Boolean)ViewBag.IsPostback;
+    Boolean Status = IsPostback ? (Boolean)ViewBag._STATUS_ : false;
+    String Message = IsPostback ? (String)ViewBag._MESSAGE_ : String.Empty;
+    DataTable objDataTableExams = IsPostback ? (DataTable)ViewBag._DATA_ : null;
+    
+}
+<div class="notificationBox">
+    <h3>NSEIT Centres</h3>
+    <div class="row">
+        <div class="col-sm-12">
+            <form id="frmCenters" method="post" action="~/Home/TBXExamCenters" autocomplete="off">
+                <div class="row mt10">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="States">Select State : <span class="mandatory">*</span></label>
+                            <select id="States" name="States" class="form-control" placeholder="Select State">
+                                <option value=''>-- Select --</option>
+                                @foreach (DataRow dr in objDataTableStates.Rows)
+                                {
+                                    if (@Convert.ToInt32(dr["state_id"]) == Convert.ToInt32(ViewBag.SelectedStateId))
+                                    {
+                                        <option value="@dr["state_id"]" selected>@dr["state_name"]</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@dr["state_id"]">@dr["state_name"]</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-3" style="align-content:flex-end">
+                        <label><span class="mandatory">&nbsp;</span></label>
+                        <div class="form-group">
+                            <input type="submit" class="btn btn-md btn-warning btn-block" value="View" />
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="row mt10">
+                <div class="col-sm-12">
+                    <div class="table-responsive">
+                        @if (IsPostback)
+                        {
+                            if (Status)
+                            {
+                                if (objDataTableExams == null)
+                                {
+                                    <span>@Message</span>
+                                }
+                                else
+                                {
+                                    <table class="table table-striped table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <td>Center Name</td>
+                                                <td>Address</td>
+                                                <td>District</td>
+                                                <td>Pincode</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (DataRow dr in objDataTableExams.Rows)
+                                            {
+                                                <tr>
+                                                    <td>@dr["varExamCenterName"]</td>
+                                                    <td>
+                                                        @dr["varHouseNo"]<br />
+                                                        @dr["varStreet"]<br />
+                                                        @dr["varTown"]
+                                                    </td>
+                                                    <td>@dr["varDistrictName"]</td>
+                                                    <td>@dr["intPincode"]</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                }
+                            }
+                            else
+                            {
+                                <span>@Message</span>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

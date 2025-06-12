@@ -1,0 +1,121 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+@*@Scripts.Render("~/js/app/tbxschedule")*@
+<script src="~/js/app/tbxschedule.js"></script>
+<div id="pnlNotifications" class="notificationBox">
+    <h3>TBX Schedule</h3>
+    @*<div class="row" id="GridFilter">
+        <div class="col-sm-12">
+            <form id="frmSearch" autocomplete="off">
+                <div class="row mt10">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <input type="button" id="butNew" class="btn btn-md btn-warning btn-block" value="New Notification">
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>*@
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="row mt10">
+                <div class="col-sm-12">
+                    @*<form id="frmMain" autocomplete="off">
+        <div class="row mt10">
+            <div class="col-sm-4 form-group">
+                <label for="txtFromDate">Display Start Date <span class="mandatory">*</span></label>
+                <input id="txtFromDate" readonly="readonly" name="txtFromDate" type="text" class="form-control dtpick" autocomplete="off" style="background-color:white; cursor:pointer" />
+            </div>
+            <div class="col-sm-4 form-group">
+                <label for="txtToDate">Display Till Date <span class="mandatory">*</span></label>
+                <input id="txtToDate" readonly="readonly" name="txtToDate" type="text" class="form-control dtpick" autocomplete="off" style="background-color:white; cursor:pointer" />
+            </div>
+        </div>
+        <div class="row mt10">
+            <div class="col-sm-8 form-group">
+                <label for="txtcaption">Notification Banner :<span class="mandatory">*</span></label>
+                <input id="txtcaption" name="txtcaption" type="text" class="form-control" autocomplete="off" />
+                <input type="hidden" id="hdnNotificationId" name="hdnNotificationId" />
+            </div>
+        </div>
+        <div class="row mt10">
+            <div class="col-sm-8 form-group">
+                <label for="txtfileName">Select File :</label>
+                <input id="txtfileName" name="txtfileName" type="file" class="form-control" />
+            </div>
+            <div class="col-sm-4 form-group">
+                <label>&nbsp;</label><br />
+                <span id="downloadfile"></span>
+            </div>
+        </div>
+        <div class="row mt10">
+            <div class="col-sm-8 form-group">
+                <label for="txtnotificationtxt">Content :</label>
+                <textarea id="txtnotificationtxt" name="txtnotificationtxt" class="form-control" rows="15" cols="200" maxlength="4000"></textarea>
+            </div>
+        </div>
+        <div class="row mt10">
+            <div class="col-sm-2 form-group">
+                <label for="lblRoles">Target Audience (select minimum one):</label>
+            </div>
+            <div class="col-sm-3 form-group">
+                <label for="chkRoleCA">Corporate Agents</label>
+                <input id="chkRoleCA" name="chkRoleCA" type="checkbox" class="form-control" style="width:20px;height:20px" />
+            </div>
+            <div class="col-sm-3 form-group">
+                <label for="chkRoleWA">Web Aggregator</label>
+                <input id="chkRoleWA" name="chkRoleWA" type="checkbox" class="form-control" style="width:20px;height:20px" />
+            </div>
+            <div class="col-sm-3 form-group">
+                <label for="chkRoleIMF">Insurance Marketing Firm</label>
+                <input id="chkRoleIMF" name="chkRoleIMF" type="checkbox" class="form-control" style="width:20px;height:20px" />
+            </div>
+        </div>
+        <div class="row mt10">
+            <div class="col-sm-2 form-group">
+            </div>
+            <div class="col-sm-3 form-group">
+                <label for="chkRoleBR">Broker</label>
+                <input id="chkRoleBR" name="chkRoleBR" type="checkbox" class="form-control" style="width:20px;height:20px" />
+            </div>
+            <div class="col-sm-3 form-group">
+                <label for="chkRoleInsurer">Insurer</label>
+                <input id="chkRoleInsurer" name="chkRoleInsurer" type="checkbox" class="form-control" style="width:20px;height:20px" />
+            </div>
+            <div class="col-sm-3 form-group">
+                <label for="chkRoleOther">Others</label>
+                <input id="chkRoleOther" name="chkRoleOther" type="checkbox" class="form-control" style="width:20px;height:20px" />
+            </div>
+        </div>
+        <div class="row mt10">
+            <div class="col-sm-2 form-group">
+                <label for="lblRoles">Display ? :</label>
+            </div>
+            <div class="col-sm-3 form-group">
+                <label for="chkHaltDisplay">Halt display</label>
+                <input id="chkHaltDisplay" name="chkHaltDisplay" type="checkbox" class="form-control" style="width:20px;height:20px" />
+            </div>
+        </div>
+        <div class="row mt10">
+            <div class="col-sm-3">
+                <input type="submit" class="btn btn-md btn-warning btn-block" value="Save" />
+            </div>
+            <div class="col-sm-3">
+                <input type="button" id="butCancel" class="btn btn-md btn-warning btn-block" value="Cancel" />
+            </div>
+        </div>
+    </form>*@
+                </div>
+            </div>
+            <div class="row mt10">
+                <div class="col-sm-12">
+                    <div id="data" class="table-responsive">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
