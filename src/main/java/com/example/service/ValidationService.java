@@ -1,6 +1,7 @@
 package com.example.service;
 
 import java.time.LocalDate;
+import java.util.Map;
 
 public interface ValidationService {
     boolean validateDateOfBirth(LocalDate dob);
@@ -9,4 +10,52 @@ public interface ValidationService {
     String validateEmailForCorporates(String email, Long applicantId, String pan);
     String validateMobileForCorporates(String mobile, Long applicantId, String pan);
     String validateMobileForCorporatesApp(String mobile, Long applicantDataId, String pan);
+    Map<String, Object> validateFromTillDate(LocalDate fromDate, LocalDate tillDate);
+    Map<String, Object> validateNotificationFromDate(LocalDate date);
+    Map<String, Object> validateYOP2(LocalDate dateDOB, LocalDate dateYOP);
+    Map<String, Object> validatePAN2(String pan, Long applicantId);
+    Map<String, Object> validateInternalRefNo(String internalRefNo, Long applicantId);
+    Map<String, Object> validateInternalRefNoApp(String internalRefNo, Long applicantDataId);
+    Map<String, Object> validateAadhaarCorporates(String aadhaarNo, String pan, String urn);
+    Map<String, Object> validateAadhaarCorporatesApp(String aadhaarNo, String pan, Long applicantDataId);
+    Map<String, Object> validateEmailCorporates(String emailId, Long applicantId, String pan);
+    Map<String, Object> validateEmailCorporatesApp(String emailId, Long applicantDataId, String pan);
+    Map<String, Object> validateMobileCorporates(String mobileNo, Long applicantId, String pan);
+    Map<String, Object> validateWhatsAppCorporates(String mobileNo, Long applicantId, String pan);
+    Map<String, Object> validateMobileCorporatesApp(String mobileNo, Long applicantDataId, String pan);
+    Map<String, Object> validateWhatsAppCorporatesApp(String mobileNo, Long applicantDataId, String pan);
+    Map<String, Object> validateWhatsAppCorporatesForMod(String urn, String mobileNo);
+    Map<String, Object> getACforDP(Integer insurerId, Integer dpUserId, Integer acUserId);
+    Map<String, Object> getAllNotifications(Integer notificationId);
+    Map<String, Object> getTbxSchedule();
+    Map<String, Object> getAllRoles(Integer roleId);
+    Map<String, Object> getRolesForUserCreation();
+    Map<String, Object> getUsers(Integer userId);
+    Map<String, Object> getAllUsers(Integer userId);
+    Map<String, Object> getDPForInsurer(Integer insurerId, Integer dpId);
+    Map<String, Object> getDPForInsurerEx(Integer insurerId, Integer dpId);
+    Map<String, Object> getInsurer();
+    Map<String, Object> getInsurer2(Integer insurerId);
+    Map<String, Object> getBasicQualificationForCOR(String corType);
+    Map<String, Object> getProQualificationForCOR(String corType);
+    Map<String, Object> getDetailsForCOR(String corType);
+    Map<String, Object> findNearestExamCenter(Integer pincode);
+    Map<String, Object> getCentersForState(Integer stateId, Integer centerId);
+    Map<String, Object> getCentersForStateEx(Integer stateId, Integer centerId);
+    Map<String, Object> getSimilarCenters(Integer centerId);
+    Map<String, Object> getCentersForStatePreLogin(Integer stateId);
+    Map<String, Object> saveExamCenter(Map<String, Object> examCenterData);
+    Map<String, Object> getAvailableSeats(Integer stateId, Integer centerId, String examDate);
+    Map<String, Object> getMenuData(Integer searchId, Integer isRole);
+    Map<String, Object> saveMenuPermission(Integer searchId, Integer isRole, java.util.List<String> menuId, java.util.List<String> oldValue, java.util.List<String> newValue);
+    Map<String, Object> getDPRangeData();
+    Map<String, Object> saveDPRange(Integer insurerCode, Integer dpCount);
+    Map<String, Object> getBatchDetailsForPayment(String batchNo);
+    Map<String, Object> getBatchDetailsForMgmt(String batchNo);
+    Map<String, Object> getBatchList(Map<String, String> searchParams);
+    Map<String, Object> deleteBatch(String batchNo);
+    Map<String, Object> deleteProbURNs(String batchNo);
+    Map<String, Object> verifyBatch(String batchNo, String paymentGateway);
+    Map<String, Object> getCompanyPaymentModes(String companyType, String companyLoginId);
+    Map<String, Object> saveCompanyPaymentModes(Map<String, Object> paymentModesData);
 } 

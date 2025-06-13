@@ -1,0 +1,13 @@
+Map<String, Object> viewDP();
+Map<String, Object> saveDP(Map<String, Object> dpData);
+Map<String, Object> generateNewDPId(Map<String, Object> requestData);
+Map<String, Object> newAC();
+Map<String, Object> viewAC();
+Map<String, Object> saveAC(Map<String, Object> acData);
+Map<String, Object> deleteAC(Map<String, Object> acData);
+Map<String, Object> roles();
+Map<String, Object> saveRole(Map<String, Object> roleData);
+Map<String, Object> saveInsurer(Map<String, Object> insurerData);
+Map<String, Object> users();
+Map<String, Object> saveUser(Map<String, Object> userData);
+Map<String, Object> rolePermission(); 
