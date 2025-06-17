@@ -5,6 +5,7 @@ import com.example.model.ApiResponse;
 import com.example.model.ExamCenter;
 import com.example.service.ExamCenterService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -97,8 +98,8 @@ public class ExamCenterController {
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<List<ExamCenter>> findNearestExamCenters(
             @RequestParam Integer pincode,
-            @RequestParam(required = false) Long examBodyId) {
-        return ResponseEntity.ok(examCenterService.findNearestExamCenters(pincode, examBodyId));
+            @RequestParam Long examId) {
+        return ResponseEntity.ok(examCenterService.findNearestExamCenters(pincode, examId));
     }
 
     @GetMapping("/similar/{centerId}")
@@ -123,17 +124,21 @@ public class ExamCenterController {
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Map<String, Object>> deleteExamCenter(@PathVariable Long id) {
-        return ResponseEntity.ok(examCenterService.deleteExamCenter(id));
+    public ResponseEntity<Void> deleteExamCenter(@PathVariable Long id) {
+        examCenterService.deleteExamCenter(id);
+        return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/download")
+    @GetMapping("/export")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Resource> downloadExamCenterList() {
-        Resource resource = examCenterService.generateExamCenterListExcel();
+    public ResponseEntity<Resource> exportExamCenters() {
+        byte[] data = examCenterService.exportExamCenters();
+        ByteArrayResource resource = new ByteArrayResource(data);
+        
         return ResponseEntity.ok()
-                .contentType(MediaType.APPLICATION_OCTET_STREAM)
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"exam-centers.xlsx\"")
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=exam_centers.xlsx")
+                .contentType(MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"))
+                .contentLength(data.length)
                 .body(resource);
     }
 
@@ -144,9 +149,9 @@ public class ExamCenterController {
         return ResponseEntity.ok(examCenterService.bulkUpdateExamCenters(file));
     }
 
-    @GetMapping("/pending-schedule")
+    @GetMapping("/pending-schedules")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<List<Map<String, Object>>> getCenterWisePendingScheduleCount() {
+    public ResponseEntity<Map<Long, Integer>> getCenterWisePendingScheduleCount() {
         return ResponseEntity.ok(examCenterService.getCenterWisePendingScheduleCount());
     }
 } 

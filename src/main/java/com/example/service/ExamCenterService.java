@@ -1,89 +1,62 @@
 package com.example.service;
 
 import com.example.model.ExamCenter;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Service;
-
-import java.sql.ResultSet;
+import org.springframework.web.multipart.MultipartFile;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
-@Service
-public class ExamCenterService {
-    
-    private final JdbcTemplate jdbcTemplate;
-
-    @Value("${portal.connection-string}")
-    private String connectionString;
-
-    public ExamCenterService(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
-
-    public List<ExamCenter> getExamCentersForDownload() {
-        String sql = "SELECT ec.*, s.StateName, d.DistrictName " +
-                    "FROM ExamCenters ec " +
-                    "INNER JOIN States s ON ec.StateId = s.StateId " +
-                    "INNER JOIN Districts d ON ec.DistrictId = d.DistrictId " +
-                    "WHERE ec.IsActive = 1";
-        
-        return jdbcTemplate.query(sql, (ResultSet rs, int rowNum) -> {
-            ExamCenter center = new ExamCenter();
-            center.setId(rs.getLong("ExamCenterId"));
-            center.setName(rs.getString("CenterName"));
-            center.setAddress(rs.getString("Address"));
-            center.setStateId(rs.getInt("StateId"));
-            center.setStateName(rs.getString("StateName"));
-            center.setDistrictId(rs.getInt("DistrictId"));
-            center.setDistrictName(rs.getString("DistrictName"));
-            center.setPincode(rs.getString("Pincode"));
-            center.setCapacity(rs.getInt("Capacity"));
-            return center;
-        });
-    }
-
-    public List<ExamCenter> findNearest3ExamCenters(Integer pincode) {
-        String sql = "EXEC sp_FindNearest3ExamCenters @Pincode = ?";
-        
-        return jdbcTemplate.query(sql, 
-            new Object[]{pincode},
-            (ResultSet rs, int rowNum) -> {
-                ExamCenter center = new ExamCenter();
-                center.setId(rs.getLong("ExamCenterId"));
-                center.setName(rs.getString("CenterName"));
-                center.setAddress(rs.getString("Address"));
-                center.setStateId(rs.getInt("StateId"));
-                center.setDistrictId(rs.getInt("DistrictId"));
-                center.setPincode(rs.getString("Pincode"));
-                center.setDistance(rs.getDouble("Distance"));
-                return center;
-            }
-        );
-    }
-
-    public List<ExamCenter> getCentersForDistrict(Integer districtId) {
-        String sql = "SELECT * FROM ExamCenters WHERE DistrictId = ? AND IsActive = 1";
-        
-        return jdbcTemplate.query(sql, 
-            new Object[]{districtId},
-            (ResultSet rs, int rowNum) -> {
-                ExamCenter center = new ExamCenter();
-                center.setId(rs.getLong("ExamCenterId"));
-                center.setName(rs.getString("CenterName"));
-                center.setAddress(rs.getString("Address"));
-                center.setStateId(rs.getInt("StateId"));
-                center.setDistrictId(rs.getInt("DistrictId"));
-                center.setPincode(rs.getString("Pincode"));
-                center.setCapacity(rs.getInt("Capacity"));
-                return center;
-            }
-        );
-    }
-
-    public Map<String, Object> getSeatsAvailability() {
-        String sql = "EXEC sp_GetSeatsAvailability";
-        
-        return jdbcTemplate.queryForMap(sql);
-    }
-} 
+public interface ExamCenterService {
+    List<ExamCenter> getExamCentersForDownload();
+    List<ExamCenter> findNearest3ExamCenters(Integer pincode);
+    List<ExamCenter> getCentersForDistrict(Integer districtId);
+    Map<String, Object> getSeatsAvailability();
+    List<ExamCenter> getCentersForState(Integer stateId, Integer districtId);
+    List<ExamCenter> getCentersByCapacity(Integer minCapacity, Integer maxCapacity);
+    boolean validateCenterCode(String centerCode);
+    void updateCenterStatus(Long centerId, String status);
+    void updateCenterCapacity(Long centerId, Integer capacity);
+    byte[] generateExamCenterListExcel();
+    void bulkUpdateExamCenters(MultipartFile file);
+    List<ExamCenter> getAllExamCenters();
+    ExamCenter getExamCenterById(Long id);
+    List<ExamCenter> getExamCentersByState(Long stateId);
+    List<ExamCenter> getExamCentersByDistrict(Long districtId);
+    List<ExamCenter> findNearestExamCenters(Integer pincode, Long examId);
+    List<ExamCenter> getSimilarCenters(Long centerId);
+    ExamCenter createExamCenter(ExamCenter examCenter);
+    ExamCenter updateExamCenter(Long id, ExamCenter examCenter);
+    void deleteExamCenter(Long id);
+    Map<Long, Integer> getCenterWisePendingScheduleCount();
+    byte[] exportExamCenters();
+    List<ExamCenter> getCentersForExam(Long examId);
+    List<ExamCenter> getCentersForUser(Long userId);
+    ExamCenter getCenterById(Long id);
+    ExamCenter createCenter(ExamCenter center);
+    ExamCenter updateCenter(Long id, ExamCenter center);
+    void deleteCenter(Long id);
+    List<ExamCenter> searchCenters(String query);
+    List<ExamCenter> getCentersByFeeRange(Double minFee, Double maxFee);
+    List<ExamCenter> getCentersByStatus(String status);
+    List<ExamCenter> getCentersByDateRange(LocalDateTime startDate, LocalDateTime endDate);
+    List<ExamCenter> getCentersByDistance(Double latitude, Double longitude, Double radius);
+    List<ExamCenter> getCentersByExamDate(LocalDateTime examDate);
+    List<ExamCenter> getCentersByExamTimeSlot(String timeSlot);
+    List<ExamCenter> getCentersByExamType(String examType);
+    List<ExamCenter> getCentersByExamLevel(String examLevel);
+    List<ExamCenter> getCentersByExamCategory(String examCategory);
+    List<ExamCenter> getCentersByExamSubject(String examSubject);
+    List<ExamCenter> getCentersByExamLanguage(String examLanguage);
+    List<ExamCenter> getCentersByExamDuration(Integer duration);
+    List<ExamCenter> getCentersByExamFee(Double fee);
+    List<ExamCenter> getCentersByExamMaxCandidates(Integer maxCandidates);
+    List<ExamCenter> getCentersByExamStatus(String status);
+    List<ExamCenter> getCentersByExamRegistrationStartDate(LocalDateTime startDate);
+    List<ExamCenter> getCentersByExamRegistrationEndDate(LocalDateTime endDate);
+    List<ExamCenter> getCentersByExamStartDate(LocalDateTime startDate);
+    List<ExamCenter> getCentersByExamEndDate(LocalDateTime endDate);
+    List<ExamCenter> getCentersByExamCreatedDate(LocalDateTime createdDate);
+    List<ExamCenter> getCentersByExamUpdatedDate(LocalDateTime updatedDate);
+    List<ExamCenter> getCentersByExamCreatedBy(String createdBy);
+    List<ExamCenter> getCentersByExamUpdatedBy(String updatedBy);
+}

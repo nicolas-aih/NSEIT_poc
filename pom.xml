@@ -12,22 +12,20 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.2.0</version> <!-- Use a recent, stable version compatible with your JDK (JDK 17+ for 3.x) -->
-        <relativePath/> <!-- lookup parent from repository -->
+        <version>3.2.0</version>
+        <relativePath/>
     </parent>
 
     <!--- PROJECT IDENTIFICATION -->
     <!-- These identify your specific project -->
-    <groupId>com.yourcompany</groupId>       <!-- Change this to your company's or project's group ID -->
-    <artifactId>nse-it-java-translation</artifactId> <!-- Change this to your project's artifact ID -->
-    <version>0.0.1-SNAPSHOT</version>       <!-- Your project's version -->
-    <packaging>war</packaging>
-
-    <name>NSEIT Java Translation</name>      <!-- Human-readable name -->
-    <description>Java translation of C# code</description> <!-- Project description -->
+    <groupId>com.example</groupId>
+    <artifactId>nse-it-java-translation</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>nse-it-java-translation</name>
+    <description>NSE IT Java Translation Project</description>
 
     <properties>
-        <java.version>17</java.version> <!-- Ensure this matches or is less than your installed JDK version (e.g., 17 or 21) -->
+        <java.version>17</java.version>
     </properties>
 
     <!-- - DEPENDENCIES - -->
@@ -51,6 +49,18 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+
+        <!-- Spring Boot Validation -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+
+        <!-- Spring Boot Mail -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
 
         <!-- H2 Database -->
@@ -79,8 +89,13 @@
         <!-- Apache POI for working with Excel files (.xlsx) -->
         <dependency>
             <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>5.2.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
-            <version>5.2.4</version> <!-- Specify version, often not managed by Spring Boot parent -->
+            <version>5.2.3</version>
         </dependency>
 
         <!-- Spring Boot Test -->
@@ -105,7 +120,47 @@
         <dependency>
             <groupId>jakarta.servlet</groupId>
             <artifactId>jakarta.servlet-api</artifactId>
+            <version>6.0.0</version>
             <scope>provided</scope>
+        </dependency>
+
+        <!-- Lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <!-- Spring Security -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+        <!-- SQL Server -->
+        <dependency>
+            <groupId>com.microsoft.sqlserver</groupId>
+            <artifactId>mssql-jdbc</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- iText PDF -->
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>itextpdf</artifactId>
+            <version>5.5.13.3</version>
+        </dependency>
+
+        <!-- Jakarta EE -->
+        <dependency>
+            <groupId>jakarta.persistence</groupId>
+            <artifactId>jakarta.persistence-api</artifactId>
+            <version>3.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.annotation</groupId>
+            <artifactId>jakarta.annotation-api</artifactId>
+            <version>2.1.1</version>
         </dependency>
 
     </dependencies>
@@ -113,19 +168,11 @@
     <!-- - BUILD CONFIGURATION - -->
     <!-- Configure how your project is built -->
     <build>
-           <plugins>
-        <plugin>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-maven-plugin</artifactId>
-            <!-- Add this configuration block -->
-            <configuration>
-                <mainClass>com.example.NSEITJavaTranslationApplication</mainClass> <!-- < Replace with your actual package and class name -->
-            </configuration>
-        </plugin>
-        <!-- Other plugins like maven-clean-plugin, maven-compiler-plugin etc. -->
-    <!-- </plugins> -->
-
-
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
         </plugins>
     </build>
 

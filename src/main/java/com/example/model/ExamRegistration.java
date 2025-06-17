@@ -1,11 +1,11 @@
 package com.example.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import lombok.Data;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
+@Data
 @Entity
 @Table(name = "exam_registrations")
 public class ExamRegistration {
@@ -13,48 +13,86 @@ public class ExamRegistration {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
-    private String address;
-    private String traiRegNo;
-    private String isActive;
-    private String dpName;
-    private String dpEmailId;
-    private String dpContactNo;
-    private String cpName;
-    private String cpEmailId;
-    private String cpContactNo;
+    @ManyToOne
+    @JoinColumn(name = "exam_id", nullable = false)
+    private Exam exam;
 
-    // Getters and setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
+    @ManyToOne
+    @JoinColumn(name = "exam_center_id", nullable = false)
+    private ExamCenter examCenter;
 
-    public String getAddress() { return address; }
-    public void setAddress(String address) { this.address = address; }
+    @Column(name = "registration_number", nullable = false, unique = true)
+    private String registrationNumber;
 
-    public String getTraiRegNo() { return traiRegNo; }
-    public void setTraiRegNo(String traiRegNo) { this.traiRegNo = traiRegNo; }
+    @Column(name = "registration_date", nullable = false)
+    private LocalDateTime registrationDate;
 
-    public String getIsActive() { return isActive; }
-    public void setIsActive(String isActive) { this.isActive = isActive; }
+    @Column(nullable = false)
+    private String status; // PENDING, APPROVED, REJECTED, CANCELLED
 
-    public String getDpName() { return dpName; }
-    public void setDpName(String dpName) { this.dpName = dpName; }
+    @Column(nullable = false)
+    private BigDecimal fee;
 
-    public String getDpEmailId() { return dpEmailId; }
-    public void setDpEmailId(String dpEmailId) { this.dpEmailId = dpEmailId; }
+    @Column(name = "payment_status", nullable = false)
+    private String paymentStatus; // PENDING, PAID, REFUNDED
 
-    public String getDpContactNo() { return dpContactNo; }
-    public void setDpContactNo(String dpContactNo) { this.dpContactNo = dpContactNo; }
+    @Column(name = "payment_transaction_id")
+    private String paymentTransactionId;
 
-    public String getCpName() { return cpName; }
-    public void setCpName(String cpName) { this.cpName = cpName; }
+    @Column(name = "payment_date")
+    private LocalDateTime paymentDate;
 
-    public String getCpEmailId() { return cpEmailId; }
-    public void setCpEmailId(String cpEmailId) { this.cpEmailId = cpEmailId; }
+    @Column(name = "document_status", nullable = false)
+    private String documentStatus; // PENDING, VERIFIED, REJECTED
 
-    public String getCpContactNo() { return cpContactNo; }
-    public void setCpContactNo(String cpContactNo) { this.cpContactNo = cpContactNo; }
+    @Column(name = "exam_date", nullable = false)
+    private LocalDateTime examDate;
+
+    @Column(name = "exam_time_slot", nullable = false)
+    private String examTimeSlot;
+
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
+    @Column(name = "created_by")
+    private String createdBy;
+
+    @Column(name = "updated_by")
+    private String updatedBy;
+
+    @Column
+    private String documentRemarks;
+
+    @Column
+    private String rollNumber;
+
+    @Column
+    private String seatNumber;
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
+        if (status == null) {
+            status = "PENDING";
+        }
+        if (paymentStatus == null) {
+            paymentStatus = "PENDING";
+        }
+        if (documentStatus == null) {
+            documentStatus = "PENDING";
+        }
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = LocalDateTime.now();
+    }
 } 

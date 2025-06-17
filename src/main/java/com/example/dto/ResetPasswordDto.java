@@ -1,13 +1,21 @@
 package com.example.dto;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import lombok.Data;
+
+@Data
 public class ResetPasswordDto {
-    private String userId;
-    private String emailId;
-
-    public ResetPasswordDto() {}
-
-    public String getUserId() { return userId; }
-    public void setUserId(String userId) { this.userId = userId; }
-    public String getEmailId() { return emailId; }
-    public void setEmailId(String emailId) { this.emailId = emailId; }
+    @NotBlank(message = "Email is required")
+    @Email(message = "Invalid email format")
+    private String email;
+    
+    @NotBlank(message = "Token is required")
+    private String token;
+    
+    @NotBlank(message = "New password is required")
+    private String newPassword;
+    
+    @NotBlank(message = "Confirm password is required")
+    private String confirmPassword;
 } 

@@ -26,6 +26,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.example.dto.CandidateRegistrationDto;
+
 @Service
 public class CandidateServiceImpl implements CandidateService {
 
@@ -195,6 +197,30 @@ public class CandidateServiceImpl implements CandidateService {
             return response;
         } catch (Exception e) {
             throw new RuntimeException("Error uploading training details", e);
+        }
+    }
+
+    @Override
+    @Transactional
+    public Map<String, Object> registerCandidate(CandidateRegistrationDto dto) {
+        try {
+            Candidate candidate = new Candidate();
+            candidate.setName(dto.getName());
+            candidate.setDateOfBirth(dto.getDob());
+            candidate.setEmail(dto.getEmail());
+            candidate.setMobileNumber(dto.getMobile());
+            candidate.setCurrentHouseNumber(dto.getAddress()); // Simplified, adjust as needed
+            candidate.setPanNumber(dto.getPan());
+            candidate.setGender(dto.getGender());
+            candidate.setCurrentState(dto.getStateId() != null ? dto.getStateId().toString() : null);
+            candidate.setCurrentDistrict(dto.getCenterId() != null ? dto.getCenterId().toString() : null);
+            candidate.setBasicQualification(dto.getQualification());
+            candidate.setYearOfPassing(dto.getYearOfPassing() != null ? java.time.LocalDate.of(dto.getYearOfPassing(), 1, 1) : null);
+            // Set other fields as needed
+            candidateRepository.save(candidate);
+            return Map.of("success", true, "message", "Candidate registered successfully");
+        } catch (Exception e) {
+            return Map.of("success", false, "message", "Registration failed: " + e.getMessage());
         }
     }
 

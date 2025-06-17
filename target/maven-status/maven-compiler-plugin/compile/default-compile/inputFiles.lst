@@ -1,40 +1,129 @@
-C:\Users\akliv\OneDrive\Desktop\Akesh kumar\forks\NSEITjava\src\main\java\iiidl\BulkUploadResult.java
-C:\Users\akliv\OneDrive\Desktop\Akesh kumar\forks\NSEITjava\src\main\java\iiibl\ExamRegistration.java
-C:\Users\akliv\OneDrive\Desktop\Akesh kumar\forks\NSEITjava\src\main\java\com\example\service\ExamDetailsService.java
-C:\Users\akliv\OneDrive\Desktop\Akesh kumar\forks\NSEITjava\src\main\java\com\example\model\ExamCenters.java
-C:\Users\akliv\OneDrive\Desktop\Akesh kumar\forks\NSEITjava\src\main\java\iiibl\BulkUploadResult.java
-C:\Users\akliv\OneDrive\Desktop\Akesh kumar\forks\NSEITjava\src\main\java\databases\sqlserver\SqlDbType.java
-C:\Users\akliv\OneDrive\Desktop\Akesh kumar\forks\NSEITjava\src\main\java\com\example\controller\ExamBatchesController.java
-C:\Users\akliv\OneDrive\Desktop\Akesh kumar\forks\NSEITjava\src\main\java\com\example\model\TelemarketerRegistration.java
-C:\Users\akliv\OneDrive\Desktop\Akesh kumar\forks\NSEITjava\src\main\java\com\example\service\DuplicateURNService.java
-C:\Users\akliv\OneDrive\Desktop\Akesh kumar\forks\NSEITjava\src\main\java\com\example\model\ExamRegistration.java
-C:\Users\akliv\OneDrive\Desktop\Akesh kumar\forks\NSEITjava\src\main\java\com\example\NSEITJavaTranslationApplication.java
-C:\Users\akliv\OneDrive\Desktop\Akesh kumar\forks\NSEITjava\src\main\java\com\example\controller\TelemarketerRegistrationController.java
-C:\Users\akliv\OneDrive\Desktop\Akesh kumar\forks\NSEITjava\src\main\java\databases\sqlserver\ParamLength.java
-C:\Users\akliv\OneDrive\Desktop\Akesh kumar\forks\NSEITjava\src\main\java\com\example\repository\ExamRegistrationRepository.java
-C:\Users\akliv\OneDrive\Desktop\Akesh kumar\forks\NSEITjava\src\main\java\com\example\services\ExcelService.java
-C:\Users\akliv\OneDrive\Desktop\Akesh kumar\forks\NSEITjava\src\main\java\ListSQLServerDatabases.java
-C:\Users\akliv\OneDrive\Desktop\Akesh kumar\forks\NSEITjava\src\main\java\com\example\common\PortalApplicationStub.java
-C:\Users\akliv\OneDrive\Desktop\Akesh kumar\forks\NSEITjava\src\main\java\iiidl\ExamRegistrations.java
-C:\Users\akliv\OneDrive\Desktop\Akesh kumar\forks\NSEITjava\src\main\java\com\example\database\ParamLength.java
-C:\Users\akliv\OneDrive\Desktop\Akesh kumar\forks\NSEITjava\src\main\java\com\example\Main.java
-C:\Users\akliv\OneDrive\Desktop\Akesh kumar\forks\NSEITjava\src\main\java\com\example\common\Errorlogger.java
-C:\Users\akliv\OneDrive\Desktop\Akesh kumar\forks\NSEITjava\src\main\java\BatchMgmt.java
-C:\Users\akliv\OneDrive\Desktop\Akesh kumar\forks\NSEITjava\src\main\java\com\example\web\LoginServlet.java
-C:\Users\akliv\OneDrive\Desktop\Akesh kumar\forks\NSEITjava\src\main\java\databases\sqlserver\ParameterDirection.java
-C:\Users\akliv\OneDrive\Desktop\Akesh kumar\forks\NSEITjava\src\main\java\com\example\controller\ExamDetailsController.java
-C:\Users\akliv\OneDrive\Desktop\Akesh kumar\forks\NSEITjava\src\main\java\com\example\controller\URNController.java
-C:\Users\akliv\OneDrive\Desktop\Akesh kumar\forks\NSEITjava\src\main\java\com\example\web\response\ApiResponse.java
-C:\Users\akliv\OneDrive\Desktop\Akesh kumar\forks\NSEITjava\src\main\java\iiidl\MasterData.java
-C:\Users\akliv\OneDrive\Desktop\Akesh kumar\forks\NSEITjava\src\main\java\com\example\database\Database.java
-C:\Users\akliv\OneDrive\Desktop\Akesh kumar\forks\NSEITjava\src\main\java\com\example\service\PartialModificationService.java
-C:\Users\akliv\OneDrive\Desktop\Akesh kumar\forks\NSEITjava\src\main\java\databases\sqlserver\ProcedureResult.java
-C:\Users\akliv\OneDrive\Desktop\Akesh kumar\forks\NSEITjava\src\main\java\com\example\controller\DuplicateURNController.java
-C:\Users\akliv\OneDrive\Desktop\Akesh kumar\forks\NSEITjava\src\main\java\com\example\common\CommonConstants.java
-C:\Users\akliv\OneDrive\Desktop\Akesh kumar\forks\NSEITjava\src\main\java\databases\sqlserver\Database.java
-C:\Users\akliv\OneDrive\Desktop\Akesh kumar\forks\NSEITjava\src\main\java\com\example\service\URNService.java
-C:\Users\akliv\OneDrive\Desktop\Akesh kumar\forks\NSEITjava\src\main\java\iiibl\MasterData.java
-C:\Users\akliv\OneDrive\Desktop\Akesh kumar\forks\NSEITjava\src\main\java\com\example\common\PortalSessionStub.java
-C:\Users\akliv\OneDrive\Desktop\Akesh kumar\forks\NSEITjava\src\main\java\com\example\controller\ExamRegistrationController.java
-C:\Users\akliv\OneDrive\Desktop\Akesh kumar\forks\NSEITjava\src\main\java\com\example\services\ResponseHelper.java
-C:\Users\akliv\OneDrive\Desktop\Akesh kumar\forks\NSEITjava\src\main\java\com\example\controller\PartialModificationController.java
+D:\NSEIT_poc\src\main\java\com\example\service\impl\UserServiceImpl.java
+D:\NSEIT_poc\src\main\java\com\example\service\TelemarketerService.java
+D:\NSEIT_poc\src\main\java\com\example\dto\UpdateExamCenterDto.java
+D:\NSEIT_poc\src\main\java\com\example\service\DuplicateURNService.java
+D:\NSEIT_poc\src\main\java\com\example\controller\UtilityController.java
+D:\NSEIT_poc\src\main\java\com\example\service\AccountService.java
+D:\NSEIT_poc\src\main\java\com\example\service\UtilityService.java
+D:\NSEIT_poc\src\main\java\com\example\service\CandidateService.java
+D:\NSEIT_poc\src\main\java\com\example\controller\DuplicateURNController.java
+D:\NSEIT_poc\src\main\java\com\example\controller\ExamBatchesController.java
+D:\NSEIT_poc\src\main\java\com\example\database\Database.java
+D:\NSEIT_poc\src\main\java\com\example\service\impl\ValidationServiceImpl.java
+D:\NSEIT_poc\src\main\java\com\example\model\ScheduleReport.java
+D:\NSEIT_poc\src\main\java\com\example\service\impl\ExamRegistrationServiceImpl.java
+D:\NSEIT_poc\src\main\java\com\example\repository\CandidateRepository.java
+D:\NSEIT_poc\src\main\java\com\example\controller\ExamCenterController.java
+D:\NSEIT_poc\src\main\java\com\example\repository\ExamRegistrationRepository.java
+D:\NSEIT_poc\src\main\java\com\example\repository\ExamRepository.java
+D:\NSEIT_poc\src\main\java\com\example\service\BranchService.java
+D:\NSEIT_poc\src\main\java\com\example\model\Notification.java
+D:\NSEIT_poc\src\main\java\com\example\service\impl\UtilityServiceImpl.java
+D:\NSEIT_poc\src\main\java\com\example\service\impl\TelemarketerServiceImpl.java
+D:\NSEIT_poc\src\main\java\com\example\controller\SchedulerController.java
+D:\NSEIT_poc\src\main\java\com\example\common\CommonConstants.java
+D:\NSEIT_poc\src\main\java\com\example\dto\ExamCenterDto.java
+D:\NSEIT_poc\src\main\java\BatchMgmt.java
+D:\NSEIT_poc\src\main\java\com\example\controller\BatchController.java
+D:\NSEIT_poc\src\main\java\com\example\controller\ExamRegistrationController.java
+D:\NSEIT_poc\src\main\java\com\example\model\PaymentResponse.java
+D:\NSEIT_poc\src\main\java\com\example\service\EmailService.java
+D:\NSEIT_poc\src\main\java\com\example\model\BatchApplicant.java
+D:\NSEIT_poc\src\main\java\com\example\repository\ExamDetailRepository.java
+D:\NSEIT_poc\src\main\java\databases\sqlserver\ProcedureResult.java
+D:\NSEIT_poc\src\main\java\com\example\repository\URNRequestRepository.java
+D:\NSEIT_poc\src\main\java\com\example\dto\ExamRegistrationDto.java
+D:\NSEIT_poc\src\main\java\com\example\services\ExcelService.java
+D:\NSEIT_poc\src\main\java\iiidl\BulkUploadResult.java
+D:\NSEIT_poc\src\main\java\com\example\controller\CandidateController.java
+D:\NSEIT_poc\src\main\java\com\example\service\BatchService.java
+D:\NSEIT_poc\src\main\java\com\example\service\impl\ExamCenterServiceImpl.java
+D:\NSEIT_poc\src\main\java\com\example\Main.java
+D:\NSEIT_poc\src\main\java\com\example\controller\ExamDetailsController.java
+D:\NSEIT_poc\src\main\java\com\example\model\User.java
+D:\NSEIT_poc\src\main\java\iiidl\ExamRegistrations.java
+D:\NSEIT_poc\src\main\java\com\example\model\Exam.java
+D:\NSEIT_poc\src\main\java\com\example\common\PortalSessionStub.java
+D:\NSEIT_poc\src\main\java\com\example\dto\CandidateRegistrationDto.java
+D:\NSEIT_poc\src\main\java\com\example\model\ExamCenters.java
+D:\NSEIT_poc\src\main\java\com\example\controller\TelemarketerController.java
+D:\NSEIT_poc\src\main\java\com\example\service\TpslService.java
+D:\NSEIT_poc\src\main\java\com\example\model\TelemarketerRegistration.java
+D:\NSEIT_poc\src\main\java\com\example\integration\impl\CSSIntegrationServiceImpl.java
+D:\NSEIT_poc\src\main\java\com\example\model\ExamRegistration.java
+D:\NSEIT_poc\src\main\java\com\example\service\PartialModificationService.java
+D:\NSEIT_poc\src\main\java\com\example\util\ExcelHelper.java
+D:\NSEIT_poc\src\main\java\com\example\controller\HomeController.java
+D:\NSEIT_poc\src\main\java\com\example\model\ExamDetail.java
+D:\NSEIT_poc\src\main\java\com\example\model\Batch.java
+D:\NSEIT_poc\src\main\java\com\example\model\ScheduleResponse.java
+D:\NSEIT_poc\src\main\java\com\example\util\PDFGenerator.java
+D:\NSEIT_poc\src\main\java\com\example\model\CreditBalance.java
+D:\NSEIT_poc\src\main\java\com\example\repository\UserRepository.java
+D:\NSEIT_poc\src\main\java\com\example\service\impl\TpslServiceImpl.java
+D:\NSEIT_poc\src\main\java\com\example\integration\CSSIntegrationService.java
+D:\NSEIT_poc\src\main\java\com\example\service\UserService.java
+D:\NSEIT_poc\src\main\java\com\example\model\Candidate.java
+D:\NSEIT_poc\src\main\java\com\example\model\URNRequest.java
+D:\NSEIT_poc\src\main\java\com\example\controller\AccountController.java
+D:\NSEIT_poc\src\main\java\com\example\controller\PaymentController.java
+D:\NSEIT_poc\src\main\java\databases\sqlserver\ParamLength.java
+D:\NSEIT_poc\src\main\java\com\example\service\ExamCenterService.java
+D:\NSEIT_poc\src\main\java\iiidl\MasterData.java
+D:\NSEIT_poc\src\main\java\com\example\model\ExamSchedule.java
+D:\NSEIT_poc\src\main\java\iiibl\BulkUploadResult.java
+D:\NSEIT_poc\src\main\java\com\example\service\ExamRegistrationService.java
+D:\NSEIT_poc\src\main\java\com\example\controller\TelemarketerRegistrationController.java
+D:\NSEIT_poc\src\main\java\com\example\model\ExamCenter.java
+D:\NSEIT_poc\src\main\java\com\example\service\SchedulerService.java
+D:\NSEIT_poc\src\main\java\com\example\service\ExamDetailsService.java
+D:\NSEIT_poc\src\main\java\com\example\service\ReportService.java
+D:\NSEIT_poc\src\main\java\com\example\model\ServiceResponse.java
+D:\NSEIT_poc\src\main\java\com\example\config\FileUploadConfig.java
+D:\NSEIT_poc\src\main\java\com\example\controller\ReportController.java
+D:\NSEIT_poc\src\main\java\com\example\controller\PartialModificationController.java
+D:\NSEIT_poc\src\main\java\com\example\service\URNService.java
+D:\NSEIT_poc\src\main\java\com\example\service\impl\EmailServiceImpl.java
+D:\NSEIT_poc\src\main\java\com\example\service\NotificationService.java
+D:\NSEIT_poc\src\main\java\databases\sqlserver\ParameterDirection.java
+D:\NSEIT_poc\src\main\java\com\example\controller\TpslController.java
+D:\NSEIT_poc\src\main\java\com\example\service\impl\CandidateServiceImpl.java
+D:\NSEIT_poc\src\main\java\iiibl\MasterData.java
+D:\NSEIT_poc\src\main\java\com\example\controller\DPRangeController.java
+D:\NSEIT_poc\src\main\java\com\example\dto\ResetPasswordDto.java
+D:\NSEIT_poc\src\main\java\com\example\controller\URNController.java
+D:\NSEIT_poc\src\main\java\com\example\database\ParamLength.java
+D:\NSEIT_poc\src\main\java\com\example\service\PaymentService.java
+D:\NSEIT_poc\src\main\java\com\example\common\PortalApplicationStub.java
+D:\NSEIT_poc\src\main\java\com\example\service\ValidationService.java
+D:\NSEIT_poc\src\main\java\com\example\model\ExamBatch.java
+D:\NSEIT_poc\src\main\java\com\example\model\ScheduleRequest.java
+D:\NSEIT_poc\src\main\java\com\example\service\impl\ExamServiceImpl.java
+D:\NSEIT_poc\src\main\java\com\example\services\ResponseHelper.java
+D:\NSEIT_poc\src\main\java\com\example\controller\NotificationController.java
+D:\NSEIT_poc\src\main\java\com\example\NSEITJavaTranslationApplication.java
+D:\NSEIT_poc\src\main\java\com\example\model\ApiResponse.java
+D:\NSEIT_poc\src\main\java\databases\sqlserver\Database.java
+D:\NSEIT_poc\src\main\java\com\example\config\PortalSession.java
+D:\NSEIT_poc\src\main\java\com\example\dto\TpslRequestDto.java
+D:\NSEIT_poc\src\main\java\com\example\controller\BranchController.java
+D:\NSEIT_poc\src\main\java\com\example\repository\ExamCenterRepository.java
+D:\NSEIT_poc\src\main\java\com\example\service\impl\SchedulerServiceImpl.java
+D:\NSEIT_poc\src\main\java\com\example\dto\CreateExamCenterDto.java
+D:\NSEIT_poc\src\main\java\com\example\service\ExamService.java
+D:\NSEIT_poc\src\main\java\databases\sqlserver\SqlDbType.java
+D:\NSEIT_poc\src\main\java\com\example\dto\ChangePasswordDto.java
+D:\NSEIT_poc\src\main\java\com\example\web\LoginServlet.java
+D:\NSEIT_poc\src\main\java\com\example\model\Branch.java
+D:\NSEIT_poc\src\main\java\com\example\controller\ExamController.java
+D:\NSEIT_poc\src\main\java\com\example\common\Errorlogger.java
+D:\NSEIT_poc\src\main\java\com\example\controller\UserController.java
+D:\NSEIT_poc\src\main\java\com\example\dto\TelemarketerDto.java
+D:\NSEIT_poc\src\main\java\iiibl\ExamRegistration.java
+D:\NSEIT_poc\src\main\java\com\example\controller\ServicesController.java
+D:\NSEIT_poc\src\main\java\com\example\model\PaymentRequest.java
+D:\NSEIT_poc\src\main\java\com\example\model\ExamReport.java
+D:\NSEIT_poc\src\main\java\com\example\web\response\ApiResponse.java
+D:\NSEIT_poc\src\main\java\ListSQLServerDatabases.java
+D:\NSEIT_poc\src\main\java\com\example\service\HomeService.java
+D:\NSEIT_poc\src\main\java\com\example\dto\LoginRequestDto.java

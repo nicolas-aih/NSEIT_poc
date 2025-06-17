@@ -13,31 +13,62 @@ public class URNRequest {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "candidate_id")
-    private Candidate candidate;
+    @Column(nullable = false, unique = true)
+    private String urn;
 
-    private String requestType; // MODIFICATION, DUPLICATE, etc.
-    private String status; // PENDING, APPROVED, REJECTED
+    @Column(name = "applicant_name", nullable = false)
+    private String applicantName;
+
+    @Column(nullable = false)
+    private String email;
+
+    @Column(name = "phone_number", nullable = false)
+    private String phoneNumber;
+
+    @Column(name = "date_of_birth")
+    private LocalDateTime dateOfBirth;
+
+    @Column(name = "address")
+    private String address;
+
+    @Column(name = "state_id")
+    private Integer stateId;
+
+    @Column(name = "district_id")
+    private Integer districtId;
+
+    @Column(name = "pincode")
+    private String pincode;
+
+    @Column(name = "status", nullable = false)
+    private String status;
+
+    @Column(name = "remarks")
     private String remarks;
-    private String modifiedFields;
-    private String oldValues;
-    private String newValues;
 
-    private LocalDateTime requestedAt;
-    private String requestedBy;
-    private LocalDateTime processedAt;
-    private String processedBy;
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
+    @Column(name = "created_by")
+    private String createdBy;
+
+    @Column(name = "updated_by")
+    private String updatedBy;
 
     @PrePersist
     protected void onCreate() {
-        requestedAt = LocalDateTime.now();
+        createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
+        if (status == null) {
+            status = "PENDING";
+        }
     }
 
     @PreUpdate
     protected void onUpdate() {
-        if (status.equals("APPROVED") || status.equals("REJECTED")) {
-            processedAt = LocalDateTime.now();
-        }
+        updatedAt = LocalDateTime.now();
     }
 } 

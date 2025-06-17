@@ -13,47 +13,35 @@ public class ExamDetail {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "candidate_id")
-    private Candidate candidate;
+    @Column(nullable = false, unique = true)
+    private String urn;
 
+    @Column(name = "applicant_name", nullable = false)
+    private String applicantName;
+
+    @Column(name = "exam_date")
     private LocalDateTime examDate;
-    private String examTime;
-    private String examineeId;
-    private Integer marks;
+
+    @Column(name = "exam_roll_number")
+    private String examRollNumber;
+
+    @Column(name = "exam_marks")
+    private Integer examMarks;
+
+    @Column(name = "result")
     private String result;
+
+    @Column(name = "exam_center_id")
+    private Long examCenterId;
+
+    @Column(name = "status")
     private String status;
 
-    // Training Details
-    private LocalDateTime trainingStartDate;
-    private LocalDateTime trainingEndDate;
-    private Integer totalTrainingHours;
-    private String trainingStatus;
-    private String trainingCenter;
-    private String trainer;
-
-    // TCC Details
-    private LocalDateTime tccExpiryDate;
-    private String tccNumber;
-    private String tccStatus;
-
-    // Payment Details
-    private String paymentMode;
-    private String paymentStatus;
-    private Double paymentAmount;
-    private String transactionId;
-    private LocalDateTime paymentDate;
-
-    // Scheduling Details
-    private String schedulingMode;
-    private LocalDateTime preferredDate;
-    private String preferredSlot;
-    private String batchCode;
-
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
-    private String createdBy;
+
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
-    private String updatedBy;
 
     @PrePersist
     protected void onCreate() {

@@ -4,6 +4,7 @@ import com.example.model.Candidate;
 import com.example.model.ExamDetail;
 import com.example.model.URNRequest;
 import com.example.service.CandidateService;
+import com.example.dto.CandidateRegistrationDto;
 import org.springframework.core.io.Resource;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
@@ -114,5 +115,10 @@ public class CandidateController {
     public ResponseEntity<Map<String, Object>> bulkUploadTrainingDetails(
             @RequestParam MultipartFile file) {
         return ResponseEntity.ok(candidateService.bulkUploadTrainingDetails(file));
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<Map<String, Object>> registerCandidate(@RequestBody CandidateRegistrationDto dto) {
+        return ResponseEntity.ok(candidateService.registerCandidate(dto));
     }
 } 

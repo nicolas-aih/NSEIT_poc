@@ -3,6 +3,7 @@ package com.example.service;
 import com.example.model.Candidate;
 import com.example.model.ExamDetail;
 import com.example.model.URNRequest;
+import com.example.dto.CandidateRegistrationDto;
 import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -32,4 +33,6 @@ public interface CandidateService {
 
     // Bulk Operations
     Map<String, Object> bulkUploadTrainingDetails(MultipartFile file);
+
+    Map<String, Object> registerCandidate(CandidateRegistrationDto dto);
 } 
